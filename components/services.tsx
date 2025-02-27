@@ -110,7 +110,7 @@ export function Services() {
                         >
                           {service.title}
                         </span>
-                        <span className="group-hover:opacity-0 transition-opacity duration-300">{service.title}</span>
+                        <span className="transition-opacity duration-300">{service.title}</span>
                       </CardTitle>
                     </CardHeader>
 

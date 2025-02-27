@@ -5,45 +5,31 @@ import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import Link from "next/link"
 
 
 const projects = [
   {
-    title: "E-commerce de Moda",
-    description: "Tienda online completa con catálogo, carrito y pasarela de pago",
-    image: "/placeholder.svg?height=400&width=600",
-    category: "e-commerce",
-  },
-  {
-    title: "Landing Page Inmobiliaria",
-    description: "Página de aterrizaje para promoción de desarrollos inmobiliarios",
-    image: "/placeholder.svg?height=400&width=600",
+    title: "Landing Page Aberturas",
+    description: "Página para promoción de articulos que incluye catálogo y posibilidad de contacto.",
+    image: "/media/alumbar.png",
+    url: "https://www.alumbaronline.com/",
     category: "landing",
   },
   {
-    title: "Web Corporativa Tecnológica",
-    description: "Sitio web institucional para empresa de tecnología",
-    image: "/placeholder.svg?height=400&width=600",
-    category: "corporate",
+    title: "Landing Page Experiencias Aéreas ",
+    description: "Página de aterrizaje para promoción de experiencias Aéreas",
+    image: "/media/experienciasaereas.png",   
+    url: "https://experienciasaereas.vercel.app/",
+    category: "landing",
   },
   {
-    title: "App de Gestión",
-    description: "Aplicación web para gestión de recursos empresariales",
-    image: "/placeholder.svg?height=400&width=600",
+    title: "Aplicacion web para gestionar stock y visualizar ventas",
+    description: "Aplicacion conectada a una base de datos para llevar el control sobre productos.",
+    image: "/media/sistem1 (1).png",
+    url: "",
     category: "app",
-  },
-  {
-    title: "Landing Page SaaS",
-    description: "Página de aterrizaje para producto SaaS",
-    image: "/placeholder.svg?height=400&width=600",
-    category: "landing",
-  },
-  {
-    title: "E-commerce de Electrónica",
-    description: "Tienda online de productos electrónicos",
-    image: "/placeholder.svg?height=400&width=600",
-    category: "e-commerce",
-  },
+  }
 ]
 
 const categories = [
@@ -60,7 +46,7 @@ export function Portfolio() {
   const filteredProjects = projects.filter((project) => activeCategory === "all" || project.category === activeCategory)
 
   return (
-    <section id="portfolio" className="py-16 sm:py-24">
+    <section id="portfolio" className="py-14 sm:py-18">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -69,7 +55,7 @@ export function Portfolio() {
           className="mx-auto max-w-2xl lg:text-center"
         >
           <h2 className="text-base font-semibold leading-7 text-primary">Portfolio</h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">
+          <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 pb-4">
             Nuestros Proyectos Destacados
           </p>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
@@ -121,14 +107,18 @@ export function Portfolio() {
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
-                        <Button
-                          variant="secondary"
-                          className="transform translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-                        >
-                          Ver Proyecto
-                        </Button>
-                      </div>
+                    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
+                      {project.url && (
+                        <Link href={project.url} target="_blank">
+                          <Button
+                            variant="secondary"
+                            className="transform translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                          >
+                            Ver Proyecto
+                          </Button>
+                        </Link>
+                      )}
+                    </div>
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-semibold group-hover:text-primary transition-colors duration-300">

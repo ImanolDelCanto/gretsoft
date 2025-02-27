@@ -7,7 +7,6 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { Portfolio } from "@/components/portfolio"
 import { PortfolioStats } from "@/components/portfolio-stats"
-import { PortfolioTestimonials } from "@/components/portfolio-testimonials"
 import { Button } from "@/components/ui/button"
 import { ArrowDown } from "lucide-react"
 
@@ -87,7 +86,7 @@ export default function PortfolioPage() {
                 </motion.p>
                 <motion.h1
                   variants={fadeInUp}
-                  className="mt-2 text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
+                  className="mt-2 text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 pb-4"
                 >
                   Transformando Ideas en Realidad Digital
                 </motion.h1>
@@ -101,7 +100,6 @@ export default function PortfolioPage() {
         </div>
         <PortfolioStats />
         <Portfolio />
-        <PortfolioTestimonials />
       </main>
       <SiteFooter />
       <AnimatePresence>

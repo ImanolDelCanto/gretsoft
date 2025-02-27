@@ -7,7 +7,6 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { About } from "@/components/about"
 import { AboutTimeline } from "@/components/about-timeline"
-import { AboutTeam } from "@/components/about-team"
 import { Button } from "@/components/ui/button"
 import { ArrowDown } from "lucide-react"
 
@@ -101,7 +100,6 @@ export default function AboutPage() {
         </div>
         <About />
         <AboutTimeline />
-        <AboutTeam />
       </main>
       <SiteFooter />
       <AnimatePresence>
