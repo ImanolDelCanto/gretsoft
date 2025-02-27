@@ -36,7 +36,7 @@ export function SiteHeader() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        isScrolled ? "bg-background/90 backdrop-blur-md shadow-sm py-2" : "bg-transparent py-4",
+        isScrolled ? "bg-background/90 backdrop-blur-md shadow-sm py-2" : "bg-transparent py-0",
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Global">
@@ -44,8 +44,8 @@ export function SiteHeader() {
           <Link href="/" className="-m-1.5 p-1.5 transition-transform duration-300 hover:scale-105">
             <span className="sr-only">GretSoft</span>
             <Image
-              className="h-14 w-auto sm:h-16 md:h-18 lg:h-20"
-              src="/gretsoft.png"
+              className="h-24 w-auto sm:h-20 md:h-24 lg:h-28"
+              src="/gretsoft2.png"
               alt="GretSoft Logo"
               width={1000}
               height={1000}

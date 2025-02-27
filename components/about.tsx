@@ -1,33 +1,7 @@
 "use client"
 
-import { useMemo } from "react"
-import { Users, Target, Lightbulb } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
 
 export function About() {
-  const values = useMemo(
-    () => [
-      {
-        title: "Experiencia",
-        description:
-          "Más de 2 años desarrollando soluciones web innovadoras y efectivas para empresas de diversos sectores.",
-        icon: Users,
-      },
-      {
-        title: "Compromiso",
-        description:
-          "Nos comprometemos con cada proyecto para entregar resultados excepcionales que superen las expectativas.",
-        icon: Target,
-      },
-      {
-        title: "Innovación",
-        description:
-          "Utilizamos las últimas tecnologías y mejores prácticas para crear soluciones web modernas y escalables.",
-        icon: Lightbulb,
-      },
-    ],
-    [],
-  )
 
   return (
     <section id="about" className="py-24 sm:py-32">
@@ -58,21 +32,7 @@ export function About() {
             servicio personalizado, GretSoft es para vos.
           </p>
         </div>
-        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-            {values.map((value) => (
-              <Card key={value.title} className="border-none shadow-none">
-                <CardContent className="pt-6">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                    <value.icon className="h-6 w-6 text-primary-foreground" aria-hidden="true" />
-                  </div>
-                  <dt className="mt-4 text-lg font-semibold leading-7">{value.title}</dt>
-                  <dd className="mt-2 leading-7 text-muted-foreground">{value.description}</dd>
-                </CardContent>
-              </Card>
-            ))}
-          </dl>
-        </div>
+
       </div>
     </section>
   )

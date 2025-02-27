@@ -1,14 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { motion, useAnimation, AnimatePresence } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { Portfolio } from "@/components/portfolio"
-import { PortfolioStats } from "@/components/portfolio-stats"
 import { Button } from "@/components/ui/button"
-import { ArrowDown } from "lucide-react"
+import { ArrowDown, Code2, Users, Star, Award } from "lucide-react"
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -25,6 +24,13 @@ const staggerChildren = {
   },
 }
 
+const stats = [
+  { name: "Soluciones a Medida", value: "100%", icon: Code2 },
+  { name: "Cercanía con el Cliente", value: "Siempre", icon: Users },
+  { name: "Proyectos en Crecimiento", value: "Cada Día", icon: Star },
+  { name: "Visión a Futuro", value: "Innovación Constante", icon: Award },
+]
+
 export default function PortfolioPage() {
   const controls = useAnimation()
   const [ref, inView] = useInView({
@@ -37,16 +43,20 @@ export default function PortfolioPage() {
     if (inView) {
       controls.start("visible")
     }
-    const handleScroll = () => {
-      setShowScrollButton(window.scrollY > 100)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
   }, [controls, inView])
 
-  const scrollToTop = () => {
+  const handleScroll = useCallback(() => {
+    setShowScrollButton(window.scrollY > 100)
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [handleScroll])
+
+  const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" })
-  }
+  }, [])
 
   return (
     <div className="relative flex min-h-screen flex-col">
@@ -54,19 +64,10 @@ export default function PortfolioPage() {
       <main className="flex-1">
         <div className="relative overflow-hidden">
           {/* Dynamic gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 animate-gradient-x" />
-
-          {/* Animated shapes */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-0 right-0 -translate-y-12 translate-x-12 blur-3xl opacity-20">
-              <div className="aspect-square h-96 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 animate-blob" />
-            </div>
-            <div className="absolute bottom-0 left-0 translate-y-12 -translate-x-12 blur-3xl opacity-20">
-              <div className="aspect-square h-96 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 animate-blob animation-delay-2000" />
-            </div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-3xl opacity-20">
-              <div className="aspect-square h-96 rounded-full bg-gradient-to-br from-pink-500 to-yellow-500 animate-blob animation-delay-4000" />
-            </div>
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+            <div className="absolute top-0 right-1/4 w-full aspect-square bg-primary/30 rounded-full blur-[120px] opacity-50 animate-pulse" />
+            <div className="absolute bottom-0 left-1/2 w-full aspect-square bg-purple-500/20 rounded-full blur-[120px] opacity-30 animate-pulse animation-delay-2000" />
           </div>
 
           <div className="relative">
@@ -78,15 +79,17 @@ export default function PortfolioPage() {
               className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8"
             >
               <motion.div variants={fadeInUp} className="mx-auto max-w-2xl lg:mx-0">
-                <motion.p
+                <motion.div
                   variants={fadeInUp}
-                  className="text-base font-semibold leading-7 text-blue-600 dark:text-blue-400"
+                  className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium gradient-border"
                 >
-                  Nuestros Proyectos
-                </motion.p>
+                  <div className="rounded-full px-3 py-1 text-sm font-medium">
+                    <span className="text-primary text-glow">Nuestros Proyectos</span>
+                  </div>
+                </motion.div>
                 <motion.h1
                   variants={fadeInUp}
-                  className="mt-2 text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 pb-4"
+                  className="mt-6 text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500 pb-4"
                 >
                   Transformando Ideas en Realidad Digital
                 </motion.h1>
@@ -95,10 +98,31 @@ export default function PortfolioPage() {
                   siguiente nivel en el mundo digital.
                 </motion.p>
               </motion.div>
+
+              <motion.div
+                variants={staggerChildren}
+                className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
+              >
+                {stats.map((stat) => (
+                  <motion.div
+                    key={stat.name}
+                    variants={fadeInUp}
+                    className="glass-card p-8 rounded-2xl hover-glow transition-all duration-300 hover:-translate-y-1"
+                  >
+                    <div className="relative">
+                      <div className="absolute -inset-1 bg-gradient-to-r from-primary to-purple-500 rounded-lg blur opacity-25" />
+                      <div className="relative flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                        <stat.icon className="h-6 w-6 text-primary" />
+                      </div>
+                    </div>
+                    <h3 className="mt-6 text-xl font-semibold text-foreground">{stat.value}</h3>
+                    <p className="mt-2 text-muted-foreground">{stat.name}</p>
+                  </motion.div>
+                ))}
+              </motion.div>
             </motion.div>
           </div>
         </div>
-        <PortfolioStats />
         <Portfolio />
       </main>
       <SiteFooter />
@@ -113,7 +137,8 @@ export default function PortfolioPage() {
             <Button
               onClick={scrollToTop}
               size="icon"
-              className="rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300"
+              aria-label="Volver arriba"
+              className="rounded-full bg-gradient-to-r from-primary to-purple-500 hover:opacity-90 shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <ArrowDown className="h-5 w-5 transform rotate-180" />
             </Button>

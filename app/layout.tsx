@@ -18,7 +18,7 @@ export const metadata = {
   authors: [{ name: "GretSoft" }],
   creator: "GretSoft",
   viewport: "width=device-width, initial-scale=1",
-  themeColor: "#6d28d9",
+  themeColor: "#00E5C9",
 }
 
 export default function RootLayout({
@@ -27,9 +27,24 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className="scroll-smooth">
-      <body className={cn("min-h-screen bg-background font-sans antialiased", inter.className)}>
-        <Suspense fallback={<div className="h-screen flex items-center justify-center">Cargando...</div>}>
+    <html lang="es" className="scroll-smooth dark">
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased selection:bg-primary/20 selection:text-primary",
+          inter.className,
+        )}
+      >
+        <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-background to-background" />
+        <Suspense
+          fallback={
+            <div className="h-screen flex items-center justify-center">
+              <div className="relative w-24 h-24">
+                <div className="absolute inset-0 border-t-2 border-primary rounded-full animate-spin"></div>
+                <div className="absolute inset-4 border-t-2 border-primary/50 rounded-full animate-spin-slow"></div>
+              </div>
+            </div>
+          }
+        >
           {children}
           <WhatsAppButton />
         </Suspense>

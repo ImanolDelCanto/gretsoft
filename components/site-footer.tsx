@@ -36,7 +36,7 @@ export function SiteFooter() {
               <span className="sr-only">GretSoft</span>
               <Image
                 className="h-24 w-auto"
-                src="/gretsoft.png"
+                src="/gretsoft1.png"
                 alt="GretSoft Logo"
                 width={1000}
                 height={1000}
