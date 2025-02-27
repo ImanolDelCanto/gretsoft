@@ -1,8 +1,31 @@
+"use client"
+
+import { useMemo } from "react"
 import Link from "next/link"
 import Image from "next/image"
 
-
 export function SiteFooter() {
+  const navigation = useMemo(
+    () => [
+      { name: "Inicio", href: "/" },
+      { name: "Nosotros", href: "/about" },
+      { name: "Portfolio", href: "/portfolio" },
+      { name: "Contacto", href: "/#contact" },
+    ],
+    [],
+  )
+
+  const services = useMemo(
+    () => [
+      { name: "Landing Pages", href: "/#services" },
+      { name: "E-commerce", href: "/#services" },
+      { name: "Sitios Web Corporativos", href: "/#services" },
+      { name: "Aplicaciones Web", href: "/#services" },
+      { name: "SEO", href: "/#services" },
+    ],
+    [],
+  )
+
   return (
     <footer className="bg-muted/50 border-t">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -11,7 +34,14 @@ export function SiteFooter() {
           <div className="space-y-4">
             <Link href="/" className="inline-block">
               <span className="sr-only">GretSoft</span>
-              <Image className="h-24 w-auto" src="/gretsoft.png" alt="GretSoft Logo" width={1000} height={1000} />
+              <Image
+                className="h-24 w-auto"
+                src="/gretsoft.png"
+                alt="GretSoft Logo"
+                width={1000}
+                height={1000}
+                loading="lazy"
+              />
             </Link>
             <p className="text-sm text-muted-foreground max-w-xs">
               Soluciones web profesionales y personalizadas para hacer crecer tu negocio digital.
@@ -22,12 +52,7 @@ export function SiteFooter() {
           <div>
             <h3 className="text-sm font-semibold mb-4">Navegación</h3>
             <ul className="space-y-3">
-              {[
-                { name: "Inicio", href: "/" },
-                { name: "Nosotros", href: "/about" },
-                { name: "Portfolio", href: "/portfolio" },
-                { name: "Contacto", href: "/#contact" },
-              ].map((item) => (
+              {navigation.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
@@ -44,13 +69,7 @@ export function SiteFooter() {
           <div>
             <h3 className="text-sm font-semibold mb-4">Servicios</h3>
             <ul className="space-y-3">
-              {[
-                { name: "Landing Pages", href: "/#services" },
-                { name: "E-commerce", href: "/#services" },
-                { name: "Sitios Web Corporativos", href: "/#services" },
-                { name: "Aplicaciones Web", href: "/#services" },
-                { name: "SEO", href: "/#services" },
-              ].map((item) => (
+              {services.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
@@ -60,6 +79,30 @@ export function SiteFooter() {
                   </Link>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="text-sm font-semibold mb-4">Contacto</h3>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="mailto:gretsoft@gmail.com"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+                >
+                  gretsoft@gmail.com
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:+5411-2676-3301"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+                >
+                  (+54) 11 2676-3301
+                </a>
+              </li>
+              <li className="text-sm text-muted-foreground">Banfield, Buenos Aires, Argentina</li>
             </ul>
           </div>
         </div>

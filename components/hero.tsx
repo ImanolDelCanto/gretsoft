@@ -3,6 +3,12 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Code, Sparkles, Zap } from "lucide-react"
 
+const features = [
+  { icon: Code, text: "Desarrollo a medida" },
+  { icon: Zap, text: "Optimización de rendimiento" },
+  { icon: Sparkles, text: "Diseño moderno" },
+]
+
 export function Hero() {
   return (
     <div id="home" className="relative isolate overflow-hidden">
@@ -63,11 +69,7 @@ export function Hero() {
           </div>
 
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {[
-              { icon: Code, text: "Desarrollo a medida" },
-              { icon: Zap, text: "Optimización de rendimiento" },
-              { icon: Sparkles, text: "Diseño moderno" },
-            ].map((item, index) => (
+            {features.map((item, index) => (
               <div key={index} className="flex items-center gap-x-2 text-sm">
                 <div className="rounded-full bg-primary/10 p-1">
                   <item.icon className="h-4 w-4 text-primary" />
@@ -87,6 +89,8 @@ export function Hero() {
             height={600}
             className="mx-auto w-full max-w-[22.875rem] sm:max-w-[28.875rem] rounded-xl shadow-2xl ring-1 ring-gray-900/10 transition-transform duration-300 hover:scale-[1.02]"
             priority
+            loading="eager"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         </div>
       </div>

@@ -1,8 +1,21 @@
+"use client"
+
+import { useMemo } from "react"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 export function AboutPreview() {
+  const stats = useMemo(
+    () => [
+      { stat: "100%", label: "Soluciones a Medida" },
+      { stat: "Innovación", label: "Como Estándar" },
+      { stat: "Colaboración", label: "Con Nuestros Clientes" },
+      { stat: "Visión", label: "Para el Futuro" },
+    ],
+    [],
+  )
+
   return (
     <section className="relative isolate overflow-hidden">
       {/* Gradient background */}
@@ -43,12 +56,7 @@ export function AboutPreview() {
             <div className="relative rounded-xl border bg-background/50 backdrop-blur-sm shadow-2xl">
               <div className="p-8">
                 <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  {[
-                    { stat: "100%", label: "Soluciones a Medida" },
-                    { stat: "Innovación", label: "Como Estándar" },
-                    { stat: "Colaboración", label: "Con Nuestros Clientes" },
-                    { stat: "Visión", label: "Para el Futuro" },
-                  ].map((item) => (
+                  {stats.map((item) => (
                     <div key={item.label} className="border-l-4 border-purple-500 pl-4">
                       <dt className="text-sm font-medium text-muted-foreground">{item.label}</dt>
                       <dd className="mt-1 text-3xl font-semibold tracking-tight text-purple-600 dark:text-purple-400">

@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Hero } from "@/components/hero"
 import { Services } from "@/components/services"
 import { Contact } from "@/components/contact"
@@ -11,11 +12,13 @@ export default function Home() {
     <div className="relative flex min-h-screen flex-col">
       <SiteHeader />
       <main className="flex-1">
-        <Hero />
-        <AboutPreview />
-        <Services />
-        <SupportServices />
-        <Contact />
+        <Suspense fallback={<div className="h-screen flex items-center justify-center">Cargando...</div>}>
+          <Hero />
+          <AboutPreview />
+          <Services />
+          <SupportServices />
+          <Contact />
+        </Suspense>
       </main>
       <SiteFooter />
     </div>

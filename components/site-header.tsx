@@ -1,6 +1,5 @@
 "use client"
-
-import * as React from "react"
+import { useCallback, useMemo, useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
@@ -8,24 +7,30 @@ import { Button } from "@/components/ui/button"
 import { MenuIcon, X } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 
-const navigation = [
-  { name: "Inicio", href: "/" },
-  { name: "Nosotros", href: "/about" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Contacto", href: "/#contact" },
-]
-
 export function SiteHeader() {
-  const [isScrolled, setIsScrolled] = React.useState(false)
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+  const navigation = useMemo(
+    () => [
+      { name: "Inicio", href: "/" },
+      { name: "Nosotros", href: "/about" },
+      { name: "Portfolio", href: "/portfolio" },
+      { name: "Contacto", href: "/#contact" },
+    ],
+    [],
+  )
+
+  const handleScroll = useCallback(() => {
+    setIsScrolled(window.scrollY > 0)
   }, [])
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [handleScroll])
+
+  const closeSheet = useCallback(() => setIsOpen(false), [])
 
   return (
     <header
@@ -72,7 +77,7 @@ export function SiteHeader() {
         <div className="flex lg:hidden">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="lg:hidden">
+              <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Abrir menú">
                 <MenuIcon className="h-6 w-6" />
                 <span className="sr-only">Abrir menú</span>
               </Button>
@@ -83,7 +88,7 @@ export function SiteHeader() {
             >
               <SheetHeader className="flex flex-row items-center justify-between">
                 <SheetTitle className="text-left">Menú</SheetTitle>
-                <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+                <Button variant="ghost" size="icon" onClick={closeSheet} aria-label="Cerrar menú">
                   <X className="h-5 w-5" />
                   <span className="sr-only">Cerrar menú</span>
                 </Button>
@@ -93,7 +98,7 @@ export function SiteHeader() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    onClick={() => setIsOpen(false)}
+                    onClick={closeSheet}
                     className="group flex items-center gap-2 text-lg font-semibold px-4 py-3 rounded-lg hover:bg-muted transition-all duration-300 ease-in-out"
                   >
                     <span className="relative overflow-hidden">
@@ -104,7 +109,7 @@ export function SiteHeader() {
                 ))}
                 <div className="mt-4 pt-4 border-t">
                   <Button asChild className="w-full rounded-full shadow-md">
-                    <Link href="/#contact" onClick={() => setIsOpen(false)}>
+                    <Link href="/#contact" onClick={closeSheet}>
                       Contáctanos
                     </Link>
                   </Button>

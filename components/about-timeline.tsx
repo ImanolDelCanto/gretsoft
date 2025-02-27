@@ -1,23 +1,29 @@
+"use client"
+
+import { useMemo } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
-const timeline = [
-  {
-    year: "2023",
-    title: "Los Inicios",
-    description: "Fundación de GretSoft con la visión de transformar ideas en soluciones digitales innovadoras.",
-    badge: "Fundación",
-  },
-  {
-    year: "Hoy",
-    title: "Liderando el Cambio",
-    description:
-      "Continuamos innovando y expandiendo nuestros servicios para satisfacer las necesidades digitales del futuro.",
-    badge: "Presente",
-  },
-]
-
 export function AboutTimeline() {
+  const timeline = useMemo(
+    () => [
+      {
+        year: "2023",
+        title: "Los Inicios",
+        description: "Fundación de GretSoft con la visión de transformar ideas en soluciones digitales innovadoras.",
+        badge: "Fundación",
+      },
+      {
+        year: "Hoy",
+        title: "Liderando el Cambio",
+        description:
+          "Continuamos innovando y expandiendo nuestros servicios para satisfacer las necesidades digitales del futuro.",
+        badge: "Presente",
+      },
+    ],
+    [],
+  )
+
   return (
     <section className="py-24 sm:py-32 bg-muted/50">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">

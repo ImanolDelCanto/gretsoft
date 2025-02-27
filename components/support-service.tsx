@@ -1,29 +1,37 @@
+"use client"
+
+import { useMemo } from "react"
 import { Shield, Clock, Zap, Users } from "lucide-react"
 
-const features = [
-  {
-    name: "Soporte Técnico 24/7",
-    description: "Asistencia técnica disponible en todo momento para resolver cualquier problema que pueda surgir.",
-    icon: Clock,
-  },
-  {
-    name: "Actualizaciones Regulares",
-    description: "Mantenemos tu sitio web actualizado con las últimas tecnologías y mejores prácticas de seguridad.",
-    icon: Zap,
-  },
-  {
-    name: "Seguridad Garantizada",
-    description: "Implementamos medidas de seguridad robustas para proteger tu sitio web y los datos de tus usuarios.",
-    icon: Shield,
-  },
-  {
-    name: "Capacitación Personalizada",
-    description: "Te enseñamos a gestionar tu sitio web para que puedas realizar cambios básicos por tu cuenta.",
-    icon: Users,
-  },
-]
-
 export function SupportServices() {
+  const features = useMemo(
+    () => [
+      {
+        name: "Soporte Técnico 24/7",
+        description: "Asistencia técnica disponible en todo momento para resolver cualquier problema que pueda surgir.",
+        icon: Clock,
+      },
+      {
+        name: "Actualizaciones Regulares",
+        description:
+          "Mantenemos tu sitio web actualizado con las últimas tecnologías y mejores prácticas de seguridad.",
+        icon: Zap,
+      },
+      {
+        name: "Seguridad Garantizada",
+        description:
+          "Implementamos medidas de seguridad robustas para proteger tu sitio web y los datos de tus usuarios.",
+        icon: Shield,
+      },
+      {
+        name: "Capacitación Personalizada",
+        description: "Te enseñamos a gestionar tu sitio web para que puedas realizar cambios básicos por tu cuenta.",
+        icon: Users,
+      },
+    ],
+    [],
+  )
+
   return (
     <section className="relative py-24 sm:py-32">
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />

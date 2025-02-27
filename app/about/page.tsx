@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { motion, useAnimation, AnimatePresence } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import { SiteHeader } from "@/components/site-header"
@@ -37,16 +37,20 @@ export default function AboutPage() {
     if (inView) {
       controls.start("visible")
     }
-    const handleScroll = () => {
-      setShowScrollButton(window.scrollY > 100)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
   }, [controls, inView])
 
-  const scrollToTop = () => {
+  const handleScroll = useCallback(() => {
+    setShowScrollButton(window.scrollY > 100)
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [handleScroll])
+
+  const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" })
-  }
+  }, [])
 
   return (
     <div className="relative flex min-h-screen flex-col">
@@ -113,6 +117,7 @@ export default function AboutPage() {
             <Button
               onClick={scrollToTop}
               size="icon"
+              aria-label="Volver arriba"
               className="rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <ArrowDown className="h-5 w-5 transform rotate-180" />

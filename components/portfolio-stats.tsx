@@ -1,17 +1,21 @@
 "use client"
 
+import { useMemo } from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Code2, Users, Star, Award } from "lucide-react"
 
-const stats = [
-  { name: "Soluciones a Medida", value: "100%", icon: Code2 },
-  { name: "Cercanía con el Cliente", value: "Siempre", icon: Users },
-  { name: "Proyectos en Crecimiento", value: "Cada Día", icon: Star },
-  { name: "Visión a Futuro", value: "Innovación Constante", icon: Award },
-]
-
 export function PortfolioStats() {
+  const stats = useMemo(
+    () => [
+      { name: "Soluciones a Medida", value: "100%", icon: Code2 },
+      { name: "Cercanía con el Cliente", value: "Siempre", icon: Users },
+      { name: "Proyectos en Crecimiento", value: "Cada Día", icon: Star },
+      { name: "Visión a Futuro", value: "Innovación Constante", icon: Award },
+    ],
+    [],
+  )
+
   return (
     <div className="relative py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -20,7 +24,8 @@ export function PortfolioStats() {
             <motion.div
               key={stat.name}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 * index }}
             >
               <Card className="relative overflow-hidden border-none bg-background/60 backdrop-blur-sm hover:shadow-lg transition-shadow duration-300">

@@ -1,12 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import type React from "react"
+
+import { useState, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Send, Mail, Phone, MapPin, Clock } from 'lucide-react'
+import { Send, Mail, Phone, MapPin, Clock } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
 
 export function Contact() {
@@ -18,40 +20,76 @@ export function Contact() {
     message: "",
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }))
-  }
+  }, [])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault()
+      setIsSubmitting(true)
 
-    try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      if (response.ok) {
-        toast({
-          title: "Mensaje enviado",
-          description: "Gracias por contactarnos. Te responderemos a la brevedad.",
+      try {
+        const response = await fetch("/api/send-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         })
-        setFormData({ name: "", email: "", subject: "", message: "" })
-      } else {
-        throw new Error('Error al enviar el mensaje')
+
+        if (response.ok) {
+          toast({
+            title: "Mensaje enviado",
+            description: "Gracias por contactarnos. Te responderemos a la brevedad.",
+          })
+          setFormData({ name: "", email: "", subject: "", message: "" })
+        } else {
+          throw new Error("Error al enviar el mensaje")
+        }
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Hubo un problema al enviar tu mensaje. Por favor, intenta nuevamente.",
+          variant: "destructive",
+        })
+      } finally {
+        setIsSubmitting(false)
       }
-    }finally {
-      setIsSubmitting(false)
-    }
-  }
+    },
+    [formData, toast],
+  )
+
+  const contactInfo = [
+    {
+      icon: Mail,
+      title: "Email",
+      content: "gretsoft@gmail.com",
+      link: "mailto:gretsoft@gmail.com",
+    },
+    {
+      icon: Phone,
+      title: "Teléfono",
+      content: "(+54) 11 2676-3301",
+      link: "tel:+5411-2676-3301",
+    },
+    {
+      icon: MapPin,
+      title: "Dirección",
+      content: "Banfield\nBuenos Aires, Argentina",
+      link: null,
+    },
+    {
+      icon: Clock,
+      title: "Horario",
+      content: "Lunes a Viernes\n8:00 AM - 6:00 PM",
+      link: null,
+    },
+  ]
 
   return (
     <section id="contact" className="relative py-24 sm:py-32 bg-muted/30">
@@ -166,70 +204,36 @@ export function Contact() {
 
           {/* Contact Information */}
           <div className="flex flex-col">
-          <Card className="border-none shadow-lg bg-background/80 backdrop-blur-sm h-full">
+            <Card className="border-none shadow-lg bg-background/80 backdrop-blur-sm h-full">
               <CardHeader>
                 <CardTitle>Información de contacto</CardTitle>
                 <CardDescription>Estamos disponibles para ayudarte en todo lo que necesites.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 transition-all duration-300 hover:bg-muted">
-                    <div className="rounded-full bg-purple-100 p-2 dark:bg-purple-900/30">
-                      <Mail className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                  {contactInfo.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 transition-all duration-300 hover:bg-muted"
+                    >
+                      <div className="rounded-full bg-purple-100 p-2 dark:bg-purple-900/30">
+                        <item.icon className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium">{item.title}</h4>
+                        {item.link ? (
+                          <a
+                            href={item.link}
+                            className="mt-1 text-muted-foreground hover:text-purple-600 transition-colors"
+                          >
+                            {item.content}
+                          </a>
+                        ) : (
+                          <p className="mt-1 text-muted-foreground whitespace-pre-line">{item.content}</p>
+                        )}
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-medium">Email</h4>
-                      <a
-                        href="mailto:gretsoft@gmail.com"
-                        className="mt-1 text-muted-foreground hover:text-purple-600 transition-colors"
-                      >
-                        gretsoft@gmail.com
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 transition-all duration-300 hover:bg-muted">
-                    <div className="rounded-full bg-purple-100 p-2 dark:bg-purple-900/30">
-                      <Phone className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Teléfono</h4>
-                      <a
-                        href="tel:+12345678"
-                        className="mt-1 text-muted-foreground hover:text-purple-600 transition-colors"
-                      >
-                        (+54) 11 2676-3301
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 transition-all duration-300 hover:bg-muted">
-                    <div className="rounded-full bg-purple-100 p-2 dark:bg-purple-900/30">
-                      <MapPin className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Dirección</h4>
-                      <p className="mt-1 text-muted-foreground">
-                        Banfield 
-                        <br />
-                        Buenos Aires, Argentina
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 transition-all duration-300 hover:bg-muted">
-                    <div className="rounded-full bg-purple-100 p-2 dark:bg-purple-900/30">
-                      <Clock className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Horario</h4>
-                      <p className="mt-1 text-muted-foreground">
-                        Lunes a Viernes
-                        <br />
-                        8:00 AM - 6:00 PM
-                      </p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
                 <div className="mt-8 p-4 rounded-lg bg-purple-50 dark:bg-purple-900/10 border border-purple-100 dark:border-purple-800/20">
                   <h4 className="font-medium text-purple-700 dark:text-purple-300">Respuesta rápida garantizada</h4>
@@ -245,3 +249,4 @@ export function Contact() {
     </section>
   )
 }
+
