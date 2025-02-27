@@ -1,35 +1,56 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Send, Mail, Phone, MapPin, CheckCircle, Clock } from "lucide-react"
+import { Send, Mail, Phone, MapPin, Clock } from 'lucide-react'
+import { toast } from "@/hooks/use-toast"
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitted(true)
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setIsSubmitted(false)
-        const form = e.target as HTMLFormElement
-        form.reset()
-      }, 3000)
-    }, 1500)
+      if (response.ok) {
+        toast({
+          title: "Mensaje enviado",
+          description: "Gracias por contactarnos. Te responderemos a la brevedad.",
+        })
+        setFormData({ name: "", email: "", subject: "", message: "" })
+      } else {
+        throw new Error('Error al enviar el mensaje')
+      }
+    }finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -55,82 +76,97 @@ export function Contact() {
               <CardDescription>Completa el formulario y te responderemos a la brevedad.</CardDescription>
             </CardHeader>
             <CardContent>
-              {isSubmitted ? (
-                <div className="flex flex-col items-center justify-center py-10 text-center space-y-4">
-                  <div className="rounded-full bg-green-100 p-3">
-                    <CheckCircle className="h-8 w-8 text-green-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold">¡Mensaje enviado!</h3>
-                  <p className="text-muted-foreground">Gracias por contactarnos. Te responderemos a la brevedad.</p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Nombre</Label>
-                      <Input id="name" placeholder="Tu nombre" required />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" placeholder="tu@email.com" required />
-                    </div>
-                  </div>
-
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="subject">Asunto</Label>
-                    <Input id="subject" placeholder="¿En qué podemos ayudarte?" required />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Mensaje</Label>
-                    <Textarea
-                      id="message"
-                      placeholder="Cuéntanos sobre tu proyecto..."
-                      className="min-h-[120px]"
+                    <Label htmlFor="name">Nombre</Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Tu nombre"
                       required
                     />
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="tu@email.com"
+                      required
+                    />
+                  </div>
+                </div>
 
-                  <Button type="submit" className="w-full rounded-full" disabled={isSubmitting}>
-                    {isSubmitting ? (
-                      <span className="flex items-center">
-                        <svg
-                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-                        Enviando...
-                      </span>
-                    ) : (
-                      <span className="flex items-center">
-                        Enviar mensaje
-                        <Send className="ml-2 h-4 w-4" />
-                      </span>
-                    )}
-                  </Button>
-                </form>
-              )}
+                <div className="space-y-2">
+                  <Label htmlFor="subject">Asunto</Label>
+                  <Input
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    placeholder="¿En qué podemos ayudarte?"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="message">Mensaje</Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Cuéntanos sobre tu proyecto..."
+                    className="min-h-[120px]"
+                    required
+                  />
+                </div>
+
+                <Button type="submit" className="w-full rounded-full" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <span className="flex items-center">
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Enviando...
+                    </span>
+                  ) : (
+                    <span className="flex items-center">
+                      Enviar mensaje
+                      <Send className="ml-2 h-4 w-4" />
+                    </span>
+                  )}
+                </Button>
+              </form>
             </CardContent>
           </Card>
 
           {/* Contact Information */}
           <div className="flex flex-col">
-            <Card className="border-none shadow-lg bg-background/80 backdrop-blur-sm h-full">
+          <Card className="border-none shadow-lg bg-background/80 backdrop-blur-sm h-full">
               <CardHeader>
                 <CardTitle>Información de contacto</CardTitle>
                 <CardDescription>Estamos disponibles para ayudarte en todo lo que necesites.</CardDescription>
@@ -268,4 +304,3 @@ export function Contact() {
     </section>
   )
 }
-
