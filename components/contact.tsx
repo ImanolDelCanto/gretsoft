@@ -51,12 +51,6 @@ export function Contact() {
         } else {
           throw new Error("Error al enviar el mensaje")
         }
-      } catch (error) {
-        toast({
-          title: "Error",
-          description: "Hubo un problema al enviar tu mensaje. Por favor, intenta nuevamente.",
-          variant: "destructive",
-        })
       } finally {
         setIsSubmitting(false)
       }
