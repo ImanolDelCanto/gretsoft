@@ -4,8 +4,8 @@
 export function About() {
 
   return (
-    <section id="about" className="py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section id="about" className="py-24 sm:py-32 bg-gradient-to-br dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 ">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 ">
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-base font-semibold leading-7 text-primary">Sobre Nosotros</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">

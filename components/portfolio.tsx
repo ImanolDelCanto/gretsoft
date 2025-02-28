@@ -46,7 +46,7 @@ export function Portfolio() {
   const filteredProjects = projects.filter((project) => activeCategory === "all" || project.category === activeCategory)
 
   return (
-    <section id="portfolio" className="py-14 sm:py-18">
+    <section id="portfolio" className="py-14 sm:py-18 bg-gradient-to-br dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

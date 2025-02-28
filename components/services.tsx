@@ -148,7 +148,7 @@ function ServicePlans() {
     () => [
       {
         name: "Plan Básico",
-        price: "$",
+        price: "$15",
         description: "Soporte Esencial",
         color: "from-green-500 to-emerald-500",
         features: [
@@ -167,7 +167,7 @@ function ServicePlans() {
       },
       {
         name: "Plan Estándar",
-        price: "$$",
+        price: "$20",
         description: "Soporte + Mejoras Pequeñas",
         color: "from-blue-500 to-indigo-500",
         features: [
@@ -188,7 +188,7 @@ function ServicePlans() {
       },
       {
         name: "Plan Premium",
-        price: "$$$",
+        price: "$30",
         description: "Soporte Completo + Mejoras Constantes",
         color: "from-red-500 to-rose-500",
         features: [
