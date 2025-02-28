@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { Hero } from "@/components/hero"
-import { Services } from "@/components/services"
+import ServicePlans, { Services } from "@/components/services"
 import { Contact } from "@/components/contact"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
@@ -16,6 +16,7 @@ export default function Home() {
           <Hero />
           <AboutPreview />
           <Services />
+          <ServicePlans />
           <SupportServices />
           <Contact />
         </Suspense>
