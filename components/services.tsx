@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
-import { LayoutTemplate, ShoppingCart, Globe, Smartphone, Search, BarChart } from "lucide-react"
+import { LayoutTemplate, ShoppingCart, Globe, Smartphone, Search } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Dialog,
@@ -54,14 +54,6 @@ export function Services() {
         gradient: "from-orange-500 to-amber-500",
         details:
           "Nuestros servicios de SEO están diseñados para mejorar la visibilidad de tu sitio web en los motores de búsqueda. Realizamos una auditoría completa de tu sitio, optimizamos el contenido y la estructura, construimos enlaces de calidad y monitoreamos el rendimiento. Nuestro objetivo es aumentar tu tráfico orgánico y mejorar tu posicionamiento para las palabras clave relevantes de tu negocio.",
-      },
-      {
-        title: "Analytics",
-        description: "Implementación de análisis y métricas para tomar mejores decisiones.",
-        icon: BarChart,
-        gradient: "from-red-500 to-pink-500",
-        details:
-          "Implementamos herramientas de análisis avanzadas para ayudarte a entender el comportamiento de tus usuarios y el rendimiento de tu sitio web. Configuramos paneles personalizados, seguimiento de eventos, embudos de conversión y más. Con estos datos, podrás tomar decisiones informadas para mejorar tu estrategia digital y aumentar tus conversiones.",
       },
     ],
     [],
@@ -148,7 +140,7 @@ function ServicePlans() {
     () => [
       {
         name: "Plan Básico",
-        price: "$15",
+        price: "$15/mes",
         description: "Soporte Esencial",
         color: "from-green-500 to-emerald-500",
         features: [
@@ -159,7 +151,6 @@ function ServicePlans() {
           "Tiempo de respuesta: 48-72 horas.",
         ],
         notIncluded: ["Cambios estructurales, nuevas funciones o diseño avanzado."],
-        estimatedPrice: "$$",
         accent:
           "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 ring-green-700/10 dark:ring-green-700/30",
         accentDark: "bg-green-500",
@@ -167,7 +158,7 @@ function ServicePlans() {
       },
       {
         name: "Plan Estándar",
-        price: "$20",
+        price: "$20/mes",
         description: "Soporte + Mejoras Pequeñas",
         color: "from-blue-500 to-indigo-500",
         features: [
@@ -179,7 +170,6 @@ function ServicePlans() {
           "Tiempo de respuesta: 24-48 horas.",
         ],
         notIncluded: [],
-        estimatedPrice: "$$$",
         accent:
           "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 ring-blue-700/10 dark:ring-blue-700/30",
         accentDark: "bg-blue-500",
@@ -188,7 +178,7 @@ function ServicePlans() {
       },
       {
         name: "Plan Premium",
-        price: "$30",
+        price: "$30/mes",
         description: "Soporte Completo + Mejoras Constantes",
         color: "from-red-500 to-rose-500",
         features: [
@@ -201,7 +191,6 @@ function ServicePlans() {
           "Tiempo de respuesta: 12-24 horas.",
         ],
         notIncluded: [],
-        estimatedPrice: "$$$$",
         accent: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300 ring-red-700/10 dark:ring-red-700/30",
         accentDark: "bg-red-500",
         accentLight: "bg-red-100",
@@ -250,7 +239,6 @@ function ServicePlans() {
               <div className="mt-4 flex items-baseline">
                 <span className="text-4xl font-bold tracking-tight">{plan.price}</span>
               </div>
-              <p className="mt-1 text-sm font-semibold text-muted-foreground">Precio estimado: {plan.estimatedPrice}</p>
             </div>
 
             <div className="mt-2 flex-1">

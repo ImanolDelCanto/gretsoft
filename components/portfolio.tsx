@@ -1,130 +1,220 @@
 "use client"
 
 import * as React from "react"
+import { useMemo } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from "next/link"
 
-
-const projects = [
-  {
-    title: "Landing Page Aberturas",
-    description: "Página para promoción de articulos que incluye catálogo y posibilidad de contacto.",
-    image: "/media/alumbar.png",
-    url: "https://www.alumbaronline.com/",
-    category: "landing",
-  },
-  {
-    title: "Landing Page Experiencias Aéreas ",
-    description: "Página de aterrizaje para promoción de experiencias Aéreas",
-    image: "/media/experienciasaereas.png",   
-    url: "https://experienciasaereas.vercel.app/",
-    category: "landing",
-  },
-  {
-    title: "Aplicacion web para gestionar stock y visualizar ventas",
-    description: "Aplicacion conectada a una base de datos para llevar el control sobre productos.",
-    image: "/media/sistem1 (1).png",
-    url: "",
-    category: "app",
-  }
-]
-
-const categories = [
-  { id: "all", label: "Todos" },
-  { id: "e-commerce", label: "E-commerce" },
-  { id: "landing", label: "Landing Pages" },
-  { id: "corporate", label: "Sitios Corporativos" },
-  { id: "app", label: "Aplicaciones" },
-]
-
 export function Portfolio() {
   const [activeCategory, setActiveCategory] = React.useState("all")
 
-  const filteredProjects = projects.filter((project) => activeCategory === "all" || project.category === activeCategory)
+  const projects = useMemo(
+    () => [
+      {
+        title: "Landing Page Aberturas",
+        description: "Página para promoción de articulos que incluye catálogo y posibilidad de contacto.",
+        image: "/media/alumbar.png",
+        url: "https://www.alumbaronline.com/",
+        category: "landing",
+      },
+      {
+        title: "Landing Page Experiencias Aéreas ",
+        description: "Página de aterrizaje para promoción de experiencias Aéreas",
+        image: "/media/experienciasaereas.png",
+        url: "https://experienciasaereas.vercel.app/",
+        category: "landing",
+      },
+      {
+        title: "Aplicacion web para gestionar stock y visualizar ventas",
+        description: "Aplicacion conectada a una base de datos para llevar el control sobre productos.",
+        image: "/media/sistem1 (1).png",
+        url: "",
+        category: "app",
+      },
+    ],
+    [],
+  )
+
+  const categories = useMemo(
+    () => [
+      { id: "all", label: "Todos" },
+      { id: "e-commerce", label: "E-commerce" },
+      { id: "landing", label: "Landing Pages" },
+      { id: "corporate", label: "Sitios Corporativos" },
+      { id: "app", label: "Aplicaciones" },
+    ],
+    [],
+  )
+
+  const filteredProjects = useMemo(
+    () => projects.filter((project) => activeCategory === "all" || project.category === activeCategory),
+    [projects, activeCategory],
+  )
 
   return (
-    <section id="portfolio" className="py-14 sm:py-18 bg-gradient-to-br dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 ">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section id="portfolio" className="relative py-14 sm:py-18 overflow-hidden">
+      {/* Dynamic background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background/90" />
+
+        {/* Animated gradient mesh */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_200px,var(--primary-rgb,0,229,201)_0.1,transparent_80%)] dark:opacity-40" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_500px_at_80%_500px,var(--purple-rgb,147,51,234)_0.1,transparent_80%)] dark:opacity-40" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_500px_at_20%_800px,var(--primary-rgb,0,229,201)_0.1,transparent_80%)] dark:opacity-40" />
+        </div>
+
+        {/* Animated grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px)] bg-[size:40px] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:opacity-20" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:40px] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:opacity-20" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-2xl lg:text-center"
         >
-          <h2 className="text-base font-semibold leading-7 text-primary">Portfolio</h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 pb-4">
+          <motion.h2
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-base font-semibold leading-7 text-primary"
+          >
+            Portfolio
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500"
+          >
             Nuestros Proyectos Destacados
-          </p>
-          <p className="mt-6 text-lg leading-8 text-muted-foreground">
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-6 text-lg leading-8 text-muted-foreground"
+          >
             Explora nuestra galería de innovaciones digitales y descubre cómo transformamos visiones en realidades
             impactantes.
-          </p>
+          </motion.p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-8 flex flex-wrap justify-center gap-4"
         >
-          {categories.map((category) => (
-            <Button
+          {categories.map((category, index) => (
+            <motion.div
               key={category.id}
-              variant={activeCategory === category.id ? "default" : "outline"}
-              onClick={() => setActiveCategory(category.id)}
-              className="mb-2"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.1 }}
             >
-              {category.label}
-            </Button>
+              <Button
+                variant={activeCategory === category.id ? "default" : "outline"}
+                onClick={() => setActiveCategory(category.id)}
+                className="mb-2"
+              >
+                {category.label}
+              </Button>
+            </motion.div>
           ))}
         </motion.div>
 
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.1,
+                },
+              },
+            }}
             className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3"
           >
-            {filteredProjects.map((project, index) => (
+            {filteredProjects.map((project) => (
               <motion.div
                 key={project.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 15,
+                    },
+                  },
+                }}
+                whileHover={{
+                  y: -8,
+                  transition: {
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 10,
+                  },
+                }}
               >
-                <Card className="group relative flex flex-col overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
+                <Card className="group relative flex flex-col overflow-hidden bg-background/40 backdrop-blur-sm border-none">
                   <CardContent className="p-0">
                     <div className="relative h-48 w-full overflow-hidden">
                       <Image
                         src={project.image || "/placeholder.svg"}
                         alt={project.title}
                         fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-110"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
-                      {project.url && (
-                        <Link href={project.url} target="_blank">
-                          <Button
-                            variant="secondary"
-                            className="transform translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-                          >
-                            Ver Proyecto
-                          </Button>
-                        </Link>
-                      )}
-                    </div>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center p-6"
+                      >
+                        {project.url && (
+                          <Link href={project.url} target="_blank">
+                            <Button
+                              variant="secondary"
+                              className="transform translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                            >
+                              Ver Proyecto
+                            </Button>
+                          </Link>
+                        )}
+                      </motion.div>
                     </div>
                     <div className="p-6">
-                      <h3 className="text-xl font-semibold group-hover:text-primary transition-colors duration-300">
+                      <motion.h3
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="text-xl font-semibold group-hover:text-primary transition-colors duration-300"
+                      >
                         {project.title}
-                      </h3>
-                      <p className="mt-2 text-muted-foreground">{project.description}</p>
+                      </motion.h3>
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        className="mt-2 text-muted-foreground"
+                      >
+                        {project.description}
+                      </motion.p>
                     </div>
                   </CardContent>
                 </Card>
