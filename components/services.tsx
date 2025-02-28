@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-export function Services() {   
+export function Services() {
   const services = useMemo(
     () => [
       {
@@ -80,59 +80,59 @@ export function Services() {
 
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {services.slice(0, 5).map((service, index) => (
+            {services.slice(0, 5).map((service, index) => (
               <motion.div
-                      key={service.title}
-                      initial={{ opacity: 0, scale: 0.9, rotate: index === 0 ? -3 : 3 }}
-                      whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                      transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                      viewport={{ once: true, margin: "-100px" }}
-                    >
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Card className="group relative overflow-hidden border-none bg-background/60 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
-                            <div
-                              className="absolute inset-0 rounded-lg bg-gradient-to-r opacity-10 group-hover:opacity-20 transition-opacity duration-300 ease-in-out"
-                              style={{ backgroundImage: `linear-gradient(to right, ${service.gradient})` }}
-                            />
+                key={service.title}
+                initial={{ opacity: 0, scale: 0.9, rotate: index === 0 ? -3 : 3 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Card className="group relative overflow-hidden border-none bg-background/60 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
+                      <div
+                        className="absolute inset-0 rounded-lg bg-gradient-to-r opacity-10 group-hover:opacity-20 transition-opacity duration-300 ease-in-out"
+                        style={{ backgroundImage: `linear-gradient(to right, ${service.gradient})` }}
+                      />
 
-                            <CardHeader>
-                              <div
-                                className={`flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r ${service.gradient} shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-110`}
-                              >
-                                <service.icon className="h-6 w-6 text-white" aria-hidden="true" />
-                              </div>
-                              <CardTitle className="mt-4 text-xl font-semibold relative">
-                                <span
-                                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-transparent bg-clip-text"
-                                  style={{
-                                    backgroundImage: `linear-gradient(to right, ${service.gradient})`,
-                                    WebkitBackgroundClip: "text",
-                                    WebkitTextFillColor: "transparent",
-                                  }}
-                                >
-                                  {service.title}
-                                </span>
-                                <span className="transition-opacity duration-300">{service.title}</span>
-                              </CardTitle>
-                            </CardHeader>
+                      <CardHeader>
+                        <div
+                          className={`flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r ${service.gradient} shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-110`}
+                        >
+                          <service.icon className="h-6 w-6 text-white" aria-hidden="true" />
+                        </div>
+                        <CardTitle className="mt-4 text-xl font-semibold relative">
+                          <span
+                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-transparent bg-clip-text"
+                            style={{
+                              backgroundImage: `linear-gradient(to right, ${service.gradient})`,
+                              WebkitBackgroundClip: "text",
+                              WebkitTextFillColor: "transparent",
+                            }}
+                          >
+                            {service.title}
+                          </span>
+                          <span className="transition-opacity duration-300">{service.title}</span>
+                        </CardTitle>
+                      </CardHeader>
 
-                            <CardContent>
-                              <CardDescription className="text-base">{service.description}</CardDescription>
-                            </CardContent>
-                          </Card>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                          <DialogHeader>
-                            <DialogTitle>{service.title}</DialogTitle>
-                            <DialogDescription>{service.description}</DialogDescription>
-                          </DialogHeader>
-                          <div className="mt-4">
-                            <p className="text-muted-foreground">{service.details}</p>
-                          </div>
-                        </DialogContent>
-                      </Dialog>
-                    </motion.div>
+                      <CardContent>
+                        <CardDescription className="text-base">{service.description}</CardDescription>
+                      </CardContent>
+                    </Card>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>{service.title}</DialogTitle>
+                      <DialogDescription>{service.description}</DialogDescription>
+                    </DialogHeader>
+                    <div className="mt-4">
+                      <p className="text-muted-foreground">{service.details}</p>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -151,7 +151,10 @@ export default function ServicePlans() {
           setIsVisible(true)
         }
       },
-      { threshold: 0.1 },
+      {
+        threshold: 0.3, // Aumentado de 0.1 a 0.3 para que requiera más visibilidad
+        rootMargin: "-100px 0px", // Añadido margen negativo para que se active cuando esté más dentro de la pantalla
+      },
     )
 
     const element = document.getElementById("plans-section")
@@ -230,8 +233,10 @@ export default function ServicePlans() {
   )
 
   return (
-    
-    <div id="plans-section" className="py-18 bg-gradient-to-tr from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+    <div
+      id="plans-section"
+      className="py-18 bg-gradient-to-tr from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"
+    >
       <div className="mx-auto max-w-2xl lg:text-center">
         <h2 className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30">
           Planes de Mantenimiento
@@ -248,7 +253,7 @@ export default function ServicePlans() {
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.7, delay: 0.3 }} // Aumentado duration y delay
         className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-3"
       >
         {plans.map((plan, index) => (
@@ -260,7 +265,7 @@ export default function ServicePlans() {
                 ? { opacity: 1, x: 0, y: 0 }
                 : { opacity: 0, x: index === 0 ? -50 : index === 1 ? 0 : 50, y: 50 }
             }
-            transition={{ duration: 0.5, delay: index * 0.2 }}
+            transition={{ duration: 0.7, delay: 0.5 + index * 0.3 }} // Aumentado duration y delay
           >
             <Card
               className={`relative flex h-full flex-col rounded-3xl p-6 ${
