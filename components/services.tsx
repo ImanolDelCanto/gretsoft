@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-export function Services() {
+export function Services() {   
   const services = useMemo(
     () => [
       {

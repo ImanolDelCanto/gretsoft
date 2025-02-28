@@ -13,7 +13,7 @@ export function PortfolioStats() {
       { name: "Proyectos en Crecimiento", value: "Cada Día", icon: Star },
       { name: "Visión a Futuro", value: "Innovación Constante", icon: Award },
     ],
-    [],
+    [],   
   )
 
   return (

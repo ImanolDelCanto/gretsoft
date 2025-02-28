@@ -16,7 +16,7 @@ export function About() {
       },
       {
         title: "Compromiso",
-        description:
+        description: 
           "Nos comprometemos con cada proyecto para entregar resultados excepcionales que superen las expectativas.",
         icon: Target,
       },

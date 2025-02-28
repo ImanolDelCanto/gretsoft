@@ -13,7 +13,7 @@ export function Portfolio() {
 
   const projects = useMemo(
     () => [
-      {
+      {  
         title: "Landing Page Aberturas",
         description: "Página para promoción de articulos que incluye catálogo y posibilidad de contacto.",
         image: "/media/alumbar.png",
