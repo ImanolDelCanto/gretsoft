@@ -6,6 +6,7 @@ import { useInView } from "react-intersection-observer"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { Portfolio } from "@/components/portfolio"
+import { WebsiteMockups } from "@/components/website-mockup"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, Code2, Users, Star, Award } from "lucide-react"
 
@@ -124,6 +125,8 @@ export default function PortfolioPage() {
           </div>
         </div>
         <Portfolio />
+        {/* Add the new WebsiteMockups component here */}
+        <WebsiteMockups />
       </main>
       <SiteFooter />
       <AnimatePresence>

@@ -15,8 +15,8 @@ export function SupportServices() {
         }
       },
       {
-        threshold: 0.3, // Aumentado de 0.1 a 0.3 para que requiera más visibilidad
-        rootMargin: "-100px 0px", // Añadido margen negativo para que se active cuando esté más dentro de la pantalla
+        threshold: 0.3, 
+        rootMargin: "-100px 0px", 
       },
     )
 
@@ -65,14 +65,14 @@ export function SupportServices() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3, // Aumentado de 0.2 a 0.3 para mayor separación entre animaciones
+        staggerChildren: 0.3, 
       },
     },
   }
 
   const itemVariants = {
     hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8 } }, // Aumentado de 0.6 a 0.8 para animación más lenta
+    visible: { opacity: 1, x: 0, transition: { duration: 0.8 } }, 
   }
 
   return (

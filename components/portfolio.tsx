@@ -29,7 +29,7 @@ export function Portfolio() {
       },
       {
         title: "Aplicacion web para gestionar stock y visualizar ventas",
-        description: "Aplicacion conectada a una base de datos para llevar el control sobre productos.",
+        description: "Aplicacion conectada a una base de datos para llevar el control sobre productos. (No se puede acceder, si quiere ver mas contactenos)",
         image: "/media/sistem1 (1).png",
         url: "",
         category: "app",
