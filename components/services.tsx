@@ -69,10 +69,10 @@ export function Services() {
           <h2 className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30">
             Nuestros Servicios
           </h2>
-          <p className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">
+          <p className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 h-24">
             Soluciones web completas para tu negocio
           </p>
-          <p className="mt-6 text-lg leading-8 text-muted-foreground">
+          <p className="mt-2 text-lg leading-8 text-muted-foreground">
             Ofrecemos una amplia gama de servicios web para ayudarte a establecer y hacer crecer tu presencia digital.
             Haz clic en cada servicio para obtener más información.
           </p>

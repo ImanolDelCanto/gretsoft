@@ -64,7 +64,7 @@ export function About() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500"
+            className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500 h-24"
           >
             Transformando negocios a través de la tecnología
           </motion.p>
@@ -73,7 +73,7 @@ export function About() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+            <p className="mt-2 text-lg leading-8 text-muted-foreground">
               En GretSoft, creemos que cada negocio merece una presencia digital única y poderosa. Nuestra misión es
               transformar ideas en soluciones web innovadoras, siempre priorizando la satisfacción del cliente.
             </p>
