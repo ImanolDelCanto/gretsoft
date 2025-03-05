@@ -16,7 +16,6 @@ export function SiteHeader() {
       { name: "Inicio", href: "/" },
       { name: "Nosotros", href: "/about" },
       { name: "Portfolio", href: "/portfolio" },
-      { name: "Contacto", href: "/#contact" },
     ],
     [],
   )
