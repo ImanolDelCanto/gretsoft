@@ -79,7 +79,7 @@ export function Services() {
         </div>
 
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.slice(0, 5).map((service, index) => (
               <motion.div
                 key={service.title}
@@ -238,13 +238,13 @@ export default function ServicePlans() {
       className="py-18 bg-gradient-to-tr from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"
     >
       <div className="mx-auto max-w-2xl lg:text-center">
-        <h2 className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30">
+        <h2 className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30 m-4">
           Planes de Mantenimiento
         </h2>
-        <p className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">
+        <p className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 m-4">
           Mantén tu sitio web siempre actualizado
         </p>
-        <p className="mt-6 text-lg leading-8 text-muted-foreground">
+        <p className="mt-6 text-lg leading-8 text-muted-foreground m-4">
           Ofrecemos diferentes planes opcionales de mantenimiento para asegurar que tu sitio web esté siempre
           funcionando de manera óptima.
         </p>
@@ -253,8 +253,8 @@ export default function ServicePlans() {
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-        transition={{ duration: 0.7, delay: 0.3 }} // Aumentado duration y delay
-        className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-3"
+        transition={{ duration: 0.7, delay: 0.3 }}
+        className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-4 sm:gap-6 px-4 sm:px-6 md:grid-cols-3"
       >
         {plans.map((plan, index) => (
           <motion.div
@@ -292,7 +292,7 @@ export default function ServicePlans() {
               </div>
 
               <div className="mt-2 flex-1">
-                <ul className="space-y-2">
+                <ul className="space-y-1 sm:space-y-2">
                   {plan.features.map((feature, featureIdx) => (
                     <li key={featureIdx} className="flex items-start">
                       <div className={`rounded-full ${plan.accentLight} p-1 mr-2 mt-1 flex-shrink-0`}>

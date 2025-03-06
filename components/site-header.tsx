@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { MenuIcon, X } from "lucide-react"
+import { MenuIcon } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 
 export function SiteHeader() {
@@ -87,10 +87,7 @@ export function SiteHeader() {
             >
               <SheetHeader className="flex flex-row items-center justify-between">
                 <SheetTitle className="text-left">Menú</SheetTitle>
-                <Button variant="ghost" size="icon" onClick={closeSheet} aria-label="Cerrar menú">
-                  <X className="h-5 w-5" />
-                  <span className="sr-only">Cerrar menú</span>
-                </Button>
+                {/* Removed the duplicate X button here, keeping only the one below */}
               </SheetHeader>
               <div className="mt-8 flex flex-col gap-6">
                 {navigation.map((item) => (

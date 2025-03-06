@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink, Smartphone, Monitor, MousePointerClick } from "lucide-react"
 
 type MockupType = "landing" | "ecommerce" | "corporate" | "app"
-type DeviceType = "desktop" | "mobile" 
+type DeviceType = "desktop" | "mobile"
 
 interface Mockup {
   id: string
@@ -33,19 +33,26 @@ export function WebsiteMockups() {
     {
       id: "landing-1",
       title: "Boceto Landing Page",
-      description: "Página de aterrizaje para promoción de tu negocio y posibildiad de contacto, con un diseño moderno y atractivo.",
+      description:
+        "Página de aterrizaje para promoción de tu negocio y posibildiad de contacto, con un diseño moderno y atractivo.",
       type: "landing",
       url: "https://bocetolandingpage1.vercel.app/",
       image: {
         desktop: "/media/bocetolanding (1).png",
         mobile: "/media/mobilelanding.png",
       },
-      features: ["Animaciones suaves", "Diseño responsivo", "Llamados a la acción estratégicos","Formulario de contacto"],
+      features: [
+        "Animaciones suaves",
+        "Diseño responsivo",
+        "Llamados a la acción estratégicos",
+        "Formulario de contacto",
+      ],
     },
     {
       id: "landing-2",
       title: "Boceto Landing page 2",
-      description: "Página de aterrizaje para promoción de tu negocio y posibildiad de contacto con un diseño sencillo y simple",
+      description:
+        "Página de aterrizaje para promoción de tu negocio y posibildiad de contacto con un diseño sencillo y simple",
       type: "landing",
       url: "https://bocetolandingpage2.vercel.app/",
       image: {
@@ -104,8 +111,8 @@ export function WebsiteMockups() {
             Bocetos Interactivos
           </motion.h2>
           <motion.p variants={fadeInUp} className="mt-6 text-lg leading-8 text-muted-foreground">
-            Interactúa con ejemplos reales de como podria verse tu sitio web y descubre cómo podemos transformar tu presencia
-            digital. Si te gusta un boceto pero queres modificarlo no dudes en decirnos! 
+            Interactúa con ejemplos reales de como podria verse tu sitio web y descubre cómo podemos transformar tu
+            presencia digital. Si te gusta un boceto pero queres modificarlo no dudes en decirnos!
           </motion.p>
         </motion.div>
 
@@ -141,26 +148,40 @@ export function WebsiteMockups() {
 
         {/* Mockups tabs by type */}
         <Tabs defaultValue="landing" className="w-full">
-          <TabsList className="flex justify-center mb-10 bg-muted/50 p-1 rounded-full">
-            <TabsTrigger value="landing" className="rounded-full">
-              Landing Pages
-            </TabsTrigger>
-            <TabsTrigger value="ecommerce" className="rounded-full">
-              E-commerce
-            </TabsTrigger>
-            <TabsTrigger value="corporate" className="rounded-full">
-              Corporativos
-            </TabsTrigger>
-            <TabsTrigger value="app" className="rounded-full">
-              Aplicaciones
-            </TabsTrigger>
-          </TabsList>
+          <div className="w-full overflow-x-auto pb-2 no-scrollbar">
+            <TabsList className="flex justify-center mb-6 sm:mb-10 bg-muted/50 p-1 rounded-full min-w-max mx-auto">
+              <TabsTrigger
+                value="landing"
+                className="rounded-full text-xs sm:text-sm py-1 px-2 sm:px-3 min-w-[80px] sm:min-w-0"
+              >
+                Landing
+              </TabsTrigger>
+              <TabsTrigger
+                value="ecommerce"
+                className="rounded-full text-xs sm:text-sm py-1 px-2 sm:px-3 min-w-[80px] sm:min-w-0"
+              >
+                E-commerce
+              </TabsTrigger>
+              <TabsTrigger
+                value="corporate"
+                className="rounded-full text-xs sm:text-sm py-1 px-2 sm:px-3 min-w-[80px] sm:min-w-0"
+              >
+                Corporativos
+              </TabsTrigger>
+              <TabsTrigger
+                value="app"
+                className="rounded-full text-xs sm:text-sm py-1 px-2 sm:px-3 min-w-[80px] sm:min-w-0"
+              >
+                Apps
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           {/* Content for each tab */}
           {(["landing", "ecommerce", "corporate", "app"] as const).map((type) => (
             <TabsContent key={type} value={type} className="mt-6">
               {mockupsByType[type].length > 0 ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 gap-6 md:gap-8 lg:gap-10 lg:grid-cols-2">
                   {mockupsByType[type].map((mockup) => (
                     <motion.div
                       key={mockup.id}
@@ -178,10 +199,10 @@ export function WebsiteMockups() {
                             className={`
                             ${
                               activeDevice === "desktop"
-                                ? "aspect-[16/9] p-4"
+                                ? "aspect-[16/9] p-2 sm:p-4"
                                 : activeDevice === "mobile"
-                                  ? "aspect-[4/3] p-3 mx-auto max-w-[80%]"
-                                  : "aspect-[9/16] p-2 mx-auto max-w-[40%]"
+                                  ? "aspect-[4/3] p-2 sm:p-3 mx-auto max-w-[60%] sm:max-w-[80%]"
+                                  : "aspect-[9/16] p-1 sm:p-2 mx-auto max-w-[30%] sm:max-w-[40%]"
                             }
                             relative overflow-hidden rounded-md bg-background
                           `}
@@ -242,7 +263,7 @@ export function WebsiteMockups() {
                           <h3 className="text-xl font-semibold text-foreground">{mockup.title}</h3>
                           <p className="mt-2 text-muted-foreground">{mockup.description}</p>
 
-                          <div className="mt-4 grid grid-cols-2 gap-4">
+                          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                             <div>
                               <h4 className="text-sm font-medium text-primary">Características</h4>
                               <ul className="mt-2 space-y-1">
@@ -262,7 +283,9 @@ export function WebsiteMockups() {
                 </div>
               ) : (
                 <div className="text-center py-20">
-                  <p className="text-muted-foreground">No hay bocetos disponibles en esta categoría actualmente. Proximamente vas a encontrar!</p>
+                  <p className="text-muted-foreground">
+                    No hay bocetos disponibles en esta categoría actualmente. Proximamente vas a encontrar!
+                  </p>
                 </div>
               )}
             </TabsContent>

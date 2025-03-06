@@ -13,7 +13,7 @@ export function Portfolio() {
 
   const projects = useMemo(
     () => [
-      {  
+      {
         title: "Landing Page Aberturas",
         description: "Página para promoción de articulos que incluye catálogo y posibilidad de contacto.",
         image: "/media/alumbar.png",
@@ -29,7 +29,8 @@ export function Portfolio() {
       },
       {
         title: "Aplicacion web para gestionar stock y visualizar ventas",
-        description: "Aplicacion conectada a una base de datos para llevar el control sobre productos. (No se puede acceder, si quiere ver mas contactenos)",
+        description:
+          "Aplicacion conectada a una base de datos para llevar el control sobre productos. (No se puede acceder, si quiere ver mas contactenos)",
         image: "/media/sistem1 (1).png",
         url: "",
         category: "app",
@@ -91,7 +92,7 @@ export function Portfolio() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500 h-12"
+            className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500 h-20"
           >
             Nuestros Proyectos Destacados
           </motion.p>
@@ -110,7 +111,7 @@ export function Portfolio() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-8 flex flex-wrap justify-center gap-4"
+          className="mt-8 flex flex-wrap justify-center gap-2 sm:gap-4"
         >
           {categories.map((category, index) => (
             <motion.div
@@ -145,7 +146,7 @@ export function Portfolio() {
                 },
               },
             }}
-            className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+            className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 md:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
           >
             {filteredProjects.map((project) => (
               <motion.div
@@ -173,7 +174,7 @@ export function Portfolio() {
               >
                 <Card className="group relative flex flex-col overflow-hidden bg-background/40 backdrop-blur-sm border-none">
                   <CardContent className="p-0">
-                    <div className="relative h-48 w-full overflow-hidden">
+                    <div className="relative h-40 sm:h-48 w-full overflow-hidden">
                       <Image
                         src={project.image || "/placeholder.svg"}
                         alt={project.title}
@@ -211,7 +212,7 @@ export function Portfolio() {
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ delay: 0.3 }}
-                        className="mt-2 text-muted-foreground"
+                        className="mt-2 text-sm sm:text-base text-muted-foreground"
                       >
                         {project.description}
                       </motion.p>
