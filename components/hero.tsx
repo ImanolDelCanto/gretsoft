@@ -3,8 +3,8 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Code, Sparkles, Zap } from "lucide-react"
+import { Code, Sparkles, Zap } from "lucide-react"
+import { AnimatedButton } from "./ui/animated-button"
 
 const features = [
   { icon: Code, text: "Desarrollo a medida" },
@@ -66,24 +66,12 @@ export function Hero() {
           </motion.p>
 
           <motion.div variants={fadeIn} className="mt-10 flex flex-col sm:flex-row items-center gap-4 sm:gap-x-6">
-            <Button
-              asChild
-              size="lg"
-              className="w-full sm:w-auto rounded-full bg-gradient-to-r from-primary to-purple-500 hover:opacity-90 transition-all duration-300"
-            >
-              <Link href="#contact">
-                Comienza tu proyecto
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              asChild
-              className="w-full sm:w-auto rounded-full border-primary/20 hover:bg-primary/5 hover-glow"
-            >
-              <Link href="/portfolio">Ver nuestro trabajo</Link>
-            </Button>
+            <AnimatedButton text="Comienza tu proyecto" href="#contact" className="w-full sm:w-auto" />
+            <Link href="/portfolio" className="w-full sm:w-auto">
+              <button className="pulse-button w-full rounded-full border border-primary/20 px-8 py-3 bg-primary-foreground text-sm font-semibold text-foreground transition-all duration-300 hover:bg-primary/30 hover:tracking-wider active:translate-y-1">
+                Ver nuestro trabajo
+              </button>
+            </Link>
           </motion.div>
 
           <motion.div variants={staggerContainer} className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">

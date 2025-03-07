@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { AboutPreview } from "@/components/about-preview"
 import { SupportServices } from "@/components/support-service"
+import { FAQ } from "@/components/faq"
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
           <ServicePlans />
           <SupportServices />
           <Contact />
+          <FAQ />
         </Suspense>
       </main>
       <SiteFooter />

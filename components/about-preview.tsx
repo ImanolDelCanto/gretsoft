@@ -1,9 +1,8 @@
 "use client"
 
 import { useMemo } from "react"
-import { ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
+
 
 export function AboutPreview() {
   const stats = useMemo(
@@ -35,12 +34,11 @@ export function AboutPreview() {
               web que destacan.
             </p>
             <div className="mt-8 flex items-center gap-x-6">
-              <Button asChild>
-                <Link href="/about">
-                  Conoce más sobre nosotros
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              <Link href="/about">
+              <button className="pulse-button w-full rounded-full border border-primary/20 px-8 py-3 bg-primary-foreground text-sm font-semibold text-foreground transition-all duration-300 hover:bg-primary/30 hover:tracking-wider active:translate-y-1">
+                Conoce más sobre nosotros
+                </button>
+              </Link>
             </div>
           </div>
           <div className="relative">

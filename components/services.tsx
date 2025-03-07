@@ -90,7 +90,7 @@ export function Services() {
               >
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Card className="group relative overflow-hidden border-none bg-background/60 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
+                    <Card className="group relative overflow-hidden border-none bg-background/60 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-8 cursor-pointer">
                       <div
                         className="absolute inset-0 rounded-lg bg-gradient-to-r opacity-10 group-hover:opacity-20 transition-opacity duration-300 ease-in-out"
                         style={{ backgroundImage: `linear-gradient(to right, ${service.gradient})` }}
@@ -268,7 +268,7 @@ export default function ServicePlans() {
             transition={{ duration: 0.7, delay: 0.5 + index * 0.3 }} // Aumentado duration y delay
           >
             <Card
-              className={`relative flex h-full flex-col rounded-3xl p-6 ${
+              className={`relative flex h-full flex-col rounded-3xl p-6 transition-all duration-300 hover:-translate-y-8 ${
                 plan.popular
                   ? "z-10 bg-background shadow-xl ring-1 ring-gray-900/10 dark:ring-gray-700/30"
                   : "bg-background/60 backdrop-blur-sm"
