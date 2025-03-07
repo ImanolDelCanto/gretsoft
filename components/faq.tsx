@@ -86,14 +86,14 @@ export function FAQ() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.1,
       },
     },
   }
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
   }
 
   return (
@@ -105,7 +105,7 @@ export function FAQ() {
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
             className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30"
           >
             Preguntas Frecuentes
@@ -113,7 +113,7 @@ export function FAQ() {
           <motion.p
             initial={{ opacity: 0, y: -20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
             className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl"
           >
             Resolvemos tus dudas
@@ -121,7 +121,7 @@ export function FAQ() {
           <motion.p
             initial={{ opacity: 0, y: -20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-            transition={{ duration: 1.2, delay: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-6 text-lg leading-8 text-muted-foreground"
           >
             Aquí encontrarás respuestas a las preguntas más comunes sobre nuestros servicios de desarrollo web. Si
@@ -163,7 +163,7 @@ export function FAQ() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ duration: 2, delay: 1.5 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-12 text-center"
           >
             <p className="text-muted-foreground">

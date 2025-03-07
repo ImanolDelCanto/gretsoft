@@ -85,12 +85,12 @@ export function Services() {
                 key={service.title}
                 initial={{ opacity: 0, scale: 0.9, rotate: index === 0 ? -3 : 3 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                transition={{ duration: 0.4, delay: 0.1 + index * 0.05 }}
                 viewport={{ once: true, margin: "-100px" }}
               >
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Card className="group relative overflow-hidden border-none bg-background/60 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-8 cursor-pointer">
+                    <Card className="group relative overflow-hidden border-none bg-background/60 backdrop-blur-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-2 cursor-pointer">
                       <div
                         className="absolute inset-0 rounded-lg bg-gradient-to-r opacity-10 group-hover:opacity-20 transition-opacity duration-300 ease-in-out"
                         style={{ backgroundImage: `linear-gradient(to right, ${service.gradient})` }}
@@ -152,8 +152,8 @@ export default function ServicePlans() {
         }
       },
       {
-        threshold: 0.3, // Aumentado de 0.1 a 0.3 para que requiera más visibilidad
-        rootMargin: "-100px 0px", // Añadido margen negativo para que se active cuando esté más dentro de la pantalla
+        threshold: 0.3,
+        rootMargin: "-100px 0px",
       },
     )
 
@@ -253,7 +253,7 @@ export default function ServicePlans() {
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-        transition={{ duration: 0.7, delay: 0.3 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
         className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-4 sm:gap-6 px-4 sm:px-6 md:grid-cols-3"
       >
         {plans.map((plan, index) => (
@@ -265,7 +265,7 @@ export default function ServicePlans() {
                 ? { opacity: 1, x: 0, y: 0 }
                 : { opacity: 0, x: index === 0 ? -50 : index === 1 ? 0 : 50, y: 50 }
             }
-            transition={{ duration: 0.7, delay: 0.5 + index * 0.3 }} // Aumentado duration y delay
+            transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
           >
             <Card
               className={`relative flex h-full flex-col rounded-3xl p-6 transition-all duration-300 hover:-translate-y-8 ${

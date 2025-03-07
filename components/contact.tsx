@@ -160,7 +160,11 @@ export function Contact() {
                   />
                 </div>
 
-                <Button type="submit" className="w-full rounded-full" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  className="w-full rounded-full transition-all duration-200"
+                  disabled={isSubmitting}
+                >
                   {isSubmitting ? (
                     <span className="flex items-center">
                       <svg
@@ -208,7 +212,7 @@ export function Contact() {
                   {contactInfo.map((item, index) => (
                     <div
                       key={index}
-                      className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 transition-all duration-300 hover:bg-muted"
+                      className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 transition-all duration-200 hover:bg-muted"
                     >
                       <div className="rounded-full bg-purple-100 p-2 dark:bg-purple-900/30">
                         <item.icon className="h-5 w-5 text-purple-600 dark:text-purple-400" />

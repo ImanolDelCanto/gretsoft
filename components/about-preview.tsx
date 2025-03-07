@@ -3,7 +3,6 @@
 import { useMemo } from "react"
 import Link from "next/link"
 
-
 export function AboutPreview() {
   const stats = useMemo(
     () => [
@@ -35,8 +34,8 @@ export function AboutPreview() {
             </p>
             <div className="mt-8 flex items-center gap-x-6">
               <Link href="/about">
-              <button className="pulse-button w-full rounded-full border border-primary/20 px-8 py-3 bg-primary-foreground text-sm font-semibold text-foreground transition-all duration-300 hover:bg-primary/30 hover:tracking-wider active:translate-y-1">
-                Conoce más sobre nosotros
+                <button className="pulse-button w-full rounded-full border border-primary/20 px-8 py-3 bg-primary-foreground text-sm font-semibold text-foreground transition-all duration-200 hover:bg-primary/30 hover:tracking-wider active:translate-y-1">
+                  Conoce más sobre nosotros
                 </button>
               </Link>
             </div>
