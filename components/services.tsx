@@ -79,7 +79,7 @@ export function Services() {
         </div>
 
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
             {services.slice(0, 5).map((service, index) => (
               <motion.div
                 key={service.title}
@@ -87,6 +87,7 @@ export function Services() {
                 whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 + index * 0.05 }}
                 viewport={{ once: true, margin: "-100px" }}
+                className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
               >
                 <Dialog>
                   <DialogTrigger asChild>

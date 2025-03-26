@@ -10,6 +10,7 @@ import { AboutTimeline } from "@/components/about-timeline"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, Users, Target, Lightbulb } from "lucide-react"
 
+
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
