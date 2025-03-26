@@ -30,14 +30,14 @@ const staggerContainer = {
 export function Hero() {
   return (
     <div id="home" className="relative isolate overflow-hidden min-h-screen flex items-center">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 -z-10">
+      {/* Animated background elements - contained with max-width */}
+      <div className="absolute inset-0 -z-10 w-full">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full aspect-square bg-primary/30 rounded-full blur-[120px] opacity-50" />
         <div className="absolute bottom-0 left-1/4 w-full aspect-square bg-purple-500/20 rounded-full blur-[120px] opacity-30" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40 w-full">
         <motion.div
           initial="hidden"
           animate="visible"

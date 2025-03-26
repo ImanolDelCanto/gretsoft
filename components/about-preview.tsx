@@ -15,9 +15,9 @@ export function AboutPreview() {
   )
 
   return (
-    <section className="relative isolate overflow-hidden">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
+    <section className="relative isolate overflow-hidden w-full">
+      {/* Gradient background with containment */}
+      <div className="absolute inset-0 w-full bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
 
       <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center">
@@ -41,7 +41,8 @@ export function AboutPreview() {
             </div>
           </div>
           <div className="relative">
-            <div className="absolute -top-64 -right-64 opacity-50 blur-3xl" aria-hidden="true">
+            {/* Fixed size and contained gradient */}
+            <div className="absolute -top-64 -right-64 opacity-50 blur-3xl max-w-full" aria-hidden="true">
               <div
                 className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
                 style={{

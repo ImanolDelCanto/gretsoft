@@ -17,7 +17,7 @@ export const metadata = {
   description:
     "Empresa de desarrollo web en Buenos Aires. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
   keywords:
-    "desarrollo web, landing pages, e-commerce, aplicaciones web, SEO, diseño web, Buenos Aires, GretSoft, páginas web, sistemas web, servicios web, desarrollo de software",
+    "paginas web, desarrollo web, landing pages, e-commerce, aplicaciones web, SEO, diseño web, Buenos Aires, GretSoft, páginas web, sistemas web, servicios web, desarrollo de software",
   authors: [{ name: "GretSoft" }],
   creator: "GretSoft",
   viewport: "width=device-width, initial-scale=1",

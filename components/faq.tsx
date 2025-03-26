@@ -97,8 +97,8 @@ export function FAQ() {
   }
 
   return (
-    <section id="faq-section" className="relative py-24 sm:py-32">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
+    <section id="faq-section" className="relative py-24 sm:py-32 w-full overflow-hidden">
+      <div className="absolute inset-0 w-full bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
