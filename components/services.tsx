@@ -61,9 +61,9 @@ export function Services() {
   )
 
   return (
-    <section id="services" className="relative py-24 sm:py-32">
-      {/* Fondo con gradiente */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
+    <section id="services" className="relative py-24 sm:py-32 w-full">
+      {/* Fixed width background with overflow hidden */}
+      <div className="absolute inset-0 w-full overflow-hidden bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
@@ -237,7 +237,7 @@ export default function ServicePlans() {
   return (
     <div
       id="plans-section"
-      className="relative py-18 bg-gradient-to-tr from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"
+      className="relative py-18 w-full overflow-hidden bg-gradient-to-tr from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"
     >
       <div className="mx-auto max-w-2xl lg:text-center">
         <h2 className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30 m-4">
