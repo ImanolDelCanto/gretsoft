@@ -122,7 +122,7 @@ export function Services() {
             className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none"
           >
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-              {services.slice(0, 5).map((service, index) => (
+              {services.slice(0, 5).map((service) => (
                 <motion.div
                   key={service.title}
                   variants={itemVariants}
