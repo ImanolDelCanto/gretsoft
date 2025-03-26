@@ -12,9 +12,17 @@ const features = [
   { icon: Sparkles, text: "Diseño moderno" },
 ]
 
+// Optimized animation variants
 const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 10 }, // Reduced y distance
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.3, // Shorter duration
+      ease: "easeOut",
+    },
+  },
 }
 
 const staggerContainer = {
@@ -22,7 +30,9 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.05, // Reduced stagger time
+      delayChildren: 0.1,
+      when: "beforeChildren",
     },
   },
 }
@@ -30,7 +40,7 @@ const staggerContainer = {
 export function Hero() {
   return (
     <div id="home" className="relative isolate overflow-hidden min-h-screen flex items-center">
-      {/* Animated background elements - contained with max-width */}
+      {/* Simplified background elements */}
       <div className="absolute inset-0 -z-10 w-full">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full aspect-square bg-primary/30 rounded-full blur-[120px] opacity-50" />
@@ -43,6 +53,7 @@ export function Hero() {
           animate="visible"
           variants={staggerContainer}
           className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto"
+          style={{ willChange: "transform, opacity" }} // Performance optimization
         >
           <motion.div variants={fadeIn} className="flex items-center gap-x-3 mb-8">
             <div className="gradient-border">
@@ -95,6 +106,7 @@ export function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow relative"
+          style={{ willChange: "transform, opacity" }} // Performance optimization
         >
           <div className="absolute -z-10 inset-0 bg-gradient-to-tr from-primary/20 to-purple-500/20 blur-3xl opacity-30 rounded-full" />
           <Image

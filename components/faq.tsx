@@ -7,17 +7,28 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export function FAQ() {
   const [isVisible, setIsVisible] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
+  // Ensure hydration is complete before animations
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Optimized intersection observer
+  useEffect(() => {
+    if (!mounted) return
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
+          // Once visible, disconnect the observer to save resources
+          observer.disconnect()
         }
       },
       {
-        threshold: 0.3,
-        rootMargin: "-100px 0px",
+        threshold: 0.1, // Lower threshold for earlier detection
+        rootMargin: "0px", // Simplified margin
       },
     )
 
@@ -31,7 +42,7 @@ export function FAQ() {
         observer.unobserve(element)
       }
     }
-  }, [])
+  }, [mounted])
 
   const faqItems = [
     {
@@ -81,19 +92,31 @@ export function FAQ() {
     },
   ]
 
+  // Optimized animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.05, // Reduced stagger time
+        delayChildren: 0.1,
+        when: "beforeChildren",
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+    hidden: { opacity: 0, y: 10 }, // Reduced y distance
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100, // Lower stiffness for better performance
+        damping: 15,
+        mass: 0.8, // Lower mass for faster animation
+      },
+    },
   }
 
   return (
@@ -102,79 +125,86 @@ export function FAQ() {
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30"
-          >
-            Preguntas Frecuentes
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: -20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl"
-          >
-            Resolvemos tus dudas
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: -20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-6 text-lg leading-8 text-muted-foreground"
-          >
-            Aquí encontrarás respuestas a las preguntas más comunes sobre nuestros servicios de desarrollo web. Si
-            tienes alguna otra duda, no dudes en contactarnos.
-          </motion.p>
+          {mounted && (
+            <>
+              <motion.h2
+                initial={{ opacity: 0, y: -20 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30"
+              >
+                Preguntas Frecuentes
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: -20 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl"
+              >
+                Resolvemos tus dudas
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: -20 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="mt-6 text-lg leading-8 text-muted-foreground"
+              >
+                Aquí encontrarás respuestas a las preguntas más comunes sobre nuestros servicios de desarrollo web. Si
+                tienes alguna otra duda, no dudes en contactarnos.
+              </motion.p>
+            </>
+          )}
         </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          className="mx-auto mt-16 max-w-3xl"
-        >
+        {mounted && isVisible && (
           <motion.div
-            variants={itemVariants}
-            className="rounded-xl bg-background/80 backdrop-blur-sm shadow-lg border border-border/50 overflow-hidden"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="mx-auto mt-16 max-w-3xl"
+            style={{ willChange: "transform, opacity" }} // Performance optimization
           >
-            <div className="p-6 sm:p-8">
-              <Accordion type="single" collapsible className="w-full">
-                {faqItems.map((item, index) => (
-                  <AccordionItem
-                    key={index}
-                    value={`item-${index}`}
-                    className="border-b border-border/50 last:border-0"
-                  >
-                    <AccordionTrigger className="text-left font-medium py-4 hover:text-primary transition-colors">
-                      <div className="flex items-start">
-                        <HelpCircle className="h-5 w-5 mr-2 text-primary flex-shrink-0 mt-0.5" />
-                        <span>{item.question}</span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground pl-7">{item.answer}</AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          </motion.div>
+            <motion.div
+              variants={itemVariants}
+              className="rounded-xl bg-background/80 backdrop-blur-sm shadow-lg border border-border/50 overflow-hidden"
+            >
+              <div className="p-6 sm:p-8">
+                <Accordion type="single" collapsible className="w-full">
+                  {faqItems.map((item, index) => (
+                    <AccordionItem
+                      key={index}
+                      value={`item-${index}`}
+                      className="border-b border-border/50 last:border-0"
+                    >
+                      <AccordionTrigger className="text-left font-medium py-4 hover:text-primary transition-colors">
+                        <div className="flex items-start">
+                          <HelpCircle className="h-5 w-5 mr-2 text-primary flex-shrink-0 mt-0.5" />
+                          <span>{item.question}</span>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-muted-foreground pl-7">{item.answer}</AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-12 text-center"
-          >
-            <p className="text-muted-foreground">
-              ¿No encuentras la respuesta que buscas?{" "}
-              <a href="#contact" className="text-primary hover:underline font-medium">
-                Contáctanos directamente
-              </a>{" "}
-              y te responderemos a la brevedad.
-            </p>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="mt-12 text-center"
+            >
+              <p className="text-muted-foreground">
+                ¿No encuentras la respuesta que buscas?{" "}
+                <a href="#contact" className="text-primary hover:underline font-medium">
+                  Contáctanos directamente
+                </a>{" "}
+                y te responderemos a la brevedad.
+              </p>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        )}
       </div>
     </section>
   )

@@ -13,7 +13,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
+// Optimized version with animations preserved
 export function Services() {
+  const [mounted, setMounted] = useState(false)
+
+  // Ensure hydration is complete before animations
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const services = useMemo(
     () => [
       {
@@ -60,10 +68,36 @@ export function Services() {
     [],
   )
 
+  // Optimized animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05, // Reduced stagger time
+        delayChildren: 0.1,
+        when: "beforeChildren",
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 }, // Reduced y distance
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100, // Lower stiffness for better performance
+        damping: 15,
+        mass: 0.8, // Lower mass for faster animation
+      },
+    },
+  }
+
   return (
     <section id="services" className="relative py-24 sm:py-32 w-full">
-      {/* Fixed width background with overflow hidden */}
-      <div className="absolute inset-0 w-full overflow-hidden bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
+      <div className="absolute inset-0 w-full bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
@@ -79,65 +113,71 @@ export function Services() {
           </p>
         </div>
 
-        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-            {services.slice(0, 5).map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, scale: 0.9, rotate: index === 0 ? -3 : 3 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 + index * 0.05 }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
-              >
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Card className="group relative overflow-hidden border-none bg-background/60 backdrop-blur-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-2 cursor-pointer">
-                      <div
-                        className="absolute inset-0 rounded-lg bg-gradient-to-r opacity-10 group-hover:opacity-20 transition-opacity duration-300 ease-in-out"
-                        style={{ backgroundImage: `linear-gradient(to right, ${service.gradient})` }}
-                      />
-
-                      <CardHeader>
+        {mounted && (
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={containerVariants}
+            className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none"
+          >
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+              {services.slice(0, 5).map((service, index) => (
+                <motion.div
+                  key={service.title}
+                  variants={itemVariants}
+                  className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+                  style={{ willChange: "transform, opacity" }} // Performance optimization
+                >
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Card className="group relative overflow-hidden border-none bg-background/60 backdrop-blur-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-2 cursor-pointer">
                         <div
-                          className={`flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r ${service.gradient} shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-110`}
-                        >
-                          <service.icon className="h-6 w-6 text-white" aria-hidden="true" />
-                        </div>
-                        <CardTitle className="mt-4 text-xl font-semibold relative">
-                          <span
-                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-transparent bg-clip-text"
-                            style={{
-                              backgroundImage: `linear-gradient(to right, ${service.gradient})`,
-                              WebkitBackgroundClip: "text",
-                              WebkitTextFillColor: "transparent",
-                            }}
-                          >
-                            {service.title}
-                          </span>
-                          <span className="transition-opacity duration-300">{service.title}</span>
-                        </CardTitle>
-                      </CardHeader>
+                          className="absolute inset-0 rounded-lg bg-gradient-to-r opacity-10 group-hover:opacity-20 transition-opacity duration-300 ease-in-out"
+                          style={{ backgroundImage: `linear-gradient(to right, ${service.gradient})` }}
+                        />
 
-                      <CardContent>
-                        <CardDescription className="text-base">{service.description}</CardDescription>
-                      </CardContent>
-                    </Card>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>{service.title}</DialogTitle>
-                      <DialogDescription>{service.description}</DialogDescription>
-                    </DialogHeader>
-                    <div className="mt-4">
-                      <p className="text-muted-foreground">{service.details}</p>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+                        <CardHeader>
+                          <div
+                            className={`flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r ${service.gradient} shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-110`}
+                          >
+                            <service.icon className="h-6 w-6 text-white" aria-hidden="true" />
+                          </div>
+                          <CardTitle className="mt-4 text-xl font-semibold relative">
+                            <span
+                              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-transparent bg-clip-text"
+                              style={{
+                                backgroundImage: `linear-gradient(to right, ${service.gradient})`,
+                                WebkitBackgroundClip: "text",
+                                WebkitTextFillColor: "transparent",
+                              }}
+                            >
+                              {service.title}
+                            </span>
+                            <span className="transition-opacity duration-300">{service.title}</span>
+                          </CardTitle>
+                        </CardHeader>
+
+                        <CardContent>
+                          <CardDescription className="text-base">{service.description}</CardDescription>
+                        </CardContent>
+                      </Card>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle>{service.title}</DialogTitle>
+                        <DialogDescription>{service.description}</DialogDescription>
+                      </DialogHeader>
+                      <div className="mt-4">
+                        <p className="text-muted-foreground">{service.details}</p>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
   )
@@ -145,17 +185,28 @@ export function Services() {
 
 export default function ServicePlans() {
   const [isVisible, setIsVisible] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
+  // Ensure hydration is complete before animations
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Optimized intersection observer
+  useEffect(() => {
+    if (!mounted) return
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
+          // Once visible, disconnect the observer to save resources
+          observer.disconnect()
         }
       },
       {
-        threshold: 0.3,
-        rootMargin: "-100px 0px",
+        threshold: 0.1, // Lower threshold for earlier detection
+        rootMargin: "0px", // Simplified margin
       },
     )
 
@@ -169,7 +220,7 @@ export default function ServicePlans() {
         observer.unobserve(element)
       }
     }
-  }, [])
+  }, [mounted])
 
   const plans = useMemo(
     () => [
@@ -234,6 +285,33 @@ export default function ServicePlans() {
     [],
   )
 
+  // Optimized animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05, // Reduced stagger time
+        delayChildren: 0.1,
+        when: "beforeChildren",
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 }, // Reduced y distance
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100, // Lower stiffness for better performance
+        damping: 15,
+        mass: 0.8, // Lower mass for faster animation
+      },
+    },
+  }
+
   return (
     <div
       id="plans-section"
@@ -252,93 +330,87 @@ export default function ServicePlans() {
         </p>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-        className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-4 sm:gap-6 px-4 sm:px-6 md:grid-cols-3"
-      >
-        {plans.map((plan, index) => (
-          <motion.div
-            key={plan.name}
-            initial={{ opacity: 0, x: index === 0 ? -50 : index === 1 ? 0 : 50, y: 50 }}
-            animate={
-              isVisible
-                ? { opacity: 1, x: 0, y: 0 }
-                : { opacity: 0, x: index === 0 ? -50 : index === 1 ? 0 : 50, y: 50 }
-            }
-            transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-          >
-            <Card
-              className={`relative flex h-full flex-col rounded-3xl p-6 transition-all duration-300 hover:-translate-y-8 ${
-                plan.popular
-                  ? "z-10 bg-background shadow-xl ring-1 ring-gray-900/10 dark:ring-gray-700/30"
-                  : "bg-background/60 backdrop-blur-sm"
-              }`}
-            >
-              {plan.popular && (
-                <div className="absolute -top-4 right-8">
-                  <div className={`rounded-full ${plan.accent} px-3 py-1 text-sm font-semibold leading-6`}>
-                    Más popular
+      {mounted && isVisible && (
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-4 sm:gap-6 px-4 sm:px-6 md:grid-cols-3"
+          style={{ willChange: "transform, opacity" }} // Performance optimization
+        >
+          {plans.map((plan, index) => (
+            <motion.div key={plan.name} variants={itemVariants} custom={index}>
+              <Card
+                className={`relative flex h-full flex-col rounded-3xl p-6 transition-all duration-300 hover:-translate-y-2 ${
+                  plan.popular
+                    ? "z-10 bg-background shadow-xl ring-1 ring-gray-900/10 dark:ring-gray-700/30"
+                    : "bg-background/60 backdrop-blur-sm"
+                }`}
+              >
+                {plan.popular && (
+                  <div className="absolute -top-4 right-8">
+                    <div className={`rounded-full ${plan.accent} px-3 py-1 text-sm font-semibold leading-6`}>
+                      Más popular
+                    </div>
+                  </div>
+                )}
+                <div className="mb-6">
+                  <h3 className="text-xl font-semibold leading-8">
+                    <span className={`bg-clip-text text-transparent bg-gradient-to-r ${plan.color}`}>{plan.name}</span>
+                  </h3>
+                  <p className="mt-1 text-sm leading-6 text-muted-foreground">{plan.description}</p>
+                  <div className="mt-4 flex items-baseline">
+                    <span className="text-4xl font-bold tracking-tight">{plan.price}</span>
                   </div>
                 </div>
-              )}
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold leading-8">
-                  <span className={`bg-clip-text text-transparent bg-gradient-to-r ${plan.color}`}>{plan.name}</span>
-                </h3>
-                <p className="mt-1 text-sm leading-6 text-muted-foreground">{plan.description}</p>
-                <div className="mt-4 flex items-baseline">
-                  <span className="text-4xl font-bold tracking-tight">{plan.price}</span>
-                </div>
-              </div>
 
-              <div className="mt-2 flex-1">
-                <ul className="space-y-1 sm:space-y-2">
-                  {plan.features.map((feature, featureIdx) => (
-                    <li key={featureIdx} className="flex items-start">
-                      <div className={`rounded-full ${plan.accentLight} p-1 mr-2 mt-1 flex-shrink-0`}>
-                        <svg
-                          className={`h-3 w-3 ${plan.accentDark === "bg-green-500" ? "text-green-600" : plan.accentDark === "bg-blue-500" ? "text-blue-600" : "text-red-600"}`}
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                      <span className="text-sm leading-tight text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
-                  {plan.notIncluded && plan.notIncluded.length > 0 && (
-                    <>
-                      {plan.notIncluded.map((feature, featureIdx) => (
-                        <li key={`not-${featureIdx}`} className="flex items-start">
-                          <div className="rounded-full bg-red-100 p-1 mr-2 mt-1 flex-shrink-0">
-                            <svg
-                              className="h-3 w-3 text-red-600"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-                            </svg>
-                          </div>
-                          <span className="text-sm leading-tight text-muted-foreground">No incluye: {feature}</span>
-                        </li>
-                      ))}
-                    </>
-                  )}
-                </ul>
-              </div>
-            </Card>
-          </motion.div>
-        ))}
-      </motion.div>
+                <div className="mt-2 flex-1">
+                  <ul className="space-y-1 sm:space-y-2">
+                    {plan.features.map((feature, featureIdx) => (
+                      <li key={featureIdx} className="flex items-start">
+                        <div className={`rounded-full ${plan.accentLight} p-1 mr-2 mt-1 flex-shrink-0`}>
+                          <svg
+                            className={`h-3 w-3 ${plan.accentDark === "bg-green-500" ? "text-green-600" : plan.accentDark === "bg-blue-500" ? "text-blue-600" : "text-red-600"}`}
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                        <span className="text-sm leading-tight text-muted-foreground">{feature}</span>
+                      </li>
+                    ))}
+                    {plan.notIncluded && plan.notIncluded.length > 0 && (
+                      <>
+                        {plan.notIncluded.map((feature, featureIdx) => (
+                          <li key={`not-${featureIdx}`} className="flex items-start">
+                            <div className="rounded-full bg-red-100 p-1 mr-2 mt-1 flex-shrink-0">
+                              <svg
+                                className="h-3 w-3 text-red-600"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                              </svg>
+                            </div>
+                            <span className="text-sm leading-tight text-muted-foreground">No incluye: {feature}</span>
+                          </li>
+                        ))}
+                      </>
+                    )}
+                  </ul>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
     </div>
   )
 }
