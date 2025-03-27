@@ -8,7 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 export function FAQ() {
   const [isVisible, setIsVisible] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const [activeItem, setActiveItem] = useState<string | null>(null)
+  const [, setActiveItem] = useState<string | null>(null)
 
   // Garantizar que la hidratación esté completa antes de animaciones
   useEffect(() => {
