@@ -1,35 +1,25 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { HelpCircle } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { useMobile } from "@/hooks/use-mobile"
 
 export function FAQ() {
   const [isVisible, setIsVisible] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const [, setActiveItem] = useState<string | null>(null)
-  const isMobile = useMobile()
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (!mounted) return
-
-    const options = {
-      threshold: 0.05, 
-      rootMargin: "0px 0px -5% 0px", 
-    }
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true)
-        observer.disconnect()
-      }
-    }, options)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      {
+        threshold: 0.3,
+        rootMargin: "-100px 0px",
+      },
+    )
 
     const element = document.getElementById("faq-section")
     if (element) {
@@ -41,7 +31,7 @@ export function FAQ() {
         observer.unobserve(element)
       }
     }
-  }, [mounted])
+  }, [])
 
   const faqItems = [
     {
@@ -91,31 +81,19 @@ export function FAQ() {
     },
   ]
 
-  // Variantes de animación optimizadas para móvil
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        when: "beforeChildren",
-        staggerChildren: isMobile ? 0.15 : 0.2,
-        delayChildren: 0.3,
+        staggerChildren: 0.1,
       },
     },
   }
 
-  // Animaciones para los elementos individuales - optimizadas para móvil
   const itemVariants = {
-    hidden: { opacity: 0, y: isMobile ? 30 : 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: isMobile ? 200 : 300,
-        damping: isMobile ? 15 : 20,
-      },
-    },
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
   }
 
   return (
@@ -123,98 +101,81 @@ export function FAQ() {
       <div className="absolute inset-0 w-full bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {mounted && (
-          <motion.div
-            className="mx-auto max-w-2xl lg:text-center"
-            initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
-            variants={containerVariants}
+        <div className="mx-auto max-w-2xl lg:text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30"
           >
-            <motion.h2
-              variants={itemVariants}
-              className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30"
-            >
-              Preguntas Frecuentes
-            </motion.h2>
-            <motion.p variants={itemVariants} className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
-              Resolvemos tus dudas
-            </motion.p>
-            <motion.p variants={itemVariants} className="mt-6 text-lg leading-8 text-muted-foreground">
-              Aquí encontrarás respuestas a las preguntas más comunes sobre nuestros servicios de desarrollo web. Si
-              tienes alguna otra duda, no dudes en contactarnos.
-            </motion.p>
-          </motion.div>
-        )}
-
-        {mounted && (
-          <motion.div
-            initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
-            variants={containerVariants}
-            className="mx-auto mt-16 max-w-3xl"
-            style={{ willChange: "transform, opacity" }}
+            Preguntas Frecuentes
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: -20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl"
           >
-            <motion.div
-              variants={itemVariants}
-              className="rounded-xl bg-background/80 backdrop-blur-sm shadow-lg border border-border/50 overflow-hidden"
-              whileHover={{ scale: isMobile ? 1.01 : 1.02, transition: { duration: 0.3 } }}
-            >
-              <div className="p-6 sm:p-8">
-                <Accordion type="single" collapsible className="w-full" onValueChange={(value) => setActiveItem(value)}>
-                  {faqItems.map((item, index) => (
-                    <AccordionItem
-                      key={index}
-                      value={`item-${index}`}
-                      className="border-b border-border/50 last:border-0"
-                    >
-                      <AccordionTrigger className="text-left font-medium py-4 hover:text-primary transition-colors">
-                        <div className="flex items-start">
-                          <HelpCircle className="h-5 w-5 mr-2 text-primary flex-shrink-0 mt-0.5" />
-                          <span>{item.question}</span>
-                        </div>
-                      </AccordionTrigger>
-                      <AnimatePresence>
-                        <AccordionContent className="text-muted-foreground pl-7">
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: isMobile ? 0.2 : 0.3 }}
-                          >
-                            {item.answer}
-                          </motion.div>
-                        </AccordionContent>
-                      </AnimatePresence>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-            </motion.div>
+            Resolvemos tus dudas
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: -20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-6 text-lg leading-8 text-muted-foreground"
+          >
+            Aquí encontrarás respuestas a las preguntas más comunes sobre nuestros servicios de desarrollo web. Si
+            tienes alguna otra duda, no dudes en contactarnos.
+          </motion.p>
+        </div>
 
-            <motion.div
-              variants={itemVariants}
-              className="mt-12 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.8, duration: isMobile ? 0.4 : 0.5 }}
-            >
-              <p className="text-muted-foreground">
-                ¿No encuentras la respuesta que buscas?{" "}
-                <motion.a
-                  href="#contact"
-                  className="text-primary hover:underline font-medium"
-                  whileHover={{ scale: isMobile ? 1.03 : 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Contáctanos directamente
-                </motion.a>{" "}
-                y te responderemos a la brevedad.
-              </p>
-            </motion.div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+          className="mx-auto mt-16 max-w-3xl"
+        >
+          <motion.div
+            variants={itemVariants}
+            className="rounded-xl bg-background/80 backdrop-blur-sm shadow-lg border border-border/50 overflow-hidden"
+          >
+            <div className="p-6 sm:p-8">
+              <Accordion type="single" collapsible className="w-full">
+                {faqItems.map((item, index) => (
+                  <AccordionItem
+                    key={index}
+                    value={`item-${index}`}
+                    className="border-b border-border/50 last:border-0"
+                  >
+                    <AccordionTrigger className="text-left font-medium py-4 hover:text-primary transition-colors">
+                      <div className="flex items-start">
+                        <HelpCircle className="h-5 w-5 mr-2 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{item.question}</span>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground pl-7">{item.answer}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
           </motion.div>
-        )}
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mt-12 text-center"
+          >
+            <p className="text-muted-foreground">
+              ¿No encuentras la respuesta que buscas?{" "}
+              <a href="#contact" className="text-primary hover:underline font-medium">
+                Contáctanos directamente
+              </a>{" "}
+              y te responderemos a la brevedad.
+            </p>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   )
 }
-
