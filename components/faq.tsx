@@ -1,36 +1,36 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { HelpCircle } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 export function FAQ() {
   const [isVisible, setIsVisible] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [activeItem, setActiveItem] = useState<string | null>(null)
 
-  // Ensure hydration is complete before animations
+  // Garantizar que la hidratación esté completa antes de animaciones
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  // Optimized intersection observer
+  // Observador de intersección optimizado
   useEffect(() => {
     if (!mounted) return
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          // Once visible, disconnect the observer to save resources
-          observer.disconnect()
-        }
-      },
-      {
-        threshold: 0.1, // Lower threshold for earlier detection
-        rootMargin: "0px", // Simplified margin
-      },
-    )
+    const options = {
+      threshold: 0.1,
+      rootMargin: "0px",
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true)
+        // Desconectar el observer una vez visible para ahorrar recursos
+        observer.disconnect()
+      }
+    }, options)
 
     const element = document.getElementById("faq-section")
     if (element) {
@@ -92,29 +92,29 @@ export function FAQ() {
     },
   ]
 
-  // Optimized animation variants
+  // Variantes de animación para el contenedor principal
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.05, // Reduced stagger time
-        delayChildren: 0.1,
         when: "beforeChildren",
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
       },
     },
   }
 
+  // Animaciones para los elementos individuales
   const itemVariants = {
-    hidden: { opacity: 0, y: 10 }, // Reduced y distance
+    hidden: { opacity: 0, y: 50 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 100, // Lower stiffness for better performance
-        damping: 15,
-        mass: 0.8, // Lower mass for faster animation
+        stiffness: 300,
+        damping: 20,
       },
     },
   }
@@ -124,52 +124,44 @@ export function FAQ() {
       <div className="absolute inset-0 w-full bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:text-center">
-          {mounted && (
-            <>
-              <motion.h2
-                initial={{ opacity: 0, y: -20 }}
-                animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-                className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30"
-              >
-                Preguntas Frecuentes
-              </motion.h2>
-              <motion.p
-                initial={{ opacity: 0, y: -20 }}
-                animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-                transition={{ duration: 0.4, delay: 0.2 }}
-                className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl"
-              >
-                Resolvemos tus dudas
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0, y: -20 }}
-                animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="mt-6 text-lg leading-8 text-muted-foreground"
-              >
-                Aquí encontrarás respuestas a las preguntas más comunes sobre nuestros servicios de desarrollo web. Si
-                tienes alguna otra duda, no dudes en contactarnos.
-              </motion.p>
-            </>
-          )}
-        </div>
-
-        {mounted && isVisible && (
+        {mounted && (
           <motion.div
-            variants={containerVariants}
+            className="mx-auto max-w-2xl lg:text-center"
             initial="hidden"
-            animate="visible"
+            animate={isVisible ? "visible" : "hidden"}
+            variants={containerVariants}
+          >
+            <motion.h2
+              variants={itemVariants}
+              className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30"
+            >
+              Preguntas Frecuentes
+            </motion.h2>
+            <motion.p variants={itemVariants} className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
+              Resolvemos tus dudas
+            </motion.p>
+            <motion.p variants={itemVariants} className="mt-6 text-lg leading-8 text-muted-foreground">
+              Aquí encontrarás respuestas a las preguntas más comunes sobre nuestros servicios de desarrollo web. Si
+              tienes alguna otra duda, no dudes en contactarnos.
+            </motion.p>
+          </motion.div>
+        )}
+
+        {mounted && (
+          <motion.div
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+            variants={containerVariants}
             className="mx-auto mt-16 max-w-3xl"
-            style={{ willChange: "transform, opacity" }} // Performance optimization
+            style={{ willChange: "transform, opacity" }}
           >
             <motion.div
               variants={itemVariants}
               className="rounded-xl bg-background/80 backdrop-blur-sm shadow-lg border border-border/50 overflow-hidden"
+              whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
             >
               <div className="p-6 sm:p-8">
-                <Accordion type="single" collapsible className="w-full">
+                <Accordion type="single" collapsible className="w-full" onValueChange={(value) => setActiveItem(value)}>
                   {faqItems.map((item, index) => (
                     <AccordionItem
                       key={index}
@@ -182,7 +174,18 @@ export function FAQ() {
                           <span>{item.question}</span>
                         </div>
                       </AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground pl-7">{item.answer}</AccordionContent>
+                      <AnimatePresence>
+                        <AccordionContent className="text-muted-foreground pl-7">
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            {item.answer}
+                          </motion.div>
+                        </AccordionContent>
+                      </AnimatePresence>
                     </AccordionItem>
                   ))}
                 </Accordion>
@@ -190,16 +193,22 @@ export function FAQ() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              variants={itemVariants}
               className="mt-12 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
             >
               <p className="text-muted-foreground">
                 ¿No encuentras la respuesta que buscas?{" "}
-                <a href="#contact" className="text-primary hover:underline font-medium">
+                <motion.a
+                  href="#contact"
+                  className="text-primary hover:underline font-medium"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   Contáctanos directamente
-                </a>{" "}
+                </motion.a>{" "}
                 y te responderemos a la brevedad.
               </p>
             </motion.div>
