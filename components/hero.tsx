@@ -12,9 +12,17 @@ const features = [
   { icon: Sparkles, text: "Diseño moderno" },
 ]
 
+// Optimized animation variants with reduced complexity
 const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 10 }, // Reduced y distance for smoother animation
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.3, // Slightly faster animation
+      ease: "easeOut",
+    },
+  },
 }
 
 const staggerContainer = {
@@ -22,7 +30,8 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      delayChildren: 0.05, // Small delay before starting children animations
+      staggerChildren: 0.08, // Slightly faster stagger
     },
   },
 }
@@ -30,11 +39,12 @@ const staggerContainer = {
 export function Hero() {
   return (
     <div id="home" className="relative isolate overflow-hidden min-h-screen flex items-center">
-      {/* Animated background elements - contained with max-width */}
+      {/* Simplified background elements with CSS-based responsive blur */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-full aspect-square bg-primary/30 rounded-full blur-[120px] opacity-50" />
-        <div className="absolute bottom-0 left-1/4 w-full max-w-full aspect-square bg-purple-500/20 rounded-full blur-[120px] opacity-30" />
+        {/* Using CSS media queries for responsive blur */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-full aspect-square bg-primary/30 rounded-full blur-[60px] sm:blur-[120px] opacity-50 will-change-auto" />
+        <div className="absolute bottom-0 left-1/4 w-full max-w-full aspect-square bg-purple-500/20 rounded-full blur-[60px] sm:blur-[120px] opacity-30 will-change-auto" />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40 w-full">
@@ -91,12 +101,16 @@ export function Hero() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={{
+            duration: 0.4,
+            ease: "easeOut",
+            delay: 0.1, // Small delay to let text animations start first
+          }}
           className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow relative"
         >
-          <div className="absolute -z-10 inset-0 bg-gradient-to-tr from-primary/20 to-purple-500/20 blur-3xl opacity-30 rounded-full" />
+          <div className="absolute -z-10 inset-0 bg-gradient-to-tr from-primary/20 to-purple-500/20 blur-xl sm:blur-3xl opacity-30 rounded-full will-change-auto" />
           <Image
             src="/banner (2).jpg"
             alt="Dashboard preview"
@@ -105,7 +119,11 @@ export function Hero() {
             className="mx-auto w-full max-w-[22.875rem] sm:max-w-[28.875rem] rounded-xl shadow-2xl ring-1 ring-white/10 transition-transform duration-300 hover:scale-[1.02] hover-glow"
             priority
             loading="eager"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 33vw"
+            style={{
+              willChange: "transform", // Hint to browser to optimize transforms
+              transform: "translateZ(0)", // Force GPU acceleration
+            }}
           />
         </motion.div>
       </div>
