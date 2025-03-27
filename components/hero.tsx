@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Code, Sparkles, Zap } from "lucide-react"
 import { AnimatedButton } from "./ui/animated-button"
+import { useMobile } from "@/hooks/use-mobile"
 
 const features = [
   { icon: Code, text: "Desarrollo a medida" },
@@ -13,13 +14,15 @@ const features = [
 ]
 
 export function Hero() {
-  // Variantes de animación detalladas y completas
+  const isMobile = useMobile()
+
+  // Variantes de animación optimizadas para móvil
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: isMobile ? 0.1 : 0.15,
         delayChildren: 0.2,
         when: "beforeChildren",
       },
@@ -27,29 +30,29 @@ export function Hero() {
   }
 
   const titleVariants = {
-    hidden: { opacity: 0, y: -50 },
+    hidden: { opacity: 0, y: isMobile ? -30 : -50 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 300,
-        damping: 20,
-        duration: 0.7,
+        stiffness: isMobile ? 200 : 300,
+        damping: isMobile ? 15 : 20,
+        duration: isMobile ? 0.5 : 0.7,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: isMobile ? 20 : 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 300,
-        damping: 20,
-        duration: 0.7,
+        stiffness: isMobile ? 200 : 300,
+        damping: isMobile ? 15 : 20,
+        duration: isMobile ? 0.5 : 0.7,
       },
     },
   }
@@ -61,25 +64,25 @@ export function Hero() {
       scale: 1,
       transition: {
         type: "spring",
-        stiffness: 300,
-        damping: 20,
+        stiffness: isMobile ? 200 : 300,
+        damping: isMobile ? 15 : 20,
         delay: 0.5,
-        duration: 0.7,
+        duration: isMobile ? 0.5 : 0.7,
       },
     },
   }
 
   const featureVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: isMobile ? 10 : 20 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 300,
-        damping: 20,
-        delay: 0.7 + i * 0.1,
-        duration: 0.5,
+        stiffness: isMobile ? 200 : 300,
+        damping: isMobile ? 15 : 20,
+        delay: 0.7 + i * (isMobile ? 0.08 : 0.1),
+        duration: isMobile ? 0.4 : 0.5,
       },
     }),
   }
@@ -116,7 +119,11 @@ export function Hero() {
               <div className="rounded-full flex items-center gap-x-2 px-3 py-1 text-sm font-medium">
                 <motion.div
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                  transition={{
+                    duration: isMobile ? 30 : 20, // Más lento en móvil para mejor rendimiento
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "linear",
+                  }}
                 >
                   <Sparkles className="h-4 w-4 text-primary" />
                 </motion.div>
@@ -133,7 +140,11 @@ export function Hero() {
             <motion.span
               initial={{ backgroundPosition: "0% 0%" }}
               animate={{ backgroundPosition: "100% 0%" }}
-              transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, repeatType: "mirror" }}
+              transition={{
+                duration: isMobile ? 8 : 5, // Más lento en móvil para mejor rendimiento
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "mirror",
+              }}
               className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500 text-glow"
             >
               experiencias digitales
@@ -150,12 +161,12 @@ export function Hero() {
             <Link href="/portfolio" className="w-full sm:w-auto">
               <motion.button
                 whileHover={{
-                  scale: 1.05,
-                  letterSpacing: "0.1em",
+                  scale: isMobile ? 1.03 : 1.05,
+                  letterSpacing: isMobile ? "0.05em" : "0.1em",
                   backgroundColor: "rgba(0, 229, 201, 0.3)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                transition={{ type: "spring", stiffness: isMobile ? 300 : 400, damping: isMobile ? 8 : 10 }}
                 className="pulse-button w-full rounded-full border border-primary/20 px-8 py-3 bg-primary-foreground text-sm font-semibold text-foreground transition-all duration-300 hover:bg-primary/30 hover:tracking-wider active:translate-y-1"
               >
                 Ver nuestro trabajo
@@ -170,7 +181,7 @@ export function Hero() {
                 custom={index}
                 variants={featureVariants}
                 whileHover={{
-                  scale: 1.05,
+                  scale: isMobile ? 1.03 : 1.05,
                   boxShadow: "0 0 25px rgba(0, 229, 201, 0.5)",
                   backgroundColor: "rgba(255, 255, 255, 0.1)",
                 }}
@@ -179,7 +190,7 @@ export function Hero() {
                 <motion.div
                   className="rounded-full bg-primary/10 p-1"
                   whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
+                  transition={{ duration: isMobile ? 0.8 : 0.6 }}
                 >
                   <item.icon className="h-4 w-4 text-primary" />
                 </motion.div>
@@ -202,14 +213,17 @@ export function Hero() {
               opacity: [0.3, 0.5, 0.3],
             }}
             transition={{
-              duration: 8,
+              duration: isMobile ? 10 : 8,
               repeat: Number.POSITIVE_INFINITY,
               repeatType: "mirror",
             }}
             className="absolute -z-10 inset-0 bg-gradient-to-tr from-primary/20 to-purple-500/20 blur-3xl rounded-full"
           />
 
-          <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>
+          <motion.div
+            whileHover={{ scale: isMobile ? 1.03 : 1.05 }}
+            transition={{ type: "spring", stiffness: isMobile ? 200 : 300, damping: isMobile ? 10 : 15 }}
+          >
             <Image
               src="/banner (2).jpg"
               alt="Dashboard preview"

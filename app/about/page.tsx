@@ -10,6 +10,11 @@ import { AboutTimeline } from "@/components/about-timeline"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, Users, Target, Lightbulb } from "lucide-react"
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+}
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },

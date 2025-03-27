@@ -20,8 +20,11 @@ export const metadata = {
     "paginas web, desarrollo web, landing pages, e-commerce, aplicaciones web, SEO, diseño web, Buenos Aires, GretSoft, páginas web, sistemas web, servicios web, desarrollo de software",
   authors: [{ name: "GretSoft" }],
   creator: "GretSoft",
-  viewport: "width=device-width, initial-scale=1",
-  themeColor: "#00E5C9",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    themeColor: "#00E5C9",
+  },
   metadataBase: new URL("https://gretsoft.com.ar"),
   alternates: {
     canonical: "/",
@@ -64,7 +67,8 @@ export const metadata = {
   verification: {
     google: "verificación-google", // Reemplaza con tu código de verificación de Google Search Console
   },
-}
+};
+
 
 export default function RootLayout({
   children,

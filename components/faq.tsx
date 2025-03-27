@@ -4,30 +4,29 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { HelpCircle } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { useMobile } from "@/hooks/use-mobile"
 
 export function FAQ() {
   const [isVisible, setIsVisible] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [, setActiveItem] = useState<string | null>(null)
+  const isMobile = useMobile()
 
-  // Garantizar que la hidratación esté completa antes de animaciones
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  // Observador de intersección optimizado
   useEffect(() => {
     if (!mounted) return
 
     const options = {
-      threshold: 0.1,
-      rootMargin: "0px",
+      threshold: 0.05, 
+      rootMargin: "0px 0px -5% 0px", 
     }
 
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setIsVisible(true)
-        // Desconectar el observer una vez visible para ahorrar recursos
         observer.disconnect()
       }
     }, options)
@@ -92,29 +91,29 @@ export function FAQ() {
     },
   ]
 
-  // Variantes de animación para el contenedor principal
+  // Variantes de animación optimizadas para móvil
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
         when: "beforeChildren",
-        staggerChildren: 0.2,
+        staggerChildren: isMobile ? 0.15 : 0.2,
         delayChildren: 0.3,
       },
     },
   }
 
-  // Animaciones para los elementos individuales
+  // Animaciones para los elementos individuales - optimizadas para móvil
   const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: isMobile ? 30 : 50 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 300,
-        damping: 20,
+        stiffness: isMobile ? 200 : 300,
+        damping: isMobile ? 15 : 20,
       },
     },
   }
@@ -158,7 +157,7 @@ export function FAQ() {
             <motion.div
               variants={itemVariants}
               className="rounded-xl bg-background/80 backdrop-blur-sm shadow-lg border border-border/50 overflow-hidden"
-              whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
+              whileHover={{ scale: isMobile ? 1.01 : 1.02, transition: { duration: 0.3 } }}
             >
               <div className="p-6 sm:p-8">
                 <Accordion type="single" collapsible className="w-full" onValueChange={(value) => setActiveItem(value)}>
@@ -180,7 +179,7 @@ export function FAQ() {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3 }}
+                            transition={{ duration: isMobile ? 0.2 : 0.3 }}
                           >
                             {item.answer}
                           </motion.div>
@@ -197,14 +196,14 @@ export function FAQ() {
               className="mt-12 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
+              transition={{ delay: 0.8, duration: isMobile ? 0.4 : 0.5 }}
             >
               <p className="text-muted-foreground">
                 ¿No encuentras la respuesta que buscas?{" "}
                 <motion.a
                   href="#contact"
                   className="text-primary hover:underline font-medium"
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: isMobile ? 1.03 : 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Contáctanos directamente

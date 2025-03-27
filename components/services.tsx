@@ -12,10 +12,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { useMobile } from "@/hooks/use-mobile"
 
 // Optimizado pero manteniendo todas las animaciones originales
 export function Services() {
   const [mounted, setMounted] = useState(false)
+  const isMobile = useMobile()
 
   // Asegurar que la hidratación esté completa antes de las animaciones
   useEffect(() => {
@@ -68,43 +70,43 @@ export function Services() {
     [],
   )
 
-  // Variantes de animación originales pero con renderizado optimizado
+  // Variantes de animación optimizadas para móvil y desktop
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3,
+        staggerChildren: isMobile ? 0.1 : 0.15,
+        delayChildren: 0.2,
         when: "beforeChildren",
       },
     },
   }
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: isMobile ? 20 : 50 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 300,
-        damping: 20,
-        duration: 0.8,
+        stiffness: isMobile ? 200 : 300,
+        damping: isMobile ? 15 : 20,
+        duration: isMobile ? 0.6 : 0.8,
       },
     },
   }
 
   const headerVariants = {
-    hidden: { opacity: 0, y: -30 },
+    hidden: { opacity: 0, y: isMobile ? -15 : -30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 300,
-        damping: 20,
-        duration: 0.5,
+        stiffness: isMobile ? 200 : 300,
+        damping: isMobile ? 15 : 20,
+        duration: isMobile ? 0.4 : 0.5,
       },
     },
   }
@@ -119,7 +121,7 @@ export function Services() {
             className="mx-auto max-w-2xl lg:text-center"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: true, margin: isMobile ? "-20px" : "-50px" }}
             variants={{
               hidden: { opacity: 0 },
               visible: {
@@ -153,7 +155,7 @@ export function Services() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
             variants={containerVariants}
             className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none"
             style={{ willChange: "transform, opacity" }} // Optimización del rendimiento de renderizado
@@ -166,11 +168,11 @@ export function Services() {
                   custom={index}
                   className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
                   whileHover={{
-                    y: -15,
+                    y: isMobile ? -5 : -15,
                     transition: {
                       type: "spring",
-                      stiffness: 300,
-                      damping: 15,
+                      stiffness: isMobile ? 200 : 300,
+                      damping: isMobile ? 10 : 15,
                     },
                   }}
                 >
@@ -235,6 +237,7 @@ export function Services() {
 export default function ServicePlans() {
   const [isVisible, setIsVisible] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const isMobile = useMobile()
 
   // Asegurar que la hidratación esté completa antes de las animaciones
   useEffect(() => {
@@ -247,7 +250,7 @@ export default function ServicePlans() {
 
     const options = {
       threshold: 0.05, // Reducido para activar más temprano
-      rootMargin: "0px 0px -10% 0px", // Activar antes de que el elemento esté completamente visible
+      rootMargin: "0px 0px -5% 0px", // Activar antes de que el elemento esté completamente visible
     }
 
     const observer = new IntersectionObserver(([entry]) => {
@@ -333,79 +336,79 @@ export default function ServicePlans() {
     [],
   )
 
-  // Variantes de animación mejoradas para los planes - más pronunciadas y fluidas
+  // Variantes de animación optimizadas para móvil
   const titleVariants = {
-    hidden: { opacity: 0, y: -30 },
+    hidden: { opacity: 0, y: isMobile ? -15 : -30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 200,
-        damping: 20,
-        duration: 0.7,
+        stiffness: isMobile ? 150 : 200,
+        damping: isMobile ? 15 : 20,
+        duration: isMobile ? 0.5 : 0.7,
       },
     },
   }
 
   const subtitleVariants = {
-    hidden: { opacity: 0, y: -20 },
+    hidden: { opacity: 0, y: isMobile ? -10 : -20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 200,
-        damping: 20,
+        stiffness: isMobile ? 150 : 200,
+        damping: isMobile ? 15 : 20,
         delay: 0.1,
-        duration: 0.7,
+        duration: isMobile ? 0.5 : 0.7,
       },
     },
   }
 
   const descriptionVariants = {
-    hidden: { opacity: 0, y: -10 },
+    hidden: { opacity: 0, y: isMobile ? -5 : -10 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 200,
-        damping: 20,
+        stiffness: isMobile ? 150 : 200,
+        damping: isMobile ? 15 : 20,
         delay: 0.2,
-        duration: 0.7,
+        duration: isMobile ? 0.5 : 0.7,
       },
     },
   }
 
-  // Variantes de animación mejoradas para los planes - más pronunciadas y fluidas
+  // Variantes de animación optimizadas para móvil
   const planVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    hidden: { opacity: 0, y: isMobile ? 20 : 50, scale: 0.95 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
         type: "spring",
-        stiffness: 200,
-        damping: 20,
-        delay: 0.3 + i * 0.15,
-        duration: 0.8,
+        stiffness: isMobile ? 150 : 200,
+        damping: isMobile ? 15 : 20,
+        delay: 0.3 + i * (isMobile ? 0.1 : 0.15),
+        duration: isMobile ? 0.6 : 0.8,
       },
     }),
   }
 
   const loadFeatures = (i: number) => ({
-    hidden: { opacity: 0, x: -20 },
+    hidden: { opacity: 0, x: isMobile ? -10 : -20 },
     visible: {
       opacity: 1,
       x: 0,
       transition: {
         type: "spring",
-        stiffness: 200,
-        damping: 20,
-        delay: 0.6 + i * 0.05,
-        duration: 0.5,
+        stiffness: isMobile ? 150 : 200,
+        damping: isMobile ? 15 : 20,
+        delay: 0.6 + i * (isMobile ? 0.03 : 0.05),
+        duration: isMobile ? 0.4 : 0.5,
       },
     },
   })
@@ -425,7 +428,7 @@ export default function ServicePlans() {
             visible: {
               opacity: 1,
               transition: {
-                staggerChildren: 0.2,
+                staggerChildren: isMobile ? 0.15 : 0.2,
                 when: "beforeChildren",
               },
             },
@@ -460,9 +463,9 @@ export default function ServicePlans() {
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
               whileHover={{
-                y: -15,
-                scale: 1.03,
-                transition: { type: "spring", stiffness: 300, damping: 15 },
+                y: isMobile ? -5 : -15,
+                scale: isMobile ? 1.02 : 1.03,
+                transition: { type: "spring", stiffness: isMobile ? 200 : 300, damping: isMobile ? 10 : 15 },
               }}
               style={{ willChange: "transform, opacity" }} // Optimización de rendimiento
             >
@@ -490,7 +493,10 @@ export default function ServicePlans() {
                     className="text-xl font-semibold leading-8"
                     initial={{ opacity: 0, y: -10 }}
                     animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
-                    transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
+                    transition={{
+                      delay: 0.4 + index * (isMobile ? 0.08 : 0.1),
+                      duration: isMobile ? 0.4 : 0.5,
+                    }}
                   >
                     <span className={`bg-clip-text text-transparent bg-gradient-to-r ${plan.color}`}>{plan.name}</span>
                   </motion.h3>
@@ -498,7 +504,10 @@ export default function ServicePlans() {
                     className="mt-1 text-sm leading-6 text-muted-foreground"
                     initial={{ opacity: 0, y: -5 }}
                     animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -5 }}
-                    transition={{ delay: 0.45 + index * 0.1, duration: 0.5 }}
+                    transition={{
+                      delay: 0.45 + index * (isMobile ? 0.08 : 0.1),
+                      duration: isMobile ? 0.4 : 0.5,
+                    }}
                   >
                     {plan.description}
                   </motion.p>
@@ -507,10 +516,10 @@ export default function ServicePlans() {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                       transition={{
-                        delay: 0.5 + index * 0.1,
-                        duration: 0.5,
+                        delay: 0.5 + index * (isMobile ? 0.08 : 0.1),
+                        duration: isMobile ? 0.4 : 0.5,
                         type: "spring",
-                        stiffness: 200,
+                        stiffness: isMobile ? 150 : 200,
                       }}
                       className="text-4xl font-bold tracking-tight"
                     >
