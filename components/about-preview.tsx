@@ -108,7 +108,15 @@ export function AboutPreview() {
             }}
           >
             {/* Fixed size and contained gradient */}
-            <div className="absolute -top-64 -right-64 opacity-50 blur-3xl max-w-full" aria-hidden="true">
+            <div
+              className="absolute -top-64 -right-64 opacity-0 sm:opacity-50 blur-3xl max-w-full"
+              style={{
+                opacity: isVisible ? (shouldReduceMotion ? 0.5 : 0.5) : 0,
+                transition: "opacity 0.6s ease-in-out",
+                zIndex: -1,
+              }}
+              aria-hidden="true"
+            >
               <motion.div
                 animate={{
                   opacity: [0.2, 0.3, 0.2],
@@ -127,18 +135,19 @@ export function AboutPreview() {
               />
             </div>
             <motion.div
-              className="relative rounded-xl border bg-background/50 backdrop-blur-sm shadow-2xl"
+              className="relative rounded-xl border bg-background/50 backdrop-blur-sm shadow-2xl overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
             >
-              <div className="p-8">
+              <div className="p-8 relative z-10 bg-background/80">
                 <motion.dl
                   className="grid grid-cols-1 gap-6 sm:grid-cols-2"
                   variants={staggerContainer}
                   initial="hidden"
                   animate={isVisible ? "visible" : "hidden"}
+                  transition={{ delayChildren: 0.6 }}
                 >
                   {stats.map((item, index) => (
                     <motion.div
