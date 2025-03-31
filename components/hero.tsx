@@ -1,10 +1,29 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Code, Sparkles, Zap } from "lucide-react"
 import { AnimatedButton } from "./ui/animated-button"
+import { useEffect, useState } from "react"
+
+// Custom hook to detect mobile devices
+function useMobileDetect() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  return isMobile
+}
 
 const features = [
   { icon: Code, text: "Desarrollo a medida" },
@@ -12,31 +31,41 @@ const features = [
   { icon: Sparkles, text: "Diseño moderno" },
 ]
 
-// Optimized animation variants with reduced complexity
-const fadeIn = {
-  hidden: { opacity: 0, y: 10 }, // Reduced y distance for smoother animation
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.3, // Slightly faster animation
-      ease: "easeOut",
-    },
-  },
-}
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      delayChildren: 0.05, // Small delay before starting children animations
-      staggerChildren: 0.08, // Slightly faster stagger
-    },
-  },
-}
 
 export function Hero() {
+  const shouldReduceMotion = useReducedMotion()
+  const isMobile = useMobileDetect()
+
+  // Adjust animation settings based on device
+  const animationSettings = {
+    duration: isMobile ? 0.2 : 0.3,
+    stagger: isMobile ? 0.04 : 0.08,
+    delay: isMobile ? 0.02 : 0.05,
+  }
+
+  const fadeIn = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 5 }, // Even smaller y distance for mobile
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.25, // Faster animation for mobile
+        ease: "easeOut",
+      },
+    },
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: shouldReduceMotion ? 0 : 0.03, // Smaller delay for mobile
+        staggerChildren: shouldReduceMotion ? 0 : 0.05, // Faster stagger for mobile
+      },
+    },
+  }
+
   return (
     <div id="home" className="relative isolate overflow-hidden min-h-screen flex items-center">
       {/* Simplified background elements with CSS-based responsive blur */}
@@ -101,12 +130,12 @@ export function Hero() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: isMobile ? 0.95 : 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
-            duration: 0.4,
+            duration: animationSettings.duration,
             ease: "easeOut",
-            delay: 0.1, // Small delay to let text animations start first
+            delay: animationSettings.delay,
           }}
           className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow relative"
         >
@@ -116,13 +145,14 @@ export function Hero() {
             alt="Dashboard preview"
             width={600}
             height={600}
-            className="mx-auto w-full max-w-[22.875rem] sm:max-w-[28.875rem] rounded-xl shadow-2xl ring-1 ring-white/10 transition-transform duration-300 hover:scale-[1.02] hover-glow"
+            className="mx-auto w-full max-w-[18rem] xs:max-w-[22.875rem] sm:max-w-[28.875rem] rounded-xl shadow-2xl ring-1 ring-white/10 transition-transform duration-300 hover:scale-[1.02] hover-glow"
             priority
             loading="eager"
-            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 480px) 90vw, (max-width: 640px) 80vw, (max-width: 1024px) 50vw, 33vw"
             style={{
-              willChange: "transform", // Hint to browser to optimize transforms
+              willChange: shouldReduceMotion ? "auto" : "transform", // Only use willChange when needed
               transform: "translateZ(0)", // Force GPU acceleration
+              backfaceVisibility: "hidden", // Prevent flickering on some mobile browsers
             }}
           />
         </motion.div>

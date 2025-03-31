@@ -1,11 +1,12 @@
 "use client"
 
 import { useMemo, useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { Shield, Clock, Zap, Users } from "lucide-react"
 
 export function SupportServices() {
   const [isVisible, setIsVisible] = useState(false)
+  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -15,8 +16,8 @@ export function SupportServices() {
         }
       },
       {
-        threshold: 0.3,
-        rootMargin: "-100px 0px",
+        threshold: 0.1, // Lower threshold for mobile
+        rootMargin: "-50px 0px", // Less strict margin
       },
     )
 
@@ -65,14 +66,22 @@ export function SupportServices() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: shouldReduceMotion ? 0 : 0.05, // Faster stagger for mobile
+        ease: [0.215, 0.61, 0.355, 1],
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
+    hidden: { opacity: 0, x: shouldReduceMotion ? 0 : -10 }, // Smaller x offset for mobile
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.3, // Slightly faster for mobile
+        ease: [0.215, 0.61, 0.355, 1],
+      },
+    },
   }
 
   return (
@@ -109,21 +118,22 @@ export function SupportServices() {
         </div>
 
         <motion.div
-          variants={containerVariants}
+          variants={shouldReduceMotion ? {} : containerVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
           className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none"
         >
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-4">
+          <dl className="grid max-w-xl grid-cols-1 gap-x-6 gap-y-8 sm:gap-y-10 lg:max-w-none md:grid-cols-2 lg:grid-cols-4">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.name}
-                variants={itemVariants}
+                variants={shouldReduceMotion ? {} : itemVariants}
                 custom={index}
-                className="group relative rounded-xl bg-background/60 backdrop-blur-sm p-6 shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-border/50"
-                whileHover={{
-                  scale: 1.03,
-                  boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                className="group relative rounded-xl bg-background/60 backdrop-blur-sm p-5 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-border/50"
+                style={{
+                  willChange: shouldReduceMotion ? "auto" : "transform",
+                  transform: "translateZ(0)",
+                  backfaceVisibility: "hidden",
                 }}
               >
                 <dt className="text-base font-semibold leading-7">
@@ -139,10 +149,15 @@ export function SupportServices() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16 flex justify-center"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-12 sm:mt-16 flex justify-center"
+          style={{
+            willChange: shouldReduceMotion ? "auto" : "transform",
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden",
+          }}
         >
           <div className="relative rounded-xl overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-600 p-px shadow-lg">
             <div className="rounded-xl bg-background/95 backdrop-blur-sm px-6 py-8 sm:px-8 sm:py-10 text-center">
@@ -167,3 +182,4 @@ export function SupportServices() {
     </section>
   )
 }
+
