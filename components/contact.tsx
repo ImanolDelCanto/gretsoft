@@ -74,7 +74,7 @@ export function Contact() {
     {
       icon: MapPin,
       title: "Dirección",
-      content: "Banfield\nBuenos Aires, Argentina",
+      content: "Buenos Aires, Argentina",
       link: null,
     },
     {
