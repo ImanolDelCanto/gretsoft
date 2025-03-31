@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from "framer-motion"
 
 export function AboutPreview() {
   const [isVisible, setIsVisible] = useState(false)
+  const [animationComplete, setAnimationComplete] = useState(false)
   const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
@@ -32,6 +33,17 @@ export function AboutPreview() {
       }
     }
   }, [])
+
+  // Set animation complete after delay
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => {
+        setAnimationComplete(true)
+      }, 800) // Wait for card animation to complete
+
+      return () => clearTimeout(timer)
+    }
+  }, [isVisible])
 
   const stats = useMemo(
     () => [
@@ -96,51 +108,43 @@ export function AboutPreview() {
               </Link>
             </motion.div>
           </motion.div>
-          <motion.div
-            className="relative"
-            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 20 }}
-            animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: shouldReduceMotion ? 0 : 20 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            style={{
-              willChange: shouldReduceMotion ? "auto" : "transform",
-              transform: "translateZ(0)",
-              backfaceVisibility: "hidden",
-            }}
-          >
-            {/* Fixed size and contained gradient */}
-            <div
-              className="absolute -top-64 -right-64 opacity-0 sm:opacity-50 blur-3xl max-w-full"
-              style={{
-                opacity: isVisible ? (shouldReduceMotion ? 0.5 : 0.5) : 0,
-                transition: "opacity 0.6s ease-in-out",
-                zIndex: -1,
-              }}
-              aria-hidden="true"
-            >
-              <motion.div
-                animate={{
-                  opacity: [0.2, 0.3, 0.2],
-                  scale: [1, 1.05, 1],
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Number.POSITIVE_INFINITY,
-                  repeatType: "reverse",
-                }}
-                className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
-                style={{
-                  clipPath:
-                    "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-                }}
-              />
-            </div>
+
+          <div className="relative">
+            {/* Stats card container */}
             <motion.div
               className="relative rounded-xl border bg-background/50 backdrop-blur-sm shadow-2xl overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
+              onAnimationComplete={() => setAnimationComplete(true)}
             >
+              {/* Background gradient that only appears after animation completes */}
+              {animationComplete && (
+                <div className="absolute -top-64 -right-64 opacity-50 blur-3xl max-w-full" aria-hidden="true">
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: [0.2, 0.3, 0.2],
+                      scale: [1, 1.05, 1],
+                    }}
+                    transition={{
+                      opacity: { duration: 0.5 },
+                      scale: {
+                        duration: 8,
+                        repeat: Number.POSITIVE_INFINITY,
+                        repeatType: "reverse",
+                      },
+                    }}
+                    className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
+                    style={{
+                      clipPath:
+                        "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+                    }}
+                  />
+                </div>
+              )}
+
               <div className="p-8 relative z-10 bg-background/80">
                 <motion.dl
                   className="grid grid-cols-1 gap-6 sm:grid-cols-2"
@@ -175,7 +179,12 @@ export function AboutPreview() {
                 </motion.dl>
               </div>
             </motion.div>
-          </motion.div>
+
+            {/* Separate background gradient for the entire right column */}
+            <div className="absolute -z-10 inset-0 opacity-30 blur-3xl" aria-hidden="true">
+              <div className="aspect-[577/310] w-full h-full bg-gradient-to-r from-purple-200 to-blue-200 dark:from-purple-900/20 dark:to-blue-900/20 opacity-30" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
