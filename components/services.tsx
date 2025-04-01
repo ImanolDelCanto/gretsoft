@@ -252,7 +252,7 @@ export function ServicePackages() {
           "Diseño tradicional / moderno con animaciones incluidas",
           "Carga de hasta 20 productos",
           "Pasarela de pagos integrada (mercado pago)",
-          "Hosting Dominio por 1 año incluidos + Certificado SSL",
+          "Hosting Dominio por 1 año incluidos",
           "Velocidad y rendimiento garantizado",
           "2 meses de soporte técnico / mantenimiento incluido",
           "Ecommerce adaptado a todos los dispositivos móviles",
