@@ -24,7 +24,7 @@ export function Portfolio() {
         title: "Landing Page Experiencias Aéreas ",
         description: "Página de aterrizaje para promoción de experiencias Aéreas",
         image: "/media/experienciasaereas.png",
-        url: "https://experienciasaereas.vercel.app/",
+        url: "https://www.experienciasaereas.com.ar/",
         category: "landing",
       },
       {
