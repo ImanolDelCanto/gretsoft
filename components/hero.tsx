@@ -44,7 +44,7 @@ function EnhancedCodeAnimation() {
   // Código adaptado para móviles (líneas más cortas)
   const codeSteps = [
     {
-      content: isMobile ? "// Bienvenido a Gretsoft" : "// Bienvenido a Gretsoft ",
+      content: isMobile ? "// Bienvenido a Gretsoft" : "// Bienvenido a Gretsoft",
       type: "comment",
       delay: isMobile ? 600 : 900,
     },
