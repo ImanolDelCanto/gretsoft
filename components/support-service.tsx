@@ -85,7 +85,7 @@ export function SupportServices() {
   }
 
   return (
-    <section id="support-services-section" className="relative py-24 sm:py-32">
+    <section id="support-services-section" className="relative py-20 sm:py-24">
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

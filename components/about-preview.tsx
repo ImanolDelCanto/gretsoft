@@ -95,14 +95,14 @@ export function AboutPreview() {
             variants={containerVariants}
           >
             <motion.h2 variants={itemVariants} className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Innovación y Experiencia
+              Experiencia y compromiso
               <br />
               <span className="text-purple-600 dark:text-purple-400">en Desarrollo Web</span>
             </motion.h2>
             <motion.p variants={itemVariants} className="mt-6 text-lg leading-8 text-muted-foreground">
-              Con más de 2 años de experiencia, en GretSoft nos especializamos en transformar ideas en soluciones
-              digitales excepcionales. Nuestro equipo combina creatividad y expertise técnico para crear experiencias
-              web que destacan.
+              Con más de dos años de experiencia, en GretSoft nos especializamos en crear soluciones tecnológicas 
+              personalizadas. Desarrollamos desde aplicaciones web hasta sistemas empresariales complejos, 
+              siempre enfocados en la calidad y los resultados.
             </motion.p>
             <motion.div variants={itemVariants} className="mt-8 flex items-center gap-x-6">
               <Link href="/about">

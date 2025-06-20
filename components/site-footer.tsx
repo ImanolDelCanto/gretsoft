@@ -87,12 +87,20 @@ export function SiteFooter() {
             <h3 className="text-sm font-semibold mb-4">Contacto</h3>
             <ul className="space-y-3">
               <li>
-                <a
+                <Link
                   href="mailto:gretsoft@gmail.com"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   gretsoft@gmail.com
-                </a>
+                </Link>
+              </li>
+                            <li>
+                <Link
+                  href="https://www.linkedin.com/company/gretsoft"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+                >
+                  GretSoft en LinkedIn
+                </Link>
               </li>
               <li>
                 <a
@@ -102,7 +110,7 @@ export function SiteFooter() {
                   (+54) 11 2676-3301
                 </a>
               </li>
-              <li className="text-sm text-muted-foreground">Banfield, Buenos Aires, Argentina</li>
+              <li className="text-sm text-muted-foreground">Buenos Aires, Argentina</li>
             </ul>
           </div>
         </div>

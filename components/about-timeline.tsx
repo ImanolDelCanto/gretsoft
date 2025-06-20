@@ -14,10 +14,22 @@ export function AboutTimeline() {
         badge: "Fundación",
       },
       {
-        year: "Hoy",
+        year: "2023",
+        title: "Primeros Proyectos",
+        description: "Desarrollamos nuestros primeros proyectos web y aplicaciones móviles, estableciendo nuestra metodología de trabajo y procesos de calidad.",
+        badge: "Desarrollo",
+      },
+            {
+        year: "2024",
+        title: "Crecimiento y Expansión",
+        description: "Ampliamos nuestro servicios, incorporando nuevas tecnologías y especializaciones en desarrollo web, móvil y consultoría digital.",
+        badge: "Expansión",
+      },
+      {
+        year: "2025",
         title: "Liderando el Cambio",
         description:
-          "Continuamos innovando y expandiendo nuestros servicios para satisfacer las necesidades digitales del futuro.",
+          "Continuamos innovando y expandiendo nuestros servicios para satisfacer las necesidades digitales del futuro, con enfoque en IA y tecnologías emergentes.",
         badge: "Presente",
       },
     ],

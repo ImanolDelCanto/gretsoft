@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Send, Mail, Phone, MapPin, Clock } from "lucide-react"
+import { Send, Mail, Phone, MapPin, Linkedin } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
 
 export function Contact() {
@@ -78,10 +78,10 @@ export function Contact() {
       link: null,
     },
     {
-      icon: Clock,
-      title: "Horario",
-      content: "Lunes a Viernes\n8:00 AM - 6:00 PM",
-      link: null,
+      icon: Linkedin,
+      title: "Linkedin",
+      content: "GretSoft",
+      link: "https://www.linkedin.com/company/gretsoft/",
     },
   ]
 
