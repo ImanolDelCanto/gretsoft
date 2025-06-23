@@ -14,7 +14,7 @@ export function Portfolio() {
   const projects = useMemo(
     () => [
       {
-        title: "Pagian web Aberturas",
+        title: "Pagina web Aberturas",
         description: "Página para promoción de articulos que incluye catálogo y posibilidad de contacto.",
         image: "/media/alumbar.png",
         url: "https://www.alumbaronline.com/",
