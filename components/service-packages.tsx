@@ -55,95 +55,96 @@ export function ServicePackages() {
     }
   }, [])
 
-  const packages = useMemo(
-    () => [
-      {
-        id: "web",
-        name: "Página Web",
-        description: "Totalmente personalizada y adaptada a las necesidades de tu negocio",
-        icon: Globe,
-        color: "from-green-500 to-emerald-500",
-        features: [
-          "Página web totalmente personalizada y adaptada a las necesidades de tu negocio",
-          "Diseño tradicional/moderno con animaciones incluidas",
-          "4 secciones, incluido el inicio (Costo adicional por más secciones)",
-          "Hosting premium y Dominio por 1 año incluidos",
-          "Formulario de contacto integrado",
-          "Velocidad y rendimiento garantizado",
-          "Optimización para motores de búsqueda (SEO)",
-          "1 mes de soporte técnico / mantenimiento incluido",
-          "Integración de redes sociales",
-          "Página web adaptada a todos los dispositivos móviles",
-          "Botón flotante de WhatsApp",
-        ],
-        notIncluded: ["No incluye panel autoadministrable"],
-        accentLight: "bg-green-100",
-        accentDark: "bg-green-500",
-      },
-      {
-        id: "landing",
-        name: "Landing Page",
-        description: "Totalmente personalizada y adaptada a las necesidades de tu negocio",
-        icon: LayoutTemplate,
-        color: "from-blue-500 to-indigo-500",
-        features: [
-          "Landing page totalmente personalizada y adaptada a las necesidades de tu negocio",
-          "Estructura adaptada al tipo de landing page que necesitas (Splash, Captura de leads, Embudos, etc)",
-          "Diseño tradicional / moderno con animaciones incluidas",
-          "Hosting y Dominio por 1 año incluidos",
-          "Formulario de contacto integrado",
-          "Velocidad y rendimiento garantizado",
-          "Optimización para motores de búsqueda (SEO)",
-          "1 mes de soporte técnico / mantenimiento incluido",
-          "Integración de redes sociales",
-          "Landing page adaptada a todos los dispositivos móviles",
-          "Botones flotantes (redes sociales, whatsapp, etc)",
-        ],
-        notIncluded: ["No incluye panel autoadministrable"],
-        accentLight: "bg-blue-100",
-        accentDark: "bg-blue-500",
-      },
-      {
-        id: "ecommerce",
-        name: "Ecommerce",
-        description: "Totalmente personalizado y adaptado a las necesidades de tu negocio",
-        icon: ShoppingCart,
-        color: "from-purple-500 to-indigo-500",
-        features: [
-          "Ecommerce totalmente personalizado y adaptado a las necesidades de tu negocio",
-          "Diseño tradicional / moderno con animaciones incluidas",
-          "Carga de hasta 20 productos",
-          "Pasarela de pagos integrada (mercado pago)",
-          "Hosting Dominio por 1 año incluidos",
-          "Velocidad y rendimiento garantizado",
-          "2 meses de soporte técnico / mantenimiento incluido",
-          "Ecommerce adaptado a todos los dispositivos móviles",
-          "Botones flotantes (redes sociales, whatsapp, carrito, etc)",
-          "Panel autoadministrable incluido",
-        ],
-        notIncluded: [],
-        accentLight: "bg-purple-100",
-        accentDark: "bg-purple-500",
-      },
-    ],
-    [],
-  )
+const packages = useMemo(
+  () => [
+    {
+      id: "web",
+      name: "Página Web",
+      description: "Sitio web a medida, desarrollado para cubrir todos los requerimientos de tu negocio.",
+      icon: Globe,
+      color: "from-green-500 to-emerald-500",
+      features: [
+        "Desarrollo 100% personalizado enfocado en los objetivos de tu empresa",
+        "Diseño visual clásico o moderno con animaciones fluidas",
+        "Incluye 4 secciones (Inicio + 3). Se pueden añadir más con costo adicional",
+        "Dominio y hosting premium incluidos por 12 meses",
+        "Formulario de contacto conectado directamente a tu correo",
+        "Alto rendimiento en carga y navegación",
+        "Optimización básica para motores de búsqueda (SEO)",
+        "Soporte técnico gratuito durante el primer mes",
+        "Enlaces e iconos a redes sociales integrados",
+        "Diseño responsivo para móviles, tablets y escritorio",
+        "Botón flotante de contacto vía WhatsApp",
+      ],
+      notIncluded: ["No incluye sistema de gestión de contenido autoadministrable"],
+      accentLight: "bg-green-100",
+      accentDark: "bg-green-500",
+    },
+    {
+      id: "landing",
+      name: "Landing Page",
+      description: "Una página única, optimizada para captar la atención de tus clientes y convertir.",
+      icon: LayoutTemplate,
+      color: "from-blue-500 to-indigo-500",
+      features: [
+        "Landing page enfocada en conversiones y diseñada a tu medida",
+        "Diseño adaptado según el tipo de landing (captura de leads, venta directa, embudo, etc.)",
+        "Estética profesional con posibilidad de incluir animaciones modernas",
+        "Incluye dominio y alojamiento por un año completo",
+        "Formulario de contacto personalizado según tus necesidades",
+        "Rendimiento optimizado para una experiencia de usuario fluida",
+        "Configurada con prácticas básicas de SEO para mejorar posicionamiento",
+        "Soporte técnico sin costo durante 30 días posteriores a la entrega",
+        "Integración con tus redes sociales principales",
+        "Compatible con cualquier dispositivo móvil o de escritorio",
+        "Botones flotantes para WhatsApp u otras redes sociales",
+      ],
+      notIncluded: ["Este servicio no incluye panel de autogestión de contenido"],
+      accentLight: "bg-blue-100",
+      accentDark: "bg-blue-500",
+    },
+    {
+      id: "ecommerce",
+      name: "Ecommerce",
+      description: "Tienda online profesional diseñada a la medida de tu negocio para vender en línea.",
+      icon: ShoppingCart,
+      color: "from-purple-500 to-indigo-500",
+      features: [
+        "Plataforma de ecommerce personalizada con identidad visual única",
+        "Diseño elegante o moderno, animaciones opcionales",
+        "Carga inicial de hasta 20 productos al catálogo",
+        "Integración con Mercado Pago para aceptar pagos en línea",
+        "Incluye dominio y hosting por un año",
+        "Optimización completa para velocidad y experiencia de usuario",
+        "Soporte técnico y mantenimiento incluidos durante los primeros 2 meses",
+        "Diseño adaptable a cualquier tipo de pantalla o dispositivo",
+        "Botones flotantes para redes, carrito y WhatsApp",
+        "Incluye panel de administración para autogestión de productos y pedidos",
+      ],
+      notIncluded: [],
+      accentLight: "bg-purple-100",
+      accentDark: "bg-purple-500",
+    },
+  ],
+  [],
+);
+
 
   return (
     <section
       id="packages-section"
-      className="relative py-20 sm:py-28 bg-gradient-to-tr from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden"
+      className="relative py-20 sm:py-24 bg-gradient-to-tr from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center mb-16">
           <h2 className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30">
             Nuestros Paquetes
           </h2>
-          <p className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 h-24">
-            Soluciones completas para tu presencia digital
+          <p className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r text-white h-24">
+            Descubrí nuestros paquetes.
           </p>
-          <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            Ofrecemos paquetes diseñados para cubrir todas tus necesidades digitales, desde sitios web corporativos
+          <p className="mt-4 text-lg leading-8 text-muted-foreground">
+            Ofrecemos paquetes diseñados para cubrir todas tus necesidades, desde sitios web corporativos
             hasta tiendas en línea completas.
           </p>
         </div>

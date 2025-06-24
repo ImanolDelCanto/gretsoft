@@ -35,21 +35,23 @@ export function SiteHeader() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        isScrolled ? "bg-background/90 backdrop-blur-md shadow-sm py-2" : "bg-transparent py-0",
+        isScrolled ? "bg-background/90 backdrop-blur-md shadow-sm " : "bg-transparent py-3",
       )}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Global">
+      <nav className="mx-auto h-24 flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5 transition-transform duration-300 hover:scale-105">
+          <Link href="/" className="-m-1.5 p-1.5 transition-transform duration-300 hover:scale-105 flex items-center justify-center py-3 sm:py-4">
             <span className="sr-only">GretSoft</span>
-            <Image
-              className="h-24 w-auto sm:h-20 md:h-24 lg:h-28"
-              src="/gretsoft2.png"
-              alt="GretSoft Logo"
-              width={1000}
-              height={1000}
-              priority
-            />
+            <div className="flex items-center justify-center h-full">
+              <Image
+                className="w-auto h-6  md:h-6 lg:h-8"
+                src="/gretsoft2.webp"
+                alt="GretSoft Logo"
+                width={1000}
+                height={1000}
+                priority
+              />
+            </div>
           </Link>
         </div>
 
