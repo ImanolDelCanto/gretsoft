@@ -16,14 +16,14 @@ export function Portfolio() {
       {
         title: "Página web Aberturas",
         description: "Página para promoción de articulos que incluye catálogo y posibilidad de contacto.",
-        image: "/media/alumbar.png",
+        image: "/media/alumbar.webp",
         url: "https://www.alumbaronline.com/",
         category: "landing",
       },
       {
         title: "Landing Page Experiencias Aéreas ",
         description: "Página de aterrizaje para promoción de experiencias Aéreas",
-        image: "/media/experienciasaereas.png",
+        image: "/media/experienciasaereas.webp",
         url: "https://www.experienciasaereas.com.ar/",
         category: "landing",
       },
@@ -31,7 +31,7 @@ export function Portfolio() {
         title: "Aplicacion web para gestionar stock y visualizar ventas",
         description:
           "Aplicacion conectada a una base de datos para llevar el control sobre productos. (No se puede acceder, si quiere ver mas contactenos)",
-        image: "/media/sistem1 (1).png",
+        image: "/media/sistem1-_1__1.webp",
         url: "",
         category: "app",
       },

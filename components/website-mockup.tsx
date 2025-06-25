@@ -38,8 +38,8 @@ export function WebsiteMockups() {
       type: "landing",
       url: "https://bocetolandingpage1.vercel.app/",
       image: {
-        desktop: "/media/bocetolanding (1).png",
-        mobile: "/media/mobilelanding.png",
+        desktop: "/media/bocetolanding-_1_.webp",
+        mobile: "/media/mobilelanding_1.webp",
       },
       features: [
         "Animaciones suaves",
@@ -56,8 +56,8 @@ export function WebsiteMockups() {
       type: "landing",
       url: "https://bocetolandingpage2.vercel.app/",
       image: {
-        desktop: "/media/bocetolanding (2).png",
-        mobile: "/media/mobilelanding2.png",
+        desktop: "/media/bocetolanding-_2__2.webp",
+        mobile: "/media/mobilelanding2.webp",
       },
       features: ["Animaciones suaves", "Formulario de contacto", "Diseño minimalista"],
     },

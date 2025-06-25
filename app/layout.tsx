@@ -112,7 +112,7 @@ export default function RootLayout({
               "@type": "Organization",
               name: "GretSoft",
               url: "https://gretsoft.com.ar",
-              logo: "https://gretsoft.com.ar/gretsoft1.png",
+              logo: "https://gretsoft.com.ar/gretsoft1.webp",
               description:
                 "Empresa de desarrollo web en Buenos Aires. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas.",
               address: {
