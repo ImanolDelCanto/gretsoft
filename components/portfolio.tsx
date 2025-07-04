@@ -14,17 +14,24 @@ export function Portfolio() {
   const projects = useMemo(
     () => [
       {
-        title: "Página web Aberturas",
-        description: "Página para promoción de articulos que incluye catálogo y posibilidad de contacto.",
-        image: "/media/alumbar.webp",
-        url: "https://www.alumbaronline.com/",
-        category: "landing",
+        title: "E-commerce Shanti",
+        description: "E-commerce integrado con Mercado Pago para realizar pagos seguros, con un panel de administrador para manejar el mismo. Entregado con un documento de uso.",
+        image: "/media/shanti.webp",
+        url: "https://www.shantihogar.com/",
+        category: "e-commerce",
       },
       {
         title: "Landing Page Experiencias Aéreas ",
         description: "Página de aterrizaje para promoción de experiencias Aéreas",
         image: "/media/experienciasaereas.webp",
         url: "https://www.experienciasaereas.com.ar/",
+        category: "landing",
+      },
+      {
+        title: "Página web Aberturas",
+        description: "Página para promoción de articulos que incluye catálogo y posibilidad de contacto.",
+        image: "/media/alumbar.webp",
+        url: "https://www.alumbaronline.com/",
         category: "landing",
       },
       {

@@ -37,7 +37,7 @@ export const metadata = {
     siteName: "GretSoft",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/gretsoft2.webp",
         width: 1200,
         height: 630,
         alt: "GretSoft - Soluciones Web Profesionales",
@@ -51,7 +51,7 @@ export const metadata = {
     title: "GretSoft | Desarrollo Web Profesional en Buenos Aires",
     description:
       "Empresa de desarrollo web en Buenos Aires. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
-    images: ["/og-image.jpg"],
+    images: ["/gretsoft2.webp"],
   },
   robots: {
     index: true,
@@ -63,9 +63,6 @@ export const metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-  },
-  verification: {
-    google: "verificación-google", // Reemplaza con tu código de verificación de Google Search Console
   },
 };
 
