@@ -192,13 +192,16 @@ export function Portfolio() {
                         initial={{ opacity: 0 }}
                         whileHover={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
-                        className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center p-6"
+                        className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center p-6 
+                                   sm:opacity-0 sm:group-hover:opacity-100 opacity-100" // Siempre visible en mobile
                       >
                         {project.url && (
                           <Link href={project.url} target="_blank">
                             <Button
                               variant="secondary"
-                              className="transform translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                              className="transform sm:translate-y-4 sm:opacity-0 transition-all duration-300 
+                                         sm:group-hover:translate-y-0 sm:group-hover:opacity-100
+                                         translate-y-0 opacity-100" // Siempre visible en mobile
                             >
                               Ver Proyecto
                             </Button>
