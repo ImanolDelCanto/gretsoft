@@ -5,7 +5,6 @@ import { useMemo } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import Link from "next/link"
 
 export function Portfolio() {
@@ -14,6 +13,7 @@ export function Portfolio() {
   const projects = useMemo(
     () => [
       {
+        id: 1,
         title: "E-commerce Shanti",
         description: "E-commerce integrado con Mercado Pago para realizar pagos seguros, con un panel de administrador para manejar el mismo. Entregado con un documento de uso.",
         image: "/media/shanti.webp",
@@ -21,13 +21,16 @@ export function Portfolio() {
         category: "e-commerce",
       },
       {
+        id: 2,
         title: "Landing Page Experiencias Aéreas ",
         description: "Página de aterrizaje para promoción de experiencias Aéreas",
         image: "/media/experienciasaereas.webp",
         url: "https://www.experienciasaereas.com.ar/",
         category: "landing",
+
       },
       {
+        id: 3,
         title: "Página web Aberturas",
         description: "Página para promoción de articulos que incluye catálogo y posibilidad de contacto.",
         image: "/media/alumbar.webp",
@@ -35,6 +38,7 @@ export function Portfolio() {
         category: "landing",
       },
       {
+        id: 4,
         title: "Aplicacion web para gestionar stock y visualizar ventas",
         description:
           "Aplicacion conectada a una base de datos para llevar el control sobre productos. (No se puede acceder, si quiere ver mas contactenos)",
@@ -155,32 +159,16 @@ export function Portfolio() {
             }}
             className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 md:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
           >
-            {filteredProjects.map((project) => (
+            {filteredProjects.map((project, index) => (
               <motion.div
-                key={project.title}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                      type: "spring",
-                      stiffness: 100,
-                      damping: 15,
-                    },
-                  },
-                }}
-                whileHover={{
-                  y: -8,
-                  transition: {
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 10,
-                  },
-                }}
+                key={project.id}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group"
               >
-                <Card className="group relative flex flex-col overflow-hidden bg-background/40 backdrop-blur-sm border-none">
-                  <CardContent className="p-0">
+                <Link href={project.url || "#"} target="_blank" className="block h-full">
+                  <div className="bg-card rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer h-full">
                     <div className="relative h-40 sm:h-48 w-full overflow-hidden">
                       <Image
                         src={project.image || "/placeholder.svg"}
@@ -188,47 +176,42 @@ export function Portfolio() {
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
+                      {/* Overlay que aparece en hover solo en desktop */}
                       <motion.div
                         initial={{ opacity: 0 }}
                         whileHover={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
-                        className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center p-6 
-                                   sm:opacity-0 sm:group-hover:opacity-100 opacity-100" // Siempre visible en mobile
+                        className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent hidden sm:flex items-end justify-center p-6 opacity-0 group-hover:opacity-100"
                       >
-                        {project.url && (
-                          <Link href={project.url} target="_blank">
-                            <Button
-                              variant="secondary"
-                              className="transform sm:translate-y-4 sm:opacity-0 transition-all duration-300 
-                                         sm:group-hover:translate-y-0 sm:group-hover:opacity-100
-                                         translate-y-0 opacity-100" // Siempre visible en mobile
-                            >
-                              Ver Proyecto
-                            </Button>
-                          </Link>
-                        )}
+                        <Button variant="secondary" className="transform translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                          Ver Proyecto
+                        </Button>
                       </motion.div>
                     </div>
+                    
                     <div className="p-6">
-                      <motion.h3
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-xl font-semibold group-hover:text-primary transition-colors duration-300"
-                      >
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="inline-block px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full">
+                          {project.category}
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
                         {project.title}
-                      </motion.h3>
-                      <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                        className="mt-2 text-sm sm:text-base text-muted-foreground"
-                      >
+                      </h3>
+                      
+                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
                         {project.description}
-                      </motion.p>
+                      </p>
+                    
+                      
+                      {/* Indicador visual para mobile */}
+                      <div className="mt-4 sm:hidden">
+                        <span className="text-xs text-primary font-medium">Toca para ver →</span>
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </motion.div>
