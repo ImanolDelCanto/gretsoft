@@ -219,7 +219,7 @@ const packages = useMemo(
                 </div>
 
                 <CardFooter className="pt-6 px-0 flex justify-center">
-                  <Link href={`https://wa.me/+5401126763301?text=Hola! Me gustaría obtener más información sobre el paquete ${pkg.name}.`} target="_blank" rel="noopener noreferrer">
+                  <Link href={`https://wa.me/+5491137052313?text=Hola! Me gustaría obtener más información sobre el paquete ${pkg.name}.`} target="_blank" rel="noopener noreferrer">
                   <Button
                     className="w-auto bg-gradient-to-r text-white "
                     style={{ backgroundImage: `linear-gradient(to right, ${pkg.color})` }}

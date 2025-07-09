@@ -68,8 +68,8 @@ export function Contact() {
     {
       icon: Phone,
       title: "Teléfono",
-      content: "(+54) 11 2676-3301",
-      link: "tel:+5411-2676-3301",
+      content: "(+54) 11 3705-2313",
+      link: "tel:+5411-3705-2313",
     },
     {
       icon: MapPin,

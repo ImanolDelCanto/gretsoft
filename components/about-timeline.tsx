@@ -14,16 +14,10 @@ export function AboutTimeline() {
         badge: "Fundación",
       },
       {
-        year: "2023",
+        year: "2024",
         title: "Primeros Proyectos",
         description: "Desarrollamos nuestros primeros proyectos web y aplicaciones móviles, estableciendo nuestra metodología de trabajo y procesos de calidad.",
         badge: "Desarrollo",
-      },
-            {
-        year: "2024",
-        title: "Crecimiento y Expansión",
-        description: "Ampliamos nuestro servicios, incorporando nuevas tecnologías y especializaciones en desarrollo web, móvil y consultoría digital.",
-        badge: "Expansión",
       },
       {
         year: "2025",

@@ -1,4 +1,5 @@
 import type React from "react"
+import type { Metadata, Viewport } from "next"
 import "@/styles/globals.css"
 import { Inter } from "next/font/google"
 import { cn } from "@/lib/utils"
@@ -12,7 +13,15 @@ const inter = Inter({
   variable: "--font-inter",
 })
 
-export const metadata = {
+// ✅ Viewport separado
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#00E5C9",
+}
+
+// ✅ Metadata sin viewport
+export const metadata: Metadata = {
   title: "GretSoft | Desarrollo Web Profesional en Buenos Aires",
   description:
     "Empresa de desarrollo web en Buenos Aires. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
@@ -20,11 +29,6 @@ export const metadata = {
     "paginas web, desarrollo web, landing pages, e-commerce, aplicaciones web, SEO, diseño web, Buenos Aires, GretSoft, páginas web, sistemas web, servicios web, desarrollo de software",
   authors: [{ name: "GretSoft" }],
   creator: "GretSoft",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    themeColor: "#00E5C9",
-  },
   metadataBase: new URL("https://gretsoft.com.ar"),
   alternates: {
     canonical: "/",
@@ -65,7 +69,6 @@ export const metadata = {
     },
   },
 };
-
 
 export default function RootLayout({
   children,

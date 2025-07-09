@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 export function WhatsAppButton() {
-  const phoneNumber = useMemo(() => "1126763301", [])
+  const phoneNumber = useMemo(() => "+5491137052313", [])
   const message = useMemo(() => "¡Hola! Me gustaría obtener más información sobre sus servicios.", [])
 
   const handleClick = useCallback(() => {

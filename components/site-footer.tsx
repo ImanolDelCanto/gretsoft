@@ -94,10 +94,20 @@ export function SiteFooter() {
                   gretsoft@gmail.com
                 </Link>
               </li>
-                            <li>
+              <li>
+                <Link
+                  href="https://www.instagram.com/gretsoft"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+                  target="_blank"
+                >
+                  GretSoft en Instagram
+                </Link>
+              </li>
+              <li>
                 <Link
                   href="https://www.linkedin.com/company/gretsoft"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+                  target="_blank"
                 >
                   GretSoft en LinkedIn
                 </Link>
