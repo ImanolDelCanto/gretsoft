@@ -22,9 +22,9 @@ export const viewport: Viewport = {
 
 // ✅ Metadata sin viewport
 export const metadata: Metadata = {
-  title: "GretSoft | Desarrollo Web Profesional en Buenos Aires",
+  title: "GretSoft | Desarrollo Web Profesional",
   description:
-    "Empresa de desarrollo web en Buenos Aires. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
+    "Empresa de desarrollo web. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
   keywords:
     "paginas web, desarrollo web, landing pages, e-commerce, aplicaciones web, SEO, diseño web, Buenos Aires, GretSoft, páginas web, sistemas web, servicios web, desarrollo de software",
   authors: [{ name: "GretSoft" }],
@@ -34,14 +34,14 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "GretSoft | Desarrollo Web Profesional en Buenos Aires",
+    title: "GretSoft | Desarrollo Web Profesional",
     description:
-      "Empresa de desarrollo web en Buenos Aires. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
+      "Empresa de desarrollo web. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
     url: "https://gretsoft.com.ar",
     siteName: "GretSoft",
     images: [
       {
-        url: "/gretsoft2.webp",
+        url: "/gretsoft.webp",
         width: 1200,
         height: 630,
         alt: "GretSoft - Soluciones Web Profesionales",
@@ -52,10 +52,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GretSoft | Desarrollo Web Profesional en Buenos Aires",
+    title: "GretSoft | Desarrollo Web Profesional",
     description:
-      "Empresa de desarrollo web en Buenos Aires. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
-    images: ["/gretsoft2.webp"],
+      "Empresa de desarrollo web. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
+    images: ["/gretsoft.webp"],
   },
   robots: {
     index: true,
@@ -114,7 +114,7 @@ export default function RootLayout({
               url: "https://gretsoft.com.ar",
               logo: "https://gretsoft.com.ar/gretsoft1.webp",
               description:
-                "Empresa de desarrollo web en Buenos Aires. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas.",
+                "Empresa de desarrollo web. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas.",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Banfield",
