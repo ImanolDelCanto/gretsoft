@@ -1,12 +1,11 @@
 "use client"
 
-import { motion, useReducedMotion } from "framer-motion"
 import Link from "next/link"
+import { motion, useReducedMotion } from "framer-motion"
 import { Code, Sparkles, Zap } from "lucide-react"
 import { AnimatedButton } from "./ui/animated-button"
 import { useEffect, useState, useRef } from "react"
 
-// Componente de animación simplificado
 function EnhancedCodeAnimation() {
   const [displayText, setDisplayText] = useState<string[]>([])
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
@@ -15,7 +14,6 @@ function EnhancedCodeAnimation() {
   const intervalRef = useRef<NodeJS.Timeout>()
   const timeoutRef = useRef<NodeJS.Timeout>()
 
-  // Detectar móvil de forma simple
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -33,7 +31,7 @@ function EnhancedCodeAnimation() {
       type: "property",
     },
     { text: "  objetivo: 'Aumentar ventas y eficiencia',", type: "property" },
-    { text: " presupuesto: 'Flexible y escalable',", type: "property" },
+    { text: "  presupuesto: 'Flexible y escalable',", type: "property" },
     { text: "  plazo: 'Lo antes posible'", type: "property" },
     { text: "};", type: "declaration" },
     { text: "", type: "empty" },
@@ -42,11 +40,8 @@ function EnhancedCodeAnimation() {
     { text: "// ✨ ¡Su solución está lista!", type: "success" },
   ]
 
-
-  // Animación principal
   useEffect(() => {
     const startAnimation = () => {
-      // Limpiar estados
       setDisplayText([])
       setCurrentLineIndex(0)
       setCurrentCharIndex(0)
@@ -64,7 +59,6 @@ function EnhancedCodeAnimation() {
         const currentLine = codeLines[lineIndex]
 
         if (charIndex < currentLine.text.length) {
-          // Escribir siguiente carácter
           setDisplayText((prev) => {
             const newText = [...prev]
             newText[lineIndex] = currentLine.text.substring(0, charIndex + 1)
@@ -72,22 +66,18 @@ function EnhancedCodeAnimation() {
           })
           charIndex++
 
-          // Velocidad de escritura
           const speed = 80
           timeoutRef.current = setTimeout(typeNextCharacter, speed)
         } else {
-          // Línea completada, pasar a la siguiente SIN volver a setear la línea
           lineIndex++
           charIndex = 0
           setCurrentLineIndex(lineIndex)
 
-          // Pausa entre líneas
           const delay = currentLine.type === "empty" ? 200 : isMobile ? 400 : 600
           timeoutRef.current = setTimeout(typeNextCharacter, delay)
         }
       }
 
-      // Iniciar después de un delay
       timeoutRef.current = setTimeout(typeNextCharacter, isMobile ? 500 : 800)
     }
 
@@ -97,7 +87,7 @@ function EnhancedCodeAnimation() {
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
-  }, [isMobile]) // Re-ejecutar cuando cambie el tamaño
+  }, [isMobile])
 
   const getLineColor = (type: string) => {
     switch (type) {
@@ -119,7 +109,6 @@ function EnhancedCodeAnimation() {
   return (
     <div className="relative w-full h-full flex items-center justify-center bg-transparent">
       <div className="terminal-window w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg bg-gray-900/95 backdrop-blur-sm border border-primary/30 rounded-lg sm:rounded-xl overflow-hidden shadow-xl sm:shadow-2xl">
-        {/* Terminal Header */}
         <div className="terminal-header flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-primary/20 to-purple-500/20 border-b border-primary/20">
           <div className="flex gap-1 sm:gap-2">
             <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500"></div>
@@ -132,9 +121,7 @@ function EnhancedCodeAnimation() {
           </div>
         </div>
 
-        {/* Terminal Content */}
         <div className="p-3 sm:p-4 md:p-6 font-mono text-xs sm:text-sm min-h-[300px] sm:min-h-[320px] relative">
-          {/* Líneas de código */}
           {displayText.map((line, index) => (
             <div
               key={index}
@@ -143,15 +130,12 @@ function EnhancedCodeAnimation() {
               }`}
             >
               {line}
-              {/* Cursor parpadeante solo en la línea actual que se está escribiendo */}
               {index === currentLineIndex && !isComplete && (
                 <span className="ml-1 w-2 h-4 bg-primary animate-pulse inline-block">|</span>
               )}
             </div>
           ))}
 
-
-          {/* Barra de progreso */}
           <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4">
             <div className="flex items-center gap-2 text-xs text-gray-400">
               <span>{isComplete ? "Completado" : "Compilando"}</span>
@@ -179,7 +163,6 @@ const features = [
 export function Hero() {
   const shouldReduceMotion = useReducedMotion()
 
-
   const fadeIn = {
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
     visible: {
@@ -202,7 +185,6 @@ export function Hero() {
 
   return (
     <div id="home" className="relative isolate overflow-hidden min-h-screen flex items-center">
-      {/* Pega aquí el nuevo fondo */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-full aspect-square bg-primary/30 rounded-full blur-[60px] sm:blur-[120px] opacity-50 will-change-auto" />
