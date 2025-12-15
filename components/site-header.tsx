@@ -15,7 +15,7 @@ export function SiteHeader() {
     () => [
       { name: "Inicio", href: "/" },
       { name: "Nosotros", href: "/about" },
-      { name: "Portfolio", href: "/portfolio" },
+      { name: "Nuestros trabajos", href: "/portfolio" },
     ],
     [],
   )

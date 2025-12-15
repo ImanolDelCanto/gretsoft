@@ -8,6 +8,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { AboutPreview } from "@/components/about-preview"
 import { SupportServices } from "@/components/support-service"
 import { FAQ } from "@/components/faq"
+import { Testimonials } from "@/components/testimonials"
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
           <Services />
           <ServicePackages />
           <SupportServices />
+          <Testimonials />
           <Contact />
           <FAQ />
         </Suspense>
