@@ -1,11 +1,10 @@
 "use client"
-import { useCallback, useMemo, useState, useEffect } from "react"
+
+import { useCallback, useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { MenuIcon } from "lucide-react"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { MenuIcon, X, ArrowUpRight } from "lucide-react"
 
 export function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -13,111 +12,130 @@ export function SiteHeader() {
 
   const navigation = useMemo(
     () => [
-      { name: "Inicio", href: "/" },
+      { name: "Servicios", href: "/#servicios" },
+      { name: "Proceso", href: "/#proceso" },
+      { name: "Trabajos", href: "/portfolio" },
       { name: "Nosotros", href: "/about" },
-      { name: "Nuestros trabajos", href: "/portfolio" },
     ],
     [],
   )
 
-  const handleScroll = useCallback(() => {
-    setIsScrolled(window.scrollY > 0)
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 12)
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [handleScroll])
+    document.body.style.overflow = isOpen ? "hidden" : ""
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isOpen])
 
-  const closeSheet = useCallback(() => setIsOpen(false), [])
+  const closeMenu = useCallback(() => setIsOpen(false), [])
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        isScrolled ? "bg-background/90 backdrop-blur-md shadow-sm " : "bg-transparent py-3",
-      )}
-    >
-      <nav className="mx-auto h-24 flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Global">
-        <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5 transition-transform duration-300 hover:scale-105 flex items-center justify-center py-3 sm:py-4">
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div
+        className={cn(
+          "transition-all duration-300",
+          isScrolled
+            ? "border-b border-border/70 bg-background/80 backdrop-blur-xl"
+            : "border-b border-transparent",
+        )}
+      >
+        <nav
+          className="mx-auto flex h-20 w-full max-w-content items-center justify-between px-6 lg:px-8"
+          aria-label="Principal"
+        >
+          <Link
+            href="/"
+            className="flex items-center transition-opacity hover:opacity-80"
+            onClick={closeMenu}
+          >
             <span className="sr-only">GretSoft</span>
-            <div className="flex items-center justify-center h-full">
-              <Image
-                className="w-auto h-6  md:h-6 lg:h-8"
-                src="/gretsoft2.webp"
-                alt="GretSoft Logo"
-                width={1000}
-                height={1000}
-                priority
-              />
-            </div>
+            <Image
+              src="/gretsoft2.webp"
+              alt="GretSoft"
+              width={520}
+              height={120}
+              priority
+              className="h-7 w-auto"
+            />
           </Link>
-        </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex lg:gap-x-8">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="relative text-base font-semibold leading-6 text-foreground hover:text-primary transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:origin-center after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:scale-x-100"
-            >
-              {item.name}
+          <div className="hidden items-center gap-1 lg:flex">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className="hidden lg:flex">
+            <Link href="/#contacto" className="btn-primary">
+              Iniciar proyecto
+              <ArrowUpRight className="h-4 w-4" />
             </Link>
-          ))}
-        </div>
+          </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Button asChild className="rounded-full px-6 shadow-md hover:shadow-lg transition-all duration-300">
-            <Link href="/#contact">Contáctanos</Link>
-          </Button>
-        </div>
+          <button
+            type="button"
+            onClick={() => setIsOpen((v) => !v)}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground lg:hidden"
+            aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={isOpen}
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
+          </button>
+        </nav>
+      </div>
 
-        {/* Mobile Navigation */}
-        <div className="flex lg:hidden">
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Abrir menú">
-                <MenuIcon className="h-6 w-6" />
-                <span className="sr-only">Abrir menú</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent
-              side="right"
-              className="w-full sm:max-w-sm border-l border-border/50 backdrop-blur-lg bg-background/95"
+      {/* Mobile panel */}
+      <div
+        className={cn(
+          "lg:hidden",
+          isOpen ? "pointer-events-auto" : "pointer-events-none",
+        )}
+      >
+        <div
+          className={cn(
+            "fixed inset-0 top-20 bg-background/95 backdrop-blur-xl transition-opacity duration-300",
+            isOpen ? "opacity-100" : "opacity-0",
+          )}
+        >
+          <div className="flex flex-col gap-1 px-6 pt-8">
+            {navigation.map((item, i) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={closeMenu}
+                style={{ transitionDelay: isOpen ? `${i * 60}ms` : "0ms" }}
+                className={cn(
+                  "border-b border-border/60 py-5 font-display text-2xl font-semibold transition-all duration-300",
+                  isOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Link
+              href="/#contacto"
+              onClick={closeMenu}
+              className="btn-primary mt-8 w-full"
             >
-              <SheetHeader className="flex flex-row items-center justify-between">
-                <SheetTitle className="text-left">Menú</SheetTitle>
-                {/* Removed the duplicate X button here, keeping only the one below */}
-              </SheetHeader>
-              <div className="mt-8 flex flex-col gap-6">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={closeSheet}
-                    className="group flex items-center gap-2 text-lg font-semibold px-4 py-3 rounded-lg hover:bg-muted transition-all duration-300 ease-in-out"
-                  >
-                    <span className="relative overflow-hidden">
-                      {item.name}
-                      <span className="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100"></span>
-                    </span>
-                  </Link>
-                ))}
-                <div className="mt-4 pt-4 border-t">
-                  <Button asChild className="w-full rounded-full shadow-md">
-                    <Link href="/#contact" onClick={closeSheet}>
-                      Contáctanos
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+              Iniciar proyecto
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
-      </nav>
+      </div>
     </header>
   )
 }
-

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(netstat -ano)",
+      "Bash(tasklist //FI \"PID eq 5384\")",
+      "Bash(taskkill //F //PID 5384)",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(ls \"C:/Users/imaau/.claude/projects/c--Users-imaau-Desktop-Proyects-GretSoft/memory/\" 2>/dev/null; echo \"---\"; cat \"C:/Users/imaau/.claude/projects/c--Users-imaau-Desktop-Proyects-GretSoft/memory/MEMORY.md\" 2>/dev/null)",
+      "Read(//c/Users/imaau/.claude/projects/c--Users-imaau-Desktop-Proyects-GretSoft/**)",
+      "Bash(curl -s -o /dev/null -w \"home:%{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"portfolio:%{http_code}\\\\n\" http://localhost:3000/portfolio)",
+      "Bash(curl -s http://localhost:3000/portfolio)"
+    ]
+  }
+}

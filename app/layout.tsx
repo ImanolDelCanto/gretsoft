@@ -1,42 +1,54 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import "@/styles/globals.css"
-import { Inter } from "next/font/google"
+import localFont from "next/font/local"
+import { Sora } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { WhatsAppButton } from "@/components/whatsapp-button"
-import { Suspense } from "react"
+import { Toaster } from "@/components/ui/toaster"
 import Script from "next/script"
 
-const inter = Inter({
-  subsets: ["latin"],
+const geist = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist",
+  weight: "100 900",
   display: "swap",
-  variable: "--font-inter",
 })
 
-// ✅ Viewport separado
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+  display: "swap",
+})
+
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-sora",
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
+})
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#00E5C9",
+  themeColor: "#04070d",
 }
 
-// ✅ Metadata sin viewport
 export const metadata: Metadata = {
-  title: "GretSoft | Desarrollo Web Profesional",
+  title: "GretSoft | Desarrollo de Software a Medida",
   description:
-    "Empresa de desarrollo web. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
+    "Estudio de desarrollo de software. Construimos aplicaciones web, sistemas de gestión, plataformas e-commerce e integraciones a medida para empresas que quieren crecer.",
   keywords:
-    "paginas web, desarrollo web, landing pages, e-commerce, aplicaciones web, SEO, diseño web, Buenos Aires, GretSoft, páginas web, sistemas web, servicios web, desarrollo de software",
+    "desarrollo de software, software a medida, aplicaciones web, sistemas de gestión, e-commerce, integraciones API, desarrollo web, landing pages, GretSoft, Buenos Aires, Argentina",
   authors: [{ name: "GretSoft" }],
   creator: "GretSoft",
   metadataBase: new URL("https://gretsoft.com.ar"),
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "GretSoft | Desarrollo Web Profesional",
+    title: "GretSoft | Desarrollo de Software a Medida",
     description:
-      "Empresa de desarrollo web. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
+      "Estudio de desarrollo de software. Aplicaciones web, sistemas de gestión, e-commerce e integraciones a medida.",
     url: "https://gretsoft.com.ar",
     siteName: "GretSoft",
     images: [
@@ -44,7 +56,7 @@ export const metadata: Metadata = {
         url: "/gretsoft.webp",
         width: 1200,
         height: 630,
-        alt: "GretSoft - Soluciones Web Profesionales",
+        alt: "GretSoft - Desarrollo de software a medida",
       },
     ],
     locale: "es_AR",
@@ -52,9 +64,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GretSoft | Desarrollo Web Profesional",
+    title: "GretSoft | Desarrollo de Software a Medida",
     description:
-      "Empresa de desarrollo web. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas para hacer crecer tu negocio.",
+      "Estudio de desarrollo de software. Aplicaciones web, sistemas de gestión, e-commerce e integraciones a medida.",
     images: ["/gretsoft.webp"],
   },
   robots: {
@@ -68,7 +80,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-};
+}
 
 export default function RootLayout({
   children,
@@ -76,33 +88,26 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className="scroll-smooth dark">
+    <html
+      lang="es"
+      className={cn("scroll-smooth dark", geist.variable, geistMono.variable, sora.variable)}
+    >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased selection:bg-primary/20 selection:text-primary",
-          inter.className,
-        )}
-      >
-        <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-background to-background" />
-        <Suspense
-          fallback={
-            <div className="h-screen flex items-center justify-center">
-              <div className="relative w-24 h-24">
-                <div className="absolute inset-0 border-t-2 border-primary rounded-full animate-spin"></div>
-                <div className="absolute inset-4 border-t-2 border-primary/50 rounded-full animate-spin-slow"></div>
-              </div>
-            </div>
-          }
-        >
-          {children}
-          <WhatsAppButton />
-        </Suspense>
+      <body className="min-h-screen bg-background font-sans antialiased">
+        {/* Ambient backdrop */}
+        <div className="pointer-events-none fixed inset-0 -z-10">
+          <div className="absolute inset-0 bg-grid opacity-[0.35] mask-fade-y" />
+          <div className="absolute -top-40 left-[42%] h-[520px] w-[760px] -translate-x-1/2 rounded-full bg-primary/10 blur-[140px]" />
+          <div className="absolute -top-24 left-[64%] h-[440px] w-[560px] -translate-x-1/2 rounded-full bg-accent2/10 blur-[150px]" />
+        </div>
 
-        {/* Structured Data (JSON-LD) */}
+        {children}
+        <WhatsAppButton />
+        <Toaster />
+
         <Script
           id="schema-organization"
           type="application/ld+json"
@@ -114,7 +119,7 @@ export default function RootLayout({
               url: "https://gretsoft.com.ar",
               logo: "https://gretsoft.com.ar/gretsoft1.webp",
               description:
-                "Empresa de desarrollo web. Creamos landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas.",
+                "Estudio de desarrollo de software. Aplicaciones web, sistemas de gestión, e-commerce e integraciones a medida.",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Banfield",
@@ -128,7 +133,6 @@ export default function RootLayout({
                 email: "gretsoft@gmail.com",
               },
               sameAs: [
-                "https://www.facebook.com/gretsoft",
                 "https://www.instagram.com/gretsoft",
                 "https://www.linkedin.com/company/gretsoft",
               ],
@@ -143,17 +147,11 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Service",
-              serviceType: "Desarrollo Web",
-              provider: {
-                "@type": "Organization",
-                name: "GretSoft",
-              },
-              areaServed: {
-                "@type": "Country",
-                name: "Argentina",
-              },
+              serviceType: "Desarrollo de software a medida",
+              provider: { "@type": "Organization", name: "GretSoft" },
+              areaServed: { "@type": "Country", name: "Argentina" },
               description:
-                "Desarrollo de landing pages, e-commerce, sitios web corporativos y aplicaciones web personalizadas.",
+                "Desarrollo de aplicaciones web, sistemas de gestión, plataformas e-commerce e integraciones a medida.",
               offers: {
                 "@type": "Offer",
                 availability: "https://schema.org/InStock",
@@ -169,4 +167,3 @@ export default function RootLayout({
     </html>
   )
 }
-

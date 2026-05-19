@@ -1,15 +1,40 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useCallback } from "react"
-import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Send, Mail, Phone, MapPin, Linkedin } from "lucide-react"
+import { Send, Mail, Phone, MapPin, Linkedin, ArrowUpRight } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
+
+const contactInfo = [
+  {
+    icon: Mail,
+    title: "Email",
+    content: "gretsoft@gmail.com",
+    link: "mailto:gretsoft@gmail.com",
+  },
+  {
+    icon: Phone,
+    title: "Teléfono",
+    content: "(+54) 11 2676-3301",
+    link: "tel:+5411-2676-3301",
+  },
+  {
+    icon: Linkedin,
+    title: "LinkedIn",
+    content: "GretSoft",
+    link: "https://www.linkedin.com/company/gretsoft/",
+  },
+  {
+    icon: MapPin,
+    title: "Ubicación",
+    content: "Buenos Aires, Argentina",
+    link: null,
+  },
+]
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -20,231 +45,221 @@ export function Contact() {
     message: "",
   })
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
-  }, [])
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target
+      setFormData((prev) => ({ ...prev, [name]: value }))
+    },
+    [],
+  )
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
       setIsSubmitting(true)
-
       try {
         const response = await fetch("/api/send-email", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         })
-
         if (response.ok) {
           toast({
             title: "Mensaje enviado",
-            description: "Gracias por contactarnos. Te responderemos a la brevedad.",
+            description: "Gracias por contactarnos. Te respondemos a la brevedad.",
           })
           setFormData({ name: "", email: "", subject: "", message: "" })
         } else {
           throw new Error("Error al enviar el mensaje")
         }
+      } catch {
+        toast({
+          title: "No se pudo enviar",
+          description: "Probá de nuevo o escribinos por WhatsApp.",
+          variant: "destructive",
+        })
       } finally {
         setIsSubmitting(false)
       }
     },
-    [formData, toast],
+    [formData],
   )
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      title: "Email",
-      content: "gretsoft@gmail.com",
-      link: "mailto:gretsoft@gmail.com",
-    },
-    {
-      icon: Phone,
-      title: "Teléfono",
-      content: "(+54) 11 2676-3301",
-      link: "tel:+5411-2676-3301",
-    },
-    {
-      icon: MapPin,
-      title: "Dirección",
-      content: "Buenos Aires, Argentina",
-      link: null,
-    },
-    {
-      icon: Linkedin,
-      title: "Linkedin",
-      content: "GretSoft",
-      link: "https://www.linkedin.com/company/gretsoft/",
-    },
-  ]
-
   return (
-    <section id="contact" className="relative py-24 sm:py-32 bg-muted/30">
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-white/50 to-blue-50/50 dark:from-gray-900/50 dark:via-gray-900/50 dark:to-gray-800/50" />
+    <section id="contacto" className="section">
+      <div className="container-x">
+        <div className="relative overflow-hidden rounded-3xl border border-border">
+          <div className="absolute inset-0 -z-10 bg-dots opacity-40" />
+          <div className="absolute -top-32 right-0 -z-10 h-80 w-80 rounded-full bg-primary/15 blur-[120px]" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center mb-16">
-          <h2 className="inline-flex items-center rounded-full px-4 py-1 text-sm font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-700/30">
-            Contacto
-          </h2>
-          <p className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">¿Listo para comenzar tu proyecto?</p>
-          <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            Contáctanos hoy mismo y conversemos sobre cómo podemos ayudarte a alcanzar tus objetivos digitales.
-          </p>
-        </div>
+          <div className="grid gap-12 p-8 sm:p-12 lg:grid-cols-2 lg:gap-16">
+            {/* Info side */}
+            <motion.div
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="eyebrow">Contacto</span>
+              <h2 className="mt-5 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+                Contanos tu idea. La hacemos realidad.
+              </h2>
+              <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+                Respondemos toda consulta en un máximo de 24 horas hábiles.
+                Sin compromiso — primero entendemos qué necesitás.
+              </p>
 
-        <div className="grid grid-cols-1 gap-y-10 gap-x-8 lg:grid-cols-2">
-          {/* Contact Form */}
-          <Card className="border-none shadow-lg bg-background/80 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle>Envíanos un mensaje</CardTitle>
-              <CardDescription>Completa el formulario y te responderemos a la brevedad.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Nombre</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Tu nombre"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="tu@email.com"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Asunto</Label>
-                  <Input
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    placeholder="¿En qué podemos ayudarte?"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="message">Mensaje</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Cuéntanos sobre tu proyecto..."
-                    className="min-h-[120px]"
-                    required
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full rounded-full transition-all duration-200"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center">
-                      <svg
-                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Enviando...
-                    </span>
-                  ) : (
-                    <span className="flex items-center">
-                      Enviar mensaje
-                      <Send className="ml-2 h-4 w-4" />
-                    </span>
-                  )}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          {/* Contact Information */}
-          <div className="flex flex-col">
-            <Card className="border-none shadow-lg bg-background/80 backdrop-blur-sm h-full">
-              <CardHeader>
-                <CardTitle>Información de contacto</CardTitle>
-                <CardDescription>Estamos disponibles para ayudarte en todo lo que necesites.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {contactInfo.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 transition-all duration-200 hover:bg-muted"
+              <div className="mt-9 grid gap-3 sm:grid-cols-2">
+                {contactInfo.map((item) => {
+                  const inner = (
+                    <>
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-border bg-background text-primary">
+                        <item.icon className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs text-muted-foreground">
+                          {item.title}
+                        </p>
+                        <p className="truncate text-sm font-medium">
+                          {item.content}
+                        </p>
+                      </div>
+                    </>
+                  )
+                  return item.link ? (
+                    <a
+                      key={item.title}
+                      href={item.link}
+                      target={item.link.startsWith("http") ? "_blank" : undefined}
+                      rel="noopener noreferrer"
+                      className="surface flex items-center gap-3 rounded-xl p-4 transition-colors hover:border-primary/40"
                     >
-                      <div className="rounded-full bg-purple-100 p-2 dark:bg-purple-900/30">
-                        <item.icon className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                      </div>
-                      <div>
-                        <h4 className="font-medium">{item.title}</h4>
-                        {item.link ? (
-                          <a
-                            href={item.link}
-                            className="mt-1 text-muted-foreground hover:text-purple-600 transition-colors"
-                          >
-                            {item.content}
-                          </a>
-                        ) : (
-                          <p className="mt-1 text-muted-foreground whitespace-pre-line">{item.content}</p>
-                        )}
-                      </div>
+                      {inner}
+                    </a>
+                  ) : (
+                    <div
+                      key={item.title}
+                      className="surface flex items-center gap-3 rounded-xl p-4"
+                    >
+                      {inner}
                     </div>
-                  ))}
+                  )
+                })}
+              </div>
+            </motion.div>
+
+            {/* Form side */}
+            <motion.form
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              onSubmit={handleSubmit}
+              className="surface space-y-5 rounded-2xl p-7 sm:p-8"
+            >
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Nombre</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Tu nombre"
+                    required
+                  />
                 </div>
-                <div className="mt-8 p-4 rounded-lg bg-purple-50 dark:bg-purple-900/10 border border-purple-100 dark:border-purple-800/20">
-                  <h4 className="font-medium text-purple-700 dark:text-purple-300">Respuesta rápida garantizada</h4>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Nos comprometemos a responder a todas las consultas en un plazo máximo de 24 horas hábiles.
-                  </p>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="tu@email.com"
+                    required
+                  />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="subject">Asunto</Label>
+                <Input
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  placeholder="¿En qué podemos ayudarte?"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="message">Mensaje</Label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Contanos sobre tu proyecto..."
+                  className="min-h-[130px]"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isSubmitting ? (
+                  <>
+                    <svg
+                      className="h-4 w-4 animate-spin"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                      />
+                    </svg>
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    Enviar mensaje
+                    <Send className="h-4 w-4" />
+                  </>
+                )}
+              </button>
+
+              <p className="text-center text-xs text-muted-foreground">
+                ¿Preferís un canal más directo?{" "}
+                <a
+                  href="https://wa.me/5491126763301"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-0.5 font-medium text-primary hover:underline"
+                >
+                  Escribinos por WhatsApp
+                  <ArrowUpRight className="h-3 w-3" />
+                </a>
+              </p>
+            </motion.form>
           </div>
         </div>
       </div>
     </section>
   )
 }
-

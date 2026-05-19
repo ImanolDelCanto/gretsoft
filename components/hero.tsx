@@ -2,261 +2,125 @@
 
 import Link from "next/link"
 import { motion, useReducedMotion } from "framer-motion"
-import { Code, Sparkles, Zap } from "lucide-react"
-import { AnimatedButton } from "./ui/animated-button"
-import { useEffect, useState, useRef } from "react"
+import { ArrowUpRight, Check } from "lucide-react"
+import { HeroOrb } from "./hero-orb"
 
-function EnhancedCodeAnimation() {
-  const [displayText, setDisplayText] = useState<string[]>([])
-  const [currentLineIndex, setCurrentLineIndex] = useState(0)
-  const [, setCurrentCharIndex] = useState(0)
-  const [isComplete, setIsComplete] = useState(false)
-  const intervalRef = useRef<NodeJS.Timeout>()
-  const timeoutRef = useRef<NodeJS.Timeout>()
-
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
-  }, [])
-
-  const codeLines = [
-    { text: "// Bienvenido a Gretsoft", type: "comment" },
-    { text: "const tuNegocio = {", type: "declaration" },
-    {
-      text: "  problema: 'Necesito digitalizar mi empresa',",
-      type: "property",
-    },
-    { text: "  objetivo: 'Aumentar ventas y eficiencia',", type: "property" },
-    { text: "  presupuesto: 'Flexible y escalable',", type: "property" },
-    { text: "  plazo: 'Lo antes posible'", type: "property" },
-    { text: "};", type: "declaration" },
-    { text: "", type: "empty" },
-    { text: "// Aplicando nuestra metodología...", type: "comment" },
-    { text: "const resultado = await gretsoft.crear(tuNegocio);", type: "execution" },
-    { text: "// ✨ ¡Su solución está lista!", type: "success" },
-  ]
-
-  useEffect(() => {
-    const startAnimation = () => {
-      setDisplayText([])
-      setCurrentLineIndex(0)
-      setCurrentCharIndex(0)
-      setIsComplete(false)
-
-      let lineIndex = 0
-      let charIndex = 0
-
-      const typeNextCharacter = () => {
-        if (lineIndex >= codeLines.length) {
-          setIsComplete(true)
-          return
-        }
-
-        const currentLine = codeLines[lineIndex]
-
-        if (charIndex < currentLine.text.length) {
-          setDisplayText((prev) => {
-            const newText = [...prev]
-            newText[lineIndex] = currentLine.text.substring(0, charIndex + 1)
-            return newText
-          })
-          charIndex++
-
-          const speed = 80
-          timeoutRef.current = setTimeout(typeNextCharacter, speed)
-        } else {
-          lineIndex++
-          charIndex = 0
-          setCurrentLineIndex(lineIndex)
-
-          const delay = currentLine.type === "empty" ? 200 : isMobile ? 400 : 600
-          timeoutRef.current = setTimeout(typeNextCharacter, delay)
-        }
-      }
-
-      timeoutRef.current = setTimeout(typeNextCharacter, isMobile ? 500 : 800)
-    }
-
-    startAnimation()
-
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current)
-      if (intervalRef.current) clearInterval(intervalRef.current)
-    }
-  }, [isMobile])
-
-  const getLineColor = (type: string) => {
-    switch (type) {
-      case "comment":
-        return "text-green-400"
-      case "declaration":
-        return "text-blue-400"
-      case "property":
-        return "text-yellow-300"
-      case "execution":
-        return "text-cyan-400"
-      case "success":
-        return "text-emerald-400"
-      default:
-        return "text-gray-300"
-    }
-  }
-
-  return (
-    <div className="relative w-full h-full flex items-center justify-center bg-transparent">
-      <div className="terminal-window w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg bg-gray-900/95 backdrop-blur-sm border border-primary/30 rounded-lg sm:rounded-xl overflow-hidden shadow-xl sm:shadow-2xl">
-        <div className="terminal-header flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-primary/20 to-purple-500/20 border-b border-primary/20">
-          <div className="flex gap-1 sm:gap-2">
-            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500"></div>
-            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500"></div>
-          </div>
-          <div className="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-3">
-            <Code className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
-            <span className="text-xs sm:text-sm text-primary font-mono">terminal</span>
-          </div>
-        </div>
-
-        <div className="p-3 sm:p-4 md:p-6 font-mono text-xs sm:text-sm min-h-[300px] sm:min-h-[320px] relative">
-          {displayText.map((line, index) => (
-            <div
-              key={index}
-              className={`leading-relaxed ${getLineColor(codeLines[index]?.type || "default")} ${
-                index === displayText.length - 1 ? "mb-6 sm:mb-8" : "mb-1 sm:mb-2"
-              }`}
-            >
-              {line}
-              {index === currentLineIndex && !isComplete && (
-                <span className="ml-1 w-2 h-4 bg-primary animate-pulse inline-block">|</span>
-              )}
-            </div>
-          ))}
-
-          <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4">
-            <div className="flex items-center gap-2 text-xs text-gray-400">
-              <span>{isComplete ? "Completado" : "Compilando"}</span>
-              <div className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-primary to-purple-500 transition-all duration-300"
-                  style={{ width: `${(displayText.length / codeLines.length) * 100}%` }}
-                />
-              </div>
-              <span>{Math.round((displayText.length / codeLines.length) * 100)}%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const features = [
-  { icon: Code, text: "Desarrollo a medida" },
-  { icon: Zap, text: "Soluciones eficientes" },
-  { icon: Sparkles, text: "Tecnología moderna" },
+const proof = [
+  "Software a medida",
+  "Apps web y sistemas",
+  "Soporte real post-entrega",
 ]
 
 export function Hero() {
-  const shouldReduceMotion = useReducedMotion()
+  const reduce = useReducedMotion()
 
-  const fadeIn = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  }
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.2,
-        staggerChildren: 0.1,
-      },
-    },
-  }
+  const ease = [0.22, 1, 0.36, 1] as const
+  const rise = (delay: number) => ({
+    initial: { opacity: 0, y: reduce ? 0 : 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, ease, delay },
+  })
 
   return (
-    <div id="home" className="relative isolate overflow-hidden min-h-screen flex items-center">
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-full aspect-square bg-primary/30 rounded-full blur-[60px] sm:blur-[120px] opacity-50 will-change-auto" />
-        <div className="absolute bottom-0 left-1/4 w-full max-w-full aspect-square bg-purple-500/20 rounded-full blur-[60px] sm:blur-[120px] opacity-30 will-change-auto" />
-      </div>
+    <section
+      id="inicio"
+      className="relative isolate overflow-hidden pb-20 pt-36 sm:pt-44 lg:pb-28"
+    >
+      <div className="absolute left-1/2 top-10 -z-10 h-[460px] w-[760px] -translate-x-1/2 glow-radial animate-glow-pulse" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40 w-full">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto"
-        >
-          <motion.div variants={fadeIn} className="flex items-center gap-x-3 mb-8">
-            <div className="gradient-border">
-              <div className="rounded-full flex items-center gap-x-2 px-3 py-1 text-sm font-medium">
-                <Sparkles className="h-4 w-4 text-primary" />
-                <span className="text-glow">Desarrollo de Software Personalizado</span>
-              </div>
-            </div>
-          </motion.div>
+      <div className="container-x">
+        <div className="grid items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
+          {/* Copy */}
+          <div>
+            <motion.div {...rise(0)}>
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                Estudio de desarrollo de software
+              </span>
+            </motion.div>
 
-          <motion.h1 variants={fadeIn} className="max-w-lg text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-            Desarrollamos soluciones{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500 text-glow">
-              digitales integrales
-            </span>
-          </motion.h1>
+            <motion.h1
+              {...rise(0.08)}
+              className="mt-7 max-w-[15ch] text-balance font-display text-[2.7rem] font-bold leading-[1.04] tracking-tight sm:text-6xl lg:text-[4rem]"
+            >
+              Construimos el{" "}
+              <span className="text-accent-gradient">software</span> que tu
+              empresa necesita.
+            </motion.h1>
 
-          <motion.p variants={fadeIn} className="mt-6 text-lg leading-8 text-muted-foreground">
-            Desde aplicaciones web hasta sistemas de gestión empresarial. Trabajamos junto a vos para crear soluciones
-            tecnológicas que optimicen sus procesos y potencien su crecimiento.
-          </motion.p>
+            <motion.p
+              {...rise(0.16)}
+              className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground"
+            >
+              No solo páginas web. Desarrollamos aplicaciones, sistemas de
+              gestión e integraciones a medida — pensados para resolver
+              problemas reales y crecer con tu negocio.
+            </motion.p>
 
-          <motion.div variants={fadeIn} className="mt-10 flex flex-col sm:flex-row items-center gap-4 sm:gap-x-6">
-            <AnimatedButton text="Consulte su proyecto" href="#contact" className="w-full sm:w-auto" />
-            <Link href="/portfolio" className="w-full sm:w-auto">
-              <button className="pulse-button w-full rounded-full border border-primary/20 px-8 py-3 bg-primary-foreground text-sm font-semibold text-foreground transition-all duration-300 hover:bg-primary/30 hover:tracking-wider active:translate-y-1">
-                Ver nuestros proyectos
-              </button>
-            </Link>
-          </motion.div>
+            <motion.div
+              {...rise(0.24)}
+              className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
+            >
+              <Link href="#contacto" className="btn-primary">
+                Iniciar un proyecto
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+              <Link href="/portfolio" className="btn-ghost">
+                Ver nuestros trabajos
+              </Link>
+            </motion.div>
 
-          <motion.div variants={staggerContainer} className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {features.map((item, index) => (
-              <motion.div
-                key={index}
-                variants={fadeIn}
-                className="flex items-center gap-x-2 text-sm glass-card p-3 rounded-lg hover-glow"
-              >
-                <div className="rounded-full bg-primary/10 p-1">
-                  <item.icon className="h-4 w-4 text-primary" />
-                </div>
-                <span>{item.text}</span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="mt-8 sm:mt-16 lg:mt-0 lg:flex-shrink-0 lg:flex-grow relative"
-        >
-          <div className="absolute -z-10 inset-0 bg-gradient-to-tr from-primary/20 to-purple-500/20 blur-3xl opacity-30 rounded-full" />
-
-          <div className="mx-auto w-full max-w-[300px] xs:max-w-[340px] sm:max-w-[400px] md:max-w-[480px] lg:max-w-[520px] h-[360px] xs:h-[400px] sm:h-[320px] md:h-[380px] lg:h-[420px] rounded-lg sm:rounded-xl shadow-2xl ring-1 ring-white/10 transition-transform duration-300 hover:scale-105 relative overflow-hidden">
-            <EnhancedCodeAnimation />
+            <motion.ul
+              {...rise(0.32)}
+              className="mt-10 flex flex-wrap gap-x-6 gap-y-3"
+            >
+              {proof.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-center gap-2 text-sm text-muted-foreground"
+                >
+                  <Check className="h-4 w-4 text-primary" />
+                  {item}
+                </li>
+              ))}
+            </motion.ul>
           </div>
-        </motion.div>
+
+          {/* 3D node-network orb */}
+          <motion.div
+            initial={{ opacity: 0, scale: reduce ? 1 : 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease, delay: 0.2 }}
+            className="relative mx-auto aspect-square w-full max-w-[480px]"
+          >
+            {/* Core glow — cyan with a violet companion */}
+            <div className="absolute left-[42%] top-[44%] -z-10 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/25 blur-[70px]" />
+            <div className="absolute left-[62%] top-[58%] -z-10 h-2/5 w-2/5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent2/25 blur-[70px]" />
+
+            {/* Rotating accent rings */}
+            <div className="absolute inset-[8%] -z-10 animate-spin-slow rounded-full border border-primary/15" />
+            <div
+              className="absolute inset-[20%] -z-10 rounded-full border border-dashed border-accent2/20"
+              style={{ animation: "spin-slow 22s linear infinite reverse" }}
+            />
+
+            <HeroOrb />
+
+            {/* Floating stat */}
+            <motion.div
+              initial={{ opacity: 0, y: reduce ? 0 : 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease, delay: 1.1 }}
+              className="surface absolute -bottom-2 -left-2 rounded-xl px-5 py-4 sm:-left-6"
+            >
+              <p className="font-display text-2xl font-bold text-primary">100%</p>
+              <p className="text-xs text-muted-foreground">
+                A medida, sin plantillas
+              </p>
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }

@@ -1,174 +1,76 @@
 "use client"
 
-import { useMemo } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { ArrowUpRight } from "lucide-react"
+
+const metrics = [
+  { value: "2+", label: "Años desarrollando software" },
+  { value: "100%", label: "Proyectos a medida" },
+  { value: "24h", label: "Tiempo de respuesta" },
+  { value: "1 a 1", label: "Trato directo con el equipo" },
+]
 
 export function AboutPreview() {
-  const stats = useMemo(
-    () => [
-      { stat: "100%", label: "Soluciones a Medida" },
-      { stat: "Innovación", label: "Como Estándar" },
-      { stat: "Colaboración", label: "Con Nuestros Clientes" },
-      { stat: "Visión", label: "Para el Futuro" },
-    ],
-    [],
-  )
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
-    },
-  }
-
-  const statsContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.6,
-      },
-    },
-  }
-
-  const statsItemVariants = {
-    hidden: { x: -10, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
-    },
-  }
-
-  const gradientVariants = {
-    hidden: { opacity: 0.5, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 1.5,
-        ease: "easeOut",
-      },
-    },
-  }
-
   return (
-    <section className="relative isolate overflow-hidden w-full">
-      {/* Animated gradient background */}
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={gradientVariants}
-        className="absolute inset-0 w-full bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"
-      />
-
-      <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center">
+    <section className="section">
+      <div className="container-x">
+        <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={containerVariants}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <motion.h2 variants={itemVariants} className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Experiencia y compromiso
-              <br />
-              <span className="text-purple-600 dark:text-purple-400">en Desarrollo Web</span>
-            </motion.h2>
-            <motion.p variants={itemVariants} className="mt-6 text-lg leading-8 text-muted-foreground">
-              Con más de dos años de experiencia, en GretSoft nos especializamos en crear soluciones tecnológicas 
-              personalizadas. Desarrollamos desde aplicaciones web hasta sistemas empresariales complejos, 
-              siempre enfocados en la calidad y los resultados.
-            </motion.p>
-            <motion.div variants={itemVariants} className="mt-8 flex items-center gap-x-6">
-              <Link href="/about">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="pulse-button w-full rounded-full border border-primary/20 px-8 py-3 bg-primary-foreground text-sm font-semibold text-foreground transition-all duration-200 hover:bg-primary/30 hover:tracking-wider"
-                >
-                  Conoce más sobre nosotros
-                </motion.button>
-              </Link>
-            </motion.div>
+            <span className="eyebrow">Quiénes somos</span>
+            <h2 className="mt-5 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              Un equipo que entiende tu problema antes de escribir una línea de código.
+            </h2>
+            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+              En GretSoft combinamos criterio técnico y cercanía. Trabajamos
+              codo a codo con cada cliente para transformar una idea o un
+              proceso desordenado en un producto digital sólido, mantenible y
+              fácil de usar.
+            </p>
+            <p className="mt-4 leading-relaxed text-muted-foreground">
+              No tercerizamos: el mismo equipo que te escucha es el que diseña,
+              desarrolla y acompaña tu proyecto.
+            </p>
+            <Link
+              href="/about"
+              className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+            >
+              Conocé cómo trabajamos
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
           </motion.div>
 
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={containerVariants}
-            className="relative"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border"
           >
-            {/* Animated gradient blob */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 0.5,
-                transition: { duration: 2, ease: "easeInOut", repeat: Number.POSITIVE_INFINITY, repeatType: "reverse" },
-              }}
-              className="absolute -top-64 -right-64 blur-3xl max-w-full"
-              aria-hidden="true"
-            >
+            {metrics.map((m, i) => (
               <div
-                className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
-                style={{
-                  clipPath:
-                    "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-                }}
-              />
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className="relative rounded-xl border bg-background/50 backdrop-blur-sm shadow-2xl"
-            >
-              <div className="p-8">
-                <motion.dl variants={statsContainerVariants} className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  {stats.map((item) => (
-                    <motion.div
-                      key={item.label}
-                      variants={statsItemVariants}
-                      whileHover={{ x: 5, transition: { duration: 0.2 } }}
-                      className="border-l-4 border-purple-500 pl-4"
-                    >
-                      <dt className="text-sm font-medium text-muted-foreground">{item.label}</dt>
-                      <dd className="mt-1 text-3xl font-semibold tracking-tight text-purple-600 dark:text-purple-400">
-                        {item.stat}
-                      </dd>
-                    </motion.div>
-                  ))}
-                </motion.dl>
+                key={m.label}
+                className="group relative bg-card p-7 transition-colors hover:bg-secondary/60 sm:p-8"
+              >
+                <span className="absolute right-5 top-5 font-mono text-xs text-muted-foreground/50">
+                  0{i + 1}
+                </span>
+                <p className="font-display text-4xl font-bold text-primary sm:text-5xl">
+                  {m.value}
+                </p>
+                <p className="mt-3 text-sm leading-snug text-muted-foreground">
+                  {m.label}
+                </p>
               </div>
-            </motion.div>
+            ))}
           </motion.div>
         </div>
       </div>
     </section>
   )
 }
-
