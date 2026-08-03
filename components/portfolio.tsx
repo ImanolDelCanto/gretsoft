@@ -17,6 +17,15 @@ type Project = {
 
 const projects: Project[] = [
   {
+    id: 6,
+    title: "E-commerce EA Importados",
+    description:
+      "Tienda mayorista de cosmética importada con precios escalonados por volumen, carrito con mínimo de compra y panel de administración de productos y pedidos.",
+    image: "/media/eaimportados.webp",
+    url: "https://importadosea.com/",
+    category: "ecommerce",
+  },
+  {
     id: 5,
     title: "E-commerce Nitrec",
     description:

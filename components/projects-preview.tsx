@@ -7,6 +7,12 @@ import { ArrowUpRight } from "lucide-react"
 
 const projects = [
   {
+    title: "EA Importados",
+    type: "E-commerce",
+    image: "/media/eaimportados.webp",
+    url: "https://importadosea.com/",
+  },
+  {
     title: "Nitrec",
     type: "E-commerce",
     image: "/media/nitrec.webp",
@@ -23,12 +29,6 @@ const projects = [
     type: "Landing Page",
     image: "/media/experienciasaereas.webp",
     url: "https://www.experienciasaereas.com.ar/",
-  },
-  {
-    title: "Sistema de gestión",
-    type: "Aplicación Web",
-    image: "/media/sistem1-_1__1.webp",
-    url: "",
   },
 ]
 
