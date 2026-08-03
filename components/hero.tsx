@@ -52,9 +52,9 @@ export function Hero() {
               {...rise(0.16)}
               className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground"
             >
-              No solo páginas web. Desarrollamos aplicaciones, sistemas de
-              gestión e integraciones a medida — pensados para resolver
-              problemas reales y crecer con tu negocio.
+              Desarrollamos páginas web, aplicaciones, sistemas de gestión e
+              integraciones a medida — pensados para resolver problemas reales
+              y crecer con tu negocio.
             </motion.p>
 
             <motion.div
